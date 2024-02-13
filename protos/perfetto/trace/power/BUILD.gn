@@ -20,6 +20,7 @@ perfetto_proto_library("@TYPE@") {
     "android_energy_estimation_breakdown.proto",
     "android_entity_state_residency.proto",
     "battery_counters.proto",
+    "qtipm.proto",
     "power_rails.proto",
   ]
 }

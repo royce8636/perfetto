@@ -129,6 +129,16 @@ void AndroidProbesParser::ParseBatteryCounters(int64_t ts, ConstBytes blob) {
   }
 }
 
+// void AndroidProbesParser::ParseQtipm(int64_t ts, ConstBytes blob) {
+//   protos::pbzero::Qtipm::Decoder evt(blob.data, blob.size);
+//   if (evt.has_energy()) {
+//     TrackId track = context_->track_tracker->InternGlobalCounterTrack(
+//         TrackTracker::Group::kPower, context_->storage->InternString("qtipm"));
+//     context_->event_tracker->PushCounter(ts, static_cast<double>(evt.energy()),
+//                                         track);
+//   }
+// }
+
 void AndroidProbesParser::ParsePowerRails(int64_t ts,
                                           uint64_t trace_packet_ts,
                                           ConstBytes blob) {

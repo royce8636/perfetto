@@ -29,6 +29,10 @@ message AndroidBatteryMetric {
     optional double current_avg_ua = 5;
   }
 
+  message Qtipm{
+    optional float usage = 1;
+  }
+
   message BatteryAggregates {
     // Field numbers for these 3 == the int values from Android
     optional int64 total_screen_off_ns = 1;
@@ -53,6 +57,8 @@ message AndroidBatteryMetric {
   // Battery counters info for each ts of the trace. This should only be
   // extracted for short traces.
   repeated BatteryCounters battery_counters = 1;
+
+  repeated Qtipm qtipm_counters = 4;
 
   optional BatteryAggregates battery_aggregates = 2;
 

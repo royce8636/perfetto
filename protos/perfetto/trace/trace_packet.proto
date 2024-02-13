@@ -55,6 +55,7 @@ import "protos/perfetto/trace/perfetto/tracing_service_event.proto";
 import "protos/perfetto/trace/power/android_energy_estimation_breakdown.proto";
 import "protos/perfetto/trace/power/android_entity_state_residency.proto";
 import "protos/perfetto/trace/power/battery_counters.proto";
+import "protos/perfetto/trace/power/qtipm.proto";
 import "protos/perfetto/trace/power/power_rails.proto";
 import "protos/perfetto/trace/statsd/statsd_atom.proto";
 import "protos/perfetto/trace/profiling/deobfuscation.proto";
@@ -138,6 +139,7 @@ message TracePacket {
     StreamingAllocation streaming_allocation = 74;
     StreamingFree streaming_free = 75;
     BatteryCounters battery = 38;
+    Qtipm qtipm = 85;
     PowerRails power_rails = 40;
     AndroidLogPacket android_log = 39;
     SystemInfo system_info = 45;

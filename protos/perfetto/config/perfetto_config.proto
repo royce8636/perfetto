@@ -1035,6 +1035,12 @@ message AndroidPowerConfig {
   }
   optional uint32 battery_poll_ms = 1;
   repeated BatteryCounters battery_counters = 2;
+  
+  enum Qtipm {
+    QTIPM_UNSPECIFIED = 0;
+    QTIPM_USAGE = 1;
+  }
+  repeated Qtipm qtipm_counters = 6;
 
   // Where available enables per-power-rail measurements.
   optional bool collect_power_rails = 3;

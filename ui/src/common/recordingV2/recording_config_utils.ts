@@ -222,6 +222,9 @@ export function genTraceConfig(
         AndroidPowerConfig.BatteryCounters.BATTERY_COUNTER_CHARGE,
         AndroidPowerConfig.BatteryCounters.BATTERY_COUNTER_CURRENT,
       ];
+      ds.config.androidPowerConfig.qtipmCounters = [
+        AndroidPowerConfig.Qtipm.QTIPM_USAGE,
+      ];
       ds.config.androidPowerConfig.collectPowerRails = true;
     }
     if (targetInfo.targetType !== 'CHROME') {
@@ -746,7 +749,8 @@ function toPbtxt(configBuffer: Uint8Array): string {
     return value.startsWith('MEMINFO_') || value.startsWith('VMSTAT_') ||
         value.startsWith('STAT_') || value.startsWith('LID_') ||
         value.startsWith('BATTERY_COUNTER_') || value === 'DISCARD' ||
-        value === 'RING_BUFFER' || value.startsWith('PERF_CLOCK_');
+        value === 'RING_BUFFER' || value.startsWith('PERF_CLOCK_') || 
+        value.startsWith('QTIPM_');
   }
   // Since javascript doesn't have 64 bit numbers when converting protos to
   // json the proto library encodes them as strings. This is lossy since

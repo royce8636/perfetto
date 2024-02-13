@@ -231,6 +231,9 @@ void AndroidProbesModule::ParseTracePacketData(
     case TracePacket::kAndroidSystemPropertyFieldNumber:
       parser_.ParseAndroidSystemProperty(ts, decoder.android_system_property());
       return;
+    // case TracePacket::kQtipmFieldNumber:
+    //   parser_.ParseQtipm(ts, decoder.qtipm());
+    //   return;
   }
 }
 

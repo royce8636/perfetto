@@ -1,0 +1,6 @@
+syntax = "proto2";
+package perfetto.protos;
+
+message Qtipm{
+    optional float usage = 1;
+}

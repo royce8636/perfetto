@@ -1036,6 +1036,13 @@ message AndroidPowerConfig {
   optional uint32 battery_poll_ms = 1;
   repeated BatteryCounters battery_counters = 2;
 
+  enum Qtipm{
+    QTIPM_UNSPECIFIED = 0;
+    QTIPM_USAGE = 1;
+  }
+
+  repeated Qtipm qtipm_counters = 6;
+
   // Where available enables per-power-rail measurements.
   optional bool collect_power_rails = 3;
 
@@ -12811,6 +12818,14 @@ message BatteryCounters {
 
 // End of protos/perfetto/trace/power/battery_counters.proto
 
+// Begin of protos/perfetto/trace/power/qtipm.proto
+
+message Qtipm{
+  optional float usage = 1;
+}
+
+// End of protos/perfetto/trace/power/qtipm.proto
+
 // Begin of protos/perfetto/trace/power/power_rails.proto
 
 message PowerRails {
@@ -14398,6 +14413,7 @@ message TracePacket {
     StreamingAllocation streaming_allocation = 74;
     StreamingFree streaming_free = 75;
     BatteryCounters battery = 38;
+    Qtipm qtipm = 85;
     PowerRails power_rails = 40;
     AndroidLogPacket android_log = 39;
     SystemInfo system_info = 45;

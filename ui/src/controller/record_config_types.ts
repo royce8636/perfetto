@@ -63,6 +63,8 @@ export const recordConfigValidator = record({
   batteryDrain: bool(),
   batteryDrainPollMs: num(1000),
 
+  Qtipm: num(1000),
+
   boardSensors: bool(),
 
   memHiFreq: bool(),

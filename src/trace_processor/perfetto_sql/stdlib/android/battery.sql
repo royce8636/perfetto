@@ -62,4 +62,10 @@ LEFT JOIN (
   JOIN counter_track t ON c.track_id = t.id
   WHERE name = 'batt.current_ua'
 ) USING(ts)
+LEFT JOIN(
+  SELECT ts, value AS QTIPM_IDK
+  FROM counter c
+  JOIN counter_track t ON c.track_id = t.id
+  WHERE name = 'QTIPM.IDK'
+) USING(ts)
 ORDER BY ts;

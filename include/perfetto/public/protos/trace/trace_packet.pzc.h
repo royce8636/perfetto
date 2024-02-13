@@ -32,6 +32,7 @@ PERFETTO_PB_MSG_DECL(perfetto_protos_AndroidGameInterventionList);
 PERFETTO_PB_MSG_DECL(perfetto_protos_AndroidLogPacket);
 PERFETTO_PB_MSG_DECL(perfetto_protos_AndroidSystemProperty);
 PERFETTO_PB_MSG_DECL(perfetto_protos_BatteryCounters);
+PERFETTO_PB_MSG_DECL(perfetto_protos_Qtipm);
 PERFETTO_PB_MSG_DECL(perfetto_protos_ChromeBenchmarkMetadata);
 PERFETTO_PB_MSG_DECL(perfetto_protos_ChromeEventBundle);
 PERFETTO_PB_MSG_DECL(perfetto_protos_ChromeMetadataPacket);
@@ -181,6 +182,11 @@ PERFETTO_PB_FIELD(perfetto_protos_TracePacket,
                   perfetto_protos_BatteryCounters,
                   battery,
                   38);
+PERFETTO_PB_FIELD(perfetto_protos_TracePacket,
+                  MSG,
+                  perfetto_protos_Qtipm,
+                  qtipm,
+                  85);
 PERFETTO_PB_FIELD(perfetto_protos_TracePacket,
                   MSG,
                   perfetto_protos_PowerRails,

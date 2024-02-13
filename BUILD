@@ -4756,6 +4756,7 @@ perfetto_proto_library(
         "protos/perfetto/trace/power/android_energy_estimation_breakdown.proto",
         "protos/perfetto/trace/power/android_entity_state_residency.proto",
         "protos/perfetto/trace/power/battery_counters.proto",
+        "protos/perfetto/trace/power/qtipm.proto",
         "protos/perfetto/trace/power/power_rails.proto",
     ],
     visibility = [

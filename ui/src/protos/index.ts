@@ -21,6 +21,7 @@ import AndroidLogId = protos.perfetto.protos.AndroidLogId;
 import AndroidPowerConfig = protos.perfetto.protos.AndroidPowerConfig;
 import BatteryCounters =
     protos.perfetto.protos.AndroidPowerConfig.BatteryCounters;
+import Qtipm = protos.perfetto.protos.AndroidPowerConfig.Qtipm;
 import BufferConfig = protos.perfetto.protos.TraceConfig.BufferConfig;
 import ChromeConfig = protos.perfetto.protos.ChromeConfig;
 import ComputeMetricArgs = protos.perfetto.protos.ComputeMetricArgs;
@@ -97,6 +98,7 @@ export {
   AndroidLogId,
   AndroidPowerConfig,
   BatteryCounters,
+  Qtipm,
   BufferConfig,
   ChromeConfig,
   ComputeMetricArgs,

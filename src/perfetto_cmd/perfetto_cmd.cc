@@ -320,6 +320,7 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
       {"buffer", required_argument, nullptr, 'b'},
       {"size", required_argument, nullptr, 's'},
       {"app", required_argument, nullptr, 'a'},
+      {"rtux", required_argument, nullptr, 'x'},
       {"no-guardrails", no_argument, nullptr, OPT_IGNORE_GUARDRAILS},
       {"txt", no_argument, nullptr, OPT_PBTXT_CONFIG},
       {"upload", no_argument, nullptr, OPT_UPLOAD},
@@ -359,7 +360,7 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
   optind = 1;  // Reset getopt state. It's reused by the snapshot thread.
   for (;;) {
     int option =
-        getopt_long(argc, argv, "hc:o:dDt:b:s:a:", long_options, nullptr);
+        getopt_long(argc, argv, "hc:o:dDt:b:s:a:x:", long_options, nullptr);
 
     if (option == -1)
       break;  // EOF.
@@ -446,6 +447,12 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
 
     if (option == 'a') {
       config_options.atrace_apps.push_back(std::string(optarg));
+      has_config_options = true;
+      continue;
+    }
+
+    if (option == 'x') {
+      config_options.rtux_file = std::string(optarg);
       has_config_options = true;
       continue;
     }
