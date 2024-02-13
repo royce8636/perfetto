@@ -56,6 +56,7 @@ class DataSourceConfig;
 class DataSourceDescriptor;
 class ObservableEvents;
 class TraceConfig;
+class RtuxConfig;
 class TraceStats;
 class TracingServiceCapabilities;
 class TracingServiceState;
@@ -69,6 +70,7 @@ using DataSourceConfig = ::perfetto::protos::gen::DataSourceConfig;
 using DataSourceDescriptor = ::perfetto::protos::gen::DataSourceDescriptor;
 using ObservableEvents = ::perfetto::protos::gen::ObservableEvents;
 using TraceConfig = ::perfetto::protos::gen::TraceConfig;
+using RtuxConfig = ::perfetto::protos::gen::RtuxConfig;
 using TraceStats = ::perfetto::protos::gen::TraceStats;
 using TracingServiceCapabilities =
     ::perfetto::protos::gen::TracingServiceCapabilities;

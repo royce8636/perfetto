@@ -345,6 +345,8 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
 
   std::string config_file_name;
   std::string trace_config_raw;
+  std::string rtux_file_name;
+  std::string rtux_config_raw;
   bool parse_as_pbtxt = false;
   TraceConfig::StatsdMetadata statsd_metadata;
   limiter_.reset(new RateLimiter());
@@ -452,8 +454,11 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
     }
 
     if (option == 'x') {
-      config_options.rtux_file = std::string(optarg);
-      has_config_options = true;
+      rtux_file_name = std::string(optarg);
+      if (!base::ReadFile(rtux_file_name, &rtux_config_raw)) {
+        PERFETTO_PLOG("Could not open %s", rtux_file_name.c_str());
+        return 1;
+      }
       continue;
     }
 
@@ -721,6 +726,20 @@ std::optional<int> PerfettoCmd::ParseCmdlineAndMaybeDaemonize(int argc,
     PERFETTO_ELOG(
         "Only one of IncidentReportConfig and AndroidReportConfig "
         "allowed in the same config.");
+    return 1;
+  }
+
+  //Read RTUX events
+  bool rtux_parsed = false;
+  if (!rtux_config_raw.empty()) {
+      PERFETTO_ELOG("Given RTUX Events file is empty");
+      return 1;
+    }
+  rtux_parsed = CreateRtuxFromOptions(rtux_config_raw);
+  if (rtux_parsed) {
+    rtux_config_raw.clear();
+  } else {
+    PERFETTO_ELOG("The RTUX config is invalid, bailing out.");
     return 1;
   }
 

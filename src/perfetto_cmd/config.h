@@ -34,7 +34,7 @@ struct ConfigOptions {
   std::string buffer_size = "32mb";
   std::vector<std::string> atrace_apps;
   std::vector<std::string> categories;
-  std::string rtux_file;
+  std::vector<std::string> rtux_events;
 };
 
 bool CreateConfigFromOptions(const ConfigOptions& options,

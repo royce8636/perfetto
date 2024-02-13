@@ -17,6 +17,7 @@
 #include "src/perfetto_cmd/config.h"
 
 #include <stdlib.h>
+#include <sstream>
 
 #include "perfetto/base/logging.h"
 #include "perfetto/ext/base/string_utils.h"
@@ -188,6 +189,19 @@ bool CreateConfigFromOptions(const ConfigOptions& options,
   ps_config->set_name("linux.process_stats");
   ps_config->set_target_buffer(0);
 
+  return true;
+}
+
+bool CreateRtuxFromOptions(const std::string& rtuxConfigRaw) {
+  std::istringstream stream(rtuxConfigRaw);
+  std::string line;
+
+  while (std::getline(stream, line)){
+    std::size_t pos = line.find(": ");
+    if (pos != std::string::npos){
+      PERFETTO_DLOG("RTUX: %s", line.substr(pos + 2).c_str());
+    }
+  }
   return true;
 }
 
