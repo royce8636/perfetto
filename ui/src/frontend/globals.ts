@@ -67,6 +67,8 @@ const INSTANT_FOCUS_DURATION = 1n;
 const INCOMPLETE_SLICE_DURATION = 30_000n;
 
 type Dispatch = (action: DeferredAction) => void;
+// type Rtux_events = Array<{key: number, value: string}>;
+// type Rtux_events= (action: DeferredAction) => void;
 type TrackDataStore = Map<string, {}>;
 type QueryResultsStore = Map<string, {}|undefined>;
 type AggregateDataStore = Map<string, AggregateData>;
@@ -250,6 +252,7 @@ class Globals {
   private _dispatch?: Dispatch = undefined;
   private _store = createStore(createEmptyState());
   private _timeline?: Timeline = undefined;
+  // private _Rtux_events?: Array<{key: number, value: string}> = undefined;
   private _serviceWorkerController?: ServiceWorkerController = undefined;
   private _logging?: Analytics = undefined;
   private _isInternalUser: boolean|undefined = undefined;
@@ -372,6 +375,10 @@ class Globals {
   get dispatch(): Dispatch {
     return assertExists(this._dispatch);
   }
+
+  // get Rtux_events(): Rtux_events {
+  //   return assertExists(this._Rtux_events);
+  // }
 
   dispatchMultiple(actions: DeferredAction[]): void {
     const dispatch = this.dispatch;

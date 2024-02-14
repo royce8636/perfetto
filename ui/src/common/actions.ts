@@ -156,6 +156,29 @@ function removeTrack(state: StateDraft, trackKey: string) {
   state.pinnedTracks = state.pinnedTracks.filter((key) => key !== trackKey);
 }
 
+// function readRtuxFile(file: File): Promise<Array<{key: number, value: string}>> {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       // Convert the result to a string
+//       const str = reader.result as string;
+
+//       // Parse the string into a vector
+//       const lines = str.split('\n');
+//       const vector = lines.map(line => {
+//         const [key, value] = line.split(': ');
+//         return {key: parseFloat(key), value};
+//       });
+
+//       resolve(vector);
+//     };
+//     reader.onerror = () => {
+//       reject(reader.error);
+//     };
+//     reader.readAsText(file);
+//   });
+// }
+
 let statusTraceEvent: TraceEventScope|undefined;
 
 export const StateActions = {
@@ -169,6 +192,17 @@ export const StateActions = {
       source: {type: 'FILE', file: args.file},
     };
   },
+
+  // openRTUXFromFile(state: StateDraft, args: {file: File}): void {
+  //   // clearTraceState(state);
+  //   const id = generateNextId(state);
+  //   state.engine = {
+  //     id,
+  //     ready: false,
+  //     source: {type: 'RTUX_FILE', file: args.file},
+  //   };
+  //   readRtuxFile(args.file)
+  // },
 
   openTraceFromBuffer(state: StateDraft, args: PostedTrace): void {
     clearTraceState(state);

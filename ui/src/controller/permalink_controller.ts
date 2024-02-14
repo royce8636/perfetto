@@ -160,6 +160,9 @@ export class PermalinkController extends Controller<'main'> {
       if (engine.source.type === 'FILE') {
         dataToUpload = engine.source.file;
         traceName = dataToUpload.name;
+      } else if (engine.source.type === 'RTUX_FILE'){
+        dataToUpload = engine.source.file;
+        traceName = dataToUpload.name;
       } else if (engine.source.type === 'ARRAY_BUFFER') {
         dataToUpload = engine.source.buffer;
       } else if (engine.source.type !== 'URL') {

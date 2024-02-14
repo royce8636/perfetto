@@ -413,6 +413,9 @@ export class TraceController extends Controller<States> {
     let traceStream: TraceStream | undefined;
     if (engineCfg.source.type === 'FILE') {
       traceStream = new TraceFileStream(engineCfg.source.file);
+    } else if (engineCfg.source.type === 'RTUX_FILE') {
+      return engineMode;
+      // traceStream = new TraceFileStream(engineCfg.source.file);
     } else if (engineCfg.source.type === 'ARRAY_BUFFER') {
       traceStream = new TraceBufferStream(engineCfg.source.buffer);
     } else if (engineCfg.source.type === 'URL') {

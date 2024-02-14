@@ -33,6 +33,9 @@
   input[type="file"] {
     display: none;
   }
+  input[type="RTUXfile"] {
+    display: none;
+  }
   > header {
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 700;

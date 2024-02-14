@@ -202,6 +202,11 @@ export interface TraceFileSource {
   file: File;
 }
 
+export interface RTUXFileSource {
+  type: 'RTUX_FILE';
+  file: File;
+}
+
 export interface TraceArrayBufferSource {
   type: 'ARRAY_BUFFER';
   buffer: ArrayBuffer;
@@ -230,7 +235,7 @@ export interface TraceHttpRpcSource {
 }
 
 export type TraceSource =
-    TraceFileSource|TraceArrayBufferSource|TraceUrlSource|TraceHttpRpcSource;
+    TraceFileSource|TraceArrayBufferSource|TraceUrlSource|TraceHttpRpcSource|RTUXFileSource;
 
 export interface TrackState {
   uri: string;
