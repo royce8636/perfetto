@@ -422,6 +422,7 @@ function onInputElementFileSelectionChanged(e: Event) {
   if (e.target.dataset['rtux'] === '1') {
     globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
     // globals.Rtux_events(RTUX_common.openRtuxFromFile(file));
+    // const vector = RTUX_common.openRtuxFromFile(file);
     RTUX_common.openRtuxFromFile(file);
   }else {
     globals.logging.logEvent('Trace Actions', 'Open trace from file');
