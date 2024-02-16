@@ -60,6 +60,7 @@ AndroidProbesParser::AndroidProbesParser(TraceProcessorContext* context)
       batt_current_avg_id_(
           context->storage->InternString("batt.current.avg_ua")),
       batt_voltage_id_(context->storage->InternString("batt.voltage_uv")),
+      qtipm_usage_id_(context->storage->InternString("batt.qtipm_usage")),
       screen_state_id_(context->storage->InternString("ScreenState")),
       device_state_id_(context->storage->InternString("DeviceStateChanged")),
       battery_status_id_(context->storage->InternString("BatteryStatus")),
@@ -73,6 +74,7 @@ void AndroidProbesParser::ParseBatteryCounters(int64_t ts, ConstBytes blob) {
   StringId batt_current_id = batt_current_id_;
   StringId batt_current_avg_id = batt_current_avg_id_;
   StringId batt_voltage_id = batt_voltage_id_;
+  StringId qtipm_usage_id = qtipm_usage_id_;
   if (evt.has_name()) {
     std::string batt_name = evt.name().ToStdString();
     batt_charge_id = context_->storage->InternString(base::StringView(
@@ -85,6 +87,8 @@ void AndroidProbesParser::ParseBatteryCounters(int64_t ts, ConstBytes blob) {
         std::string("batt.").append(batt_name).append(".current.avg_ua")));
     batt_voltage_id = context_->storage->InternString(base::StringView(
         std::string("batt.").append(batt_name).append(".voltage_uv")));
+    qtipm_usage_id = context_->storage->InternString(base::StringView(
+        std::string("batt.").append(batt_name).append(".qtipm_usage")));
   }
   if (evt.has_charge_counter_uah()) {
     TrackId track = context_->track_tracker->InternGlobalCounterTrack(
@@ -126,6 +130,12 @@ void AndroidProbesParser::ParseBatteryCounters(int64_t ts, ConstBytes blob) {
         TrackTracker::Group::kPower, batt_voltage_id);
     context_->event_tracker->PushCounter(
         ts, static_cast<double>(evt.voltage_uv()), track);
+  }
+  if (evt.has_qtipm_usage()) {
+    TrackId track = context_->track_tracker->InternGlobalCounterTrack(
+        TrackTracker::Group::kPower, qtipm_usage_id);
+    context_->event_tracker->PushCounter(
+        ts, static_cast<double>(evt.qtipm_usage()), track);
   }
 }
 
@@ -262,7 +272,7 @@ void AndroidProbesParser::ParseAndroidLogPacket(ConstBytes blob) {
 }
 
 void AndroidProbesParser::ParseAndroidLogEvent(ConstBytes blob) {
-  // TODO(primiano): Add events and non-stringified fields to the "raw" table.
+  // TODO(primiano): Add events and non-sbtringified fields to the "raw" table.
   protos::pbzero::AndroidLogPacket::LogEvent::Decoder evt(blob.data, blob.size);
   int64_t ts = static_cast<int64_t>(evt.timestamp());
   uint32_t pid = static_cast<uint32_t>(evt.pid());

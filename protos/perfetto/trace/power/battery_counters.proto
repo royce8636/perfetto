@@ -43,4 +43,6 @@ message BatteryCounters {
 
   // Battery voltage in microvolts(µV).
   optional int64 voltage_uv = 7;
+
+  optional float qtipm_usage = 8;
 }

@@ -82,6 +82,7 @@ SELECT AndroidBatteryMetric(
         'capacity_percent', capacity_percent,
         'current_ua', current_ua,
         'current_avg_ua', current_avg_ua
+        'qtipm_usage', qtipm_usage
       )
     )
     FROM android_battery_charge

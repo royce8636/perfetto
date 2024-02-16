@@ -63,9 +63,9 @@ LEFT JOIN (
   WHERE name = 'batt.current_ua'
 ) USING(ts)
 LEFT JOIN(
-  SELECT ts, value AS QTIPM_IDK
+  SELECT ts, value AS qtipm_usage
   FROM counter c
   JOIN counter_track t ON c.track_id = t.id
-  WHERE name = 'QTIPM.IDK'
+  WHERE name = 'batt.qtipm_usage'
 ) USING(ts)
 ORDER BY ts;
