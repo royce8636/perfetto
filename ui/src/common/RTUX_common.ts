@@ -1,3 +1,5 @@
+import { pluginManager } from "./plugins";
+
 // Define a module-level variable to store the vector
 let globalVector: Array<{ key: number, value: string }> = [];
 
@@ -27,6 +29,7 @@ function readRtuxFile(file: File): Promise<Array<{ key: number, value: string }>
     });
 }
 
+
 // A new function to access the stored vector
 function getStoredVector(): Array<{ key: number, value: string }> {
     return globalVector;
@@ -48,6 +51,7 @@ export const RTUX_common = {
     readRtuxFile,
     openRtuxFromFile: async (file: File) => {
         await readRtuxFile(file);
+        await pluginManager.onRtuxLoad();
         // You might want to return something or process the vector further here
     },
     getStoredVector, // Allow access to the stored vector

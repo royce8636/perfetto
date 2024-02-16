@@ -411,6 +411,13 @@ export class PluginManager {
     await Promise.all(promises);
   }
 
+  async onRtuxLoad(): Promise<void> {
+    const rtuxPlugin = this.registry.get('com.rtux.demo');
+    const plugin = makePlugin(rtuxPlugin);
+    const context = new PluginContextImpl('com.rtux.demo');
+    plugin.onActivate(context);
+  }
+
   onTraceClose() {
     for (const pluginDetails of this.plugins.values()) {
       maybeDoPluginTraceUnload(pluginDetails);
