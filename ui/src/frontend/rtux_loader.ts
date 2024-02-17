@@ -1,4 +1,3 @@
-// import { pluginManager } from "./plugins";
 
 // Define a module-level variable to store the vector
 let globalVector: Array<{ key: number, value: string }> = [];
@@ -46,7 +45,7 @@ function getTimestamps(): ArrayLike<Time>{
 }
 
 // Optionally, adjust the structure to encapsulate the operations
-export const rtux_common = {
+export const rtux_loader = {
     readRtuxFile,
     openRtuxFromFile: async (file: File) => {
         await readRtuxFile(file);
