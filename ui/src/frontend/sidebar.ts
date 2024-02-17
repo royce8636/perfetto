@@ -48,6 +48,7 @@ import {
   convertTraceToSystraceAndDownload,
 } from './trace_converter';
 import {HttpRpcEngine} from '../trace_processor/http_rpc_engine';
+import {rtux_common} from '../common/rtux_common';
 
 const GITILES_URL =
     'https://android.googlesource.com/platform/external/perfetto';
@@ -420,7 +421,7 @@ function onInputElementFileSelectionChanged(e: Event) {
   }
   if (e.target.dataset['rtux'] === '1') {
     globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
-    // RTUX_common.openRtuxFromFile(file);
+    rtux_common.openRtuxFromFile(file);
   } else{
     globals.logging.logEvent('Trace Actions', 'Open trace from file');
     globals.dispatch(Actions.openTraceFromFile({file}));
