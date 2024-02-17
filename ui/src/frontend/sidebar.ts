@@ -137,6 +137,12 @@ const SECTIONS: Section[] = [
     expanded: true,
     items: [
       {t: 'Open trace file', a: popupFileSelectionDialog, i: 'folder_open'},
+
+      {t: 'Open RTUX event file',
+        a: popupFileSelectionDialogRTUX, 
+        i: 'folder_open'
+      },
+
       {
         t: 'Open with legacy UI',
         a: popupFileSelectionDialogOldUI,
@@ -296,6 +302,12 @@ function popupFileSelectionDialog(e: Event) {
   getFileElement().click();
 }
 
+function popupFileSelectionDialogRTUX(e: Event) {
+  e.preventDefault();
+  getFileElement().dataset['rtux'] = '1';
+  getFileElement().click();
+}
+
 function popupFileSelectionDialogOldUI(e: Event) {
   e.preventDefault();
   getFileElement().dataset['useCatapultLegacyUi'] = '1';
@@ -406,9 +418,13 @@ function onInputElementFileSelectionChanged(e: Event) {
     openWithLegacyUi(file);
     return;
   }
-
-  globals.logging.logEvent('Trace Actions', 'Open trace from file');
-  globals.dispatch(Actions.openTraceFromFile({file}));
+  if (e.target.dataset['rtux'] === '1') {
+    globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
+    // RTUX_common.openRtuxFromFile(file);
+  } else{
+    globals.logging.logEvent('Trace Actions', 'Open trace from file');
+    globals.dispatch(Actions.openTraceFromFile({file}));
+  }
 }
 
 async function openWithLegacyUi(file: File) {
