@@ -9,74 +9,107 @@ import {
 import { PanelSize } from 'src/frontend/panel';
 import {PrimaryTrackSortKey} from '../../public';
 import { rtux_loader } from '../../frontend/rtux_loader';
+import { TimelineFetcher } from 'src/common/track_helper';
+import {globals} from '../../frontend/globals';
+import {time, duration, Time} from '../../base/time';
+import {TrackData} from '../../common/track_data';
+import {checkerboardExcept} from '../../frontend/checkerboard';
 
-  const BAR_HEIGHT = 3;
-  const MARGIN_TOP = 4.5;
-  const RECT_HEIGHT = 30.5;
-  
-//   class RTUXTab implements Tab {
-//     render(): m.Children {
-//       return m('div', 'Hello from my tab');
-//     }
-  
-//     getTitle(): string {
-//       return 'RTUX Tab';
-//     }
-//   }
-  
-// async function loadRtuxCommon() {
-//     const module = await import('../../common/rtux_common');
-//     return module.rtux_common;
-//   }
+export interface Data extends TrackData {
+  timestamps: BigInt64Array;
+  names: string[];
+}
+
+const MARGIN = 2;
+const RECT_HEIGHT = 18;
+const TRACK_HEIGHT = (RECT_HEIGHT) + (2 * MARGIN);
+
+interface Grouped {
+  [key: string]: string[];
+}
 
 class RTUXTrack implements Track {
-    // private centerY = this.getHeight() / 2 + BAR_HEIGHT;
-    private markerWidth = (this.getHeight() - MARGIN_TOP - BAR_HEIGHT) / 2;
+
+  private fetcher = new TimelineFetcher(this.onBoundsChange.bind(this));
+
+  async onBoundsChange(start: time, end: time, resolution: duration): Promise<Data> {
+    // const excludeList = Array.from(globals.state.ftraceFilter.excludedNames);
+  
+    // Access the vector using the provided function
+    const inputVector = rtux_loader.getStoredVector();
+  
+    // Filter the vector based on start, end, and excluded names
+    const filteredVector = inputVector.filter(item =>
+      item.key >= start &&
+      item.key <= end
+      // !excludeList.includes(item.value)
+    );
+  
+    // Initialize grouped with the explicit type
+    const grouped: Grouped = {};
+
+    filteredVector.forEach(({ key, value }) => {
+      // Convert the key to a string for consistent object indexing
+      const tsQuantKey = ((key / resolution) * resolution).toString(); // Ensure arithmetic is valid for BigInt
+
+      if (!grouped[tsQuantKey]) {
+        grouped[tsQuantKey] = [];
+      }
+      grouped[tsQuantKey].push(value);
+    });
+
+    // Prepare the result object
+    // Convert keys back to BigInt for timestamps array
+    const timestamps = Object.keys(grouped).map(ts => BigInt(ts));
+    const names = Object.values(grouped).flat(); // Flattening names if multiple per tsQuant
+
+    const result: Data = {
+      start: start,
+      end: end,
+      resolution: resolution,
+      length: timestamps.length,
+      timestamps: new BigInt64Array(timestamps),
+      names,
+    };
+
+    return result;
+  }
+  
 
     getHeight() {
-        return MARGIN_TOP + RECT_HEIGHT - 1;
+        return TRACK_HEIGHT;
     }
-    render(ctx: CanvasRenderingContext2D, _size: PanelSize): void {
-        // const {
-        // visibleTimeScale: timeScale,
-        // } = globals.timeline;
-        const data = rtux_loader.getStoredVector();
+    render(ctx: CanvasRenderingContext2D, size: PanelSize): void {
+        const {
+          visibleTimeScale,
+        } = globals.timeline;
+
+        const data = this.fetcher.data;
+        
         if (data === undefined) return;
 
-        // const timestamps = rtux_common.getTimestamps();
-        // const tsStart = Math.min(...Array.from(timestamps));
-        // const selection = globals.state.currentSelection;
-        // const isHovered = false;
-        // const isSelected = selection !== null
-        // const strokeWidth = isSelected ? 3 : 0;
-        // this.drawMarker(
-        //     ctx,
-        //     tsStart,
-        //     this.centerY,
-        //     isHovered,
-        //     strokeWidth,
-        //     0);
+        const dataStartPx = visibleTimeScale.timeToPx(data.start);
+        const dataEndPx = visibleTimeScale.timeToPx(data.end);
 
-        // const callsiteId = 0;
-        // ctx.fillStyle = colorForSample(callsiteId, false);
-        ctx.fillRect(2, MARGIN_TOP, 2, BAR_HEIGHT);
-    }
-    drawMarker(
-        ctx: CanvasRenderingContext2D, x: number, y: number): void {
-        ctx.beginPath();
-        ctx.moveTo(x - this.markerWidth, y - this.markerWidth);
-        ctx.lineTo(x, y + this.markerWidth);
-        ctx.lineTo(x + this.markerWidth, y - this.markerWidth);
-        ctx.lineTo(x - this.markerWidth, y - this.markerWidth);
-        ctx.closePath();
-        // ctx.fillStyle = colorForSample(callsiteId, isHovered);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-        ctx.fill();
-        // if (strokeWidth > 0) {
-        //   ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
-        //   ctx.lineWidth = strokeWidth;
-        //   ctx.stroke();
+        checkerboardExcept(
+          ctx, this.getHeight(), 0, size.width, dataStartPx, dataEndPx);
+    
+        const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
+
+        for (let i = 0; i < data.timestamps.length; i++) {
+          // const name = data.names[i];
+          ctx.fillStyle = 'rgb(255, 0, 0)';
+          const timestamp = Time.fromRaw(data.timestamps[i]);
+          const xPos = Math.floor(visibleTimeScale.timeToPx(timestamp));
+    
+          // Draw a diamond over the event
+          ctx.save();
+          ctx.translate(xPos, MARGIN);
+          ctx.rotate(Math.PI / 4);
+          ctx.fillRect(0, 0, diamondSideLen, diamondSideLen);
+          ctx.restore();
         }
+    }
 }
   
   
