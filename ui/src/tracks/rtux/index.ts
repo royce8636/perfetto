@@ -1,5 +1,8 @@
+import m from 'mithril';
+
 import {
     // EngineProxy,
+    // Tab,
     Plugin,
     PluginContext,
     PluginContextTrace,
@@ -9,6 +12,7 @@ import {
 import { PanelSize } from 'src/frontend/panel';
 import {PrimaryTrackSortKey} from '../../public';
 import { rtux_loader } from '../../frontend/rtux_loader';
+import {LogPanel} from '../../frontend/logs_panel';
 
   const BAR_HEIGHT = 3;
   const MARGIN_TOP = 4.5;
@@ -86,26 +90,49 @@ class RTUXTrack implements Track {
       // async onActivate(ctx: PluginContextTrace): Promise<void> {
       async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
         ctx.registerTrack({
-            uri: 'com.rtux.track',
+            uri: 'dev.rtux.track',
             displayName: 'RTUX Events',
             trackFactory: () => new RTUXTrack(),
         });
         ctx.addDefaultTrack({
-            uri: 'com.rtux.track#RTUXTrack',
+            uri: 'dev.rtux.track#RTUXTrack',
             displayName: 'RTUX Events',
             sortKey: PrimaryTrackSortKey.ORDINARY_TRACK,
             // kind: CPU_PROFILE_TRACK_KIND,
             // utid,
             // trackFactory: () => new RTUXTrack(),
         });
-        // ctx.registerTab({
-        //   uri: 'com.rtux.track#RTUXTab',
-        //   content: new RTUXTab(),
-        // });
-      }
+    //     ctx.registerTab({
+    //       isEphemeral: false,
+    //       uri: 'com.rtux.track#RTUXTab',
+    //       content: new RTUXTab(),
+    //     });
+    //     ctx.registerCommand({
+    //         id:'dev.rtux.track#ShowRTUXTab',
+    //         name: 'Show RTUX Tab',
+    //         callback: () => {
+    //             ctx.tabs.showTab('dev.rtux.track#RTUXTab');
+    //         },
+    // });
+        ctx.registerTab({
+            isEphemeral: false,
+            uri: 'dev.rtux.track#RTUXTab',
+            content: {
+                render: () => m(LogPanel),
+                getTitle: () => 'RTUX Events',
+            },
+        });
+        ctx.registerCommand({
+            id: 'dev.rtux.track#ShowRTUXTab',
+            name: 'Show RTUX Tab',
+            callback: () => {
+                ctx.tabs.showTab('dev.rtux.track#RTUXTab');
+            },
+        });
     }
+}
   
     export const plugin: PluginDescriptor = {
-      pluginId: 'com.rtux.track',
+      pluginId: 'dev.rtux.track',
       plugin: RTUX,
     };
