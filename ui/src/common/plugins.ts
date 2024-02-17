@@ -510,6 +510,13 @@ export class PluginManager {
     }
   }
 
+  async onRtuxLoad(engine: Engine): Promise<void> {
+    const plugins = Array.from(this._plugins.entries());
+    for (const [id, pluginDetails] of plugins) {
+      await doPluginRtuxLoad(pluginDetails, engine, id);
+    }
+    }
+
   onTraceClose() {
     for (const pluginDetails of this._plugins.values()) {
       doPluginTraceUnload(pluginDetails);
@@ -547,6 +554,22 @@ async function doPluginTraceLoad(
 
   raf.scheduleFullRedraw();
 
+  return result;
+}
+
+async function doPluginRtuxLoad(
+  pluginDetails: PluginDetails, 
+  engine: Engine,
+  pluginId: string): Promise<void> {
+  const {plugin, context} = pluginDetails;
+  const engineProxy = engine.getProxy(pluginId);
+  const traceCtx = new PluginContextTraceImpl(context, engineProxy);
+  pluginDetails.traceContext = traceCtx;
+  const startTime = performance.now();
+  const result = await Promise.resolve(plugin.onRtuxLoad?.(traceCtx));
+  const loadTime = performance.now() - startTime;
+  pluginDetails.previousOnTraceLoadTimeMillis = loadTime;
+  raf.scheduleFullRedraw();
   return result;
 }
 

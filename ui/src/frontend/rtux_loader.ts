@@ -57,6 +57,7 @@
 //     getTimestamps,
 // };
 
+// import { parse } from 'path';
 import {Time, time} from '../base/time';
 // Define a module-level variable to store the vector
 let globalVector: Array<{ key: time, value: string }> = [];
@@ -74,7 +75,9 @@ function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> 
             const vector = lines.map(line => {
                 const [key, value] = line.split(': ');
                 // return { key: base64Encode(key), value };
-                return { key: Time.fromSeconds(parseFloat(key)), value };
+                // return { key: Time.fromSeconds(parseFloat(key)), value };
+                const rawkey = BigInt(Math.floor(parseFloat(key) * 1e9));
+                return { key: Time.fromRaw(rawkey), value };
             });
 
             // Store the vector in the global variable
@@ -99,6 +102,7 @@ export const rtux_loader = {
     openRtuxFromFile: async (file: File) => {
         await readRtuxFile(file);
         // await pluginManager.onRtuxLoad();
+        // You might want to return something or process the vector further here
     },
     getStoredVector, // Allow access to the stored vector
 };
