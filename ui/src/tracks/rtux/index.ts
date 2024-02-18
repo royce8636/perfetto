@@ -139,9 +139,6 @@ class RTUXTrack implements Track {
             uri: 'dev.rtux.track#RTUXTrack',
             displayName: 'RTUX Events',
             sortKey: PrimaryTrackSortKey.ORDINARY_TRACK,
-            // kind: CPU_PROFILE_TRACK_KIND,
-            // utid,
-            // trackFactory: () => new RTUXTrack(),
         });
         // ctx.registerTab({
         //   uri: 'com.rtux.track#RTUXTab',
