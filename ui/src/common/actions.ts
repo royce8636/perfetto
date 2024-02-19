@@ -648,6 +648,17 @@ export const StateActions = {
     state.pendingScrollId = args.scroll ? args.id : undefined;
   },
 
+  selectRTUX(
+    state: StateDraft,
+    args: {id: number, trackKey: string, scroll?: boolean}): void {
+    state.currentSelection = {
+      kind: 'RTUX',
+      id: args.id,
+      trackKey: args.trackKey,
+    };
+    state.pendingScrollId = args.scroll ? args.id : undefined;
+  },
+
   selectCounter(
     state: StateDraft,
     args: {leftTs: time, rightTs: time, id: number, trackKey: string}): void {
@@ -824,6 +835,10 @@ export const StateActions = {
 
   updateFtracePagination(state: StateDraft, args: Pagination): void {
     state.ftracePagination = args;
+  },
+
+  updateRtuxPagination(state: StateDraft, args: Pagination): void {
+    state.rtuxPagination = args;
   },
 
   updateFtraceFilter(state: StateDraft, patch: FtraceFilterPatch) {

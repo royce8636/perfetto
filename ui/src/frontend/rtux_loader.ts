@@ -1,4 +1,13 @@
 import {Time, time} from '../base/time';
+// const fs = require('fs').promises;
+// const path = require('path');
+// const os = require('os');
+// import fs from 'fs/promises';
+// import * as fs from 'fs/promises';
+import {promises as fs} from 'fs';
+import path from 'path';
+// import os from 'os';
+
 // import { Logger } from 'sass';
 // Define a module-level variable to store the vector
 import {
@@ -8,6 +17,8 @@ import {
 } from './globals';
 import { publishRtuxCounters, publishRtuxPanelData } from './publish';
 let globalVector: Array<{ key: time, value: string }> = [];
+//define global log_directory
+let log_directory: string = "";
 
 function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
     return new Promise((resolve, reject) => {
@@ -19,22 +30,23 @@ function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> 
             // const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
             // Parse the string into a vector
             const lines = str.split('\n');
+
+            log_directory = lines.shift() || ""; // Removes and returns the first element of the array, which is the log directory
+
             const vector = lines.map(line => {
                 const [key, value] = line.split(': ');
-                // return { key: base64Encode(key), value };
-                // return { key: Time.fromSeconds(parseFloat(key)), value };
-                // const rawkey = BigInt(Math.floor(parseFloat(key) * 1e9));
                 try{
                     const rawkey = BigInt(Math.floor(parseFloat(key) * 1e9));
                     return { key: Time.fromRaw(rawkey), value };
                 }
                 catch(e){
                     console.log(e);
-                    const rawkey = BigInt(0);
-                    return { key: Time.fromRaw(rawkey), value };
+                    return { key: Time.INVALID, value };
+
                 }
-                // return { key: Time.fromRaw(rawkey), value };
-            });
+            }).filter(item => {
+                return !(item.key === Time.INVALID)
+            })
             const counters: FtraceStat[] = [];
             let cnt = 0;
             for (const line of lines) {
@@ -66,6 +78,49 @@ function getStoredVector(): Array<{ key: time, value: string }> {
     return globalVector;
 }
 
+// function resolveHome(filepath: string) {
+//     if (filepath[0] === '~') {
+//         return path.join(os.homedir(), filepath.slice(1));
+//     }
+//     return filepath;
+// }
+
+// function resolveHome(filepath: string) {
+//     if (filepath[0] === '~') {
+//         return process.env.HOME + filepath.slice(1);
+//     }
+//     return filepath;
+// }
+
+
+type DetectedFile = {
+    path: string;
+    number: number;
+};
+async function getSortedFilePaths(): Promise<string[]> {
+    const directory = log_directory;
+    try {
+        const img_files = await fs.readdir(directory);
+        const detectedFiles: string[] = img_files
+            .filter((img_file: string) => img_file.startsWith('detected_') && img_file.endsWith('.png'))
+            .map((img_file: string): DetectedFile => {
+                const match = img_file.match(/detected_(\d+)\.png/);
+                const numberPart = match ? match[1] : '0'; // Fallback to '0' if match is null
+                return {
+                    path: path.join(directory, img_file),
+                    number: parseInt(numberPart, 10),
+                };
+            })
+            .sort((a: DetectedFile, b: DetectedFile) => a.number - b.number)
+            .map((file: DetectedFile) => file.path);
+
+        return detectedFiles;
+    } catch (error) {
+        console.error('Error reading directory:', error);
+        return [];
+    }
+}
+
 // async function loadRtux(): Promise<void> {
 //     let     
 // }
@@ -79,6 +134,7 @@ export const rtux_loader = {
         // You might want to return something or process the vector further here
     },
     getStoredVector, // Allow access to the stored vector
+    getSortedFilePaths,
 };
 
 // import {Controller} from '../controller/controller';

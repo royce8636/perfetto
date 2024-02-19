@@ -52,7 +52,7 @@ export class RTUXPanel implements m.ClassComponent {
     this.pageCount = Math.ceil(visibleRowCount / PAGE_SIZE) + 2;
 
     if (this.page !== prevPage || this.pageCount !== prevPageCount) {
-      globals.dispatch(Actions.updateFtracePagination({
+      globals.dispatch(Actions.updateRtuxPagination({
         offset: Math.max(0, this.page) * PAGE_SIZE,
         count: this.pageCount * PAGE_SIZE,
       }));
@@ -60,7 +60,7 @@ export class RTUXPanel implements m.ClassComponent {
   }
 
   onremove(_: m.CVnodeDOM) {
-    globals.dispatch(Actions.updateFtracePagination({
+    globals.dispatch(Actions.updateRtuxPagination({
       offset: 0,
       count: 0,
     }));
@@ -79,8 +79,8 @@ export class RTUXPanel implements m.ClassComponent {
   }
 
   private renderTitle() {
-    if (globals.ftracePanelData) {
-      const {numEvents} = globals.ftracePanelData;
+    if (globals.rtuxPanelData) {
+      const {numEvents} = globals.rtuxPanelData;
       return `RTUX Events (${numEvents})`;
     } else {
       return 'RTUX Rows';

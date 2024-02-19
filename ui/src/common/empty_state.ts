@@ -133,6 +133,11 @@ export function createEmptyState(): State {
       count: 0,
     },
 
+    rtuxPagination: {
+      offset: 0,
+      count: 0,
+    },
+
     ftraceFilter: {
       excludedNames: [],
     },

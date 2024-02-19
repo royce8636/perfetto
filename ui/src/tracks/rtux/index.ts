@@ -15,7 +15,12 @@ import {time, duration, Time} from '../../base/time';
 import {TrackData} from '../../common/track_data';
 import {checkerboardExcept_debug} from '../../frontend/checkerboard';
 import {RTUXPanel} from '../../frontend/rtux_panel';
+import { RTUXDetailsTab} from '../../frontend/rtux_detail_panel';
+import {Actions} from '../../common/actions';
+// import {search} from '../../base/binary_search';
+import { drawTrackHoverTooltip } from '../../common/canvas_utils';
 // import {checkerboardExcept} from '../../frontend/checkerboard';
+
 
 export interface Data extends TrackData {
   timestamps: BigInt64Array;
@@ -31,6 +36,13 @@ interface Grouped {
 }
 
 class RTUXTrack implements Track {
+  // private trackKey: string;
+
+  // constructor(trackKey: string) {
+    // this.trackKey = trackKey;
+  // }
+
+  private mousePos? = {x: 0, y: 0};
 
   private fetcher = new TimelineFetcher(this.onBoundsChange.bind(this));
 
@@ -84,7 +96,6 @@ class RTUXTrack implements Track {
 
     return result;
   }
-  
 
     getHeight() {
         return TRACK_HEIGHT;
@@ -120,45 +131,54 @@ class RTUXTrack implements Track {
           ctx.rotate(Math.PI / 4);
           ctx.fillRect(0, 0, diamondSideLen, diamondSideLen);
           ctx.restore();
+
+          if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2){
+            drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), data.names[i]);
+          }
+
         }
+
+    }
+
+      
+    onMouseMove(pos: { x: number; y: number; }): void {
+      this.mousePos = pos;
+    }
+
+    onMouseOut(){
+      this.mousePos = undefined;
+    }
+
+
+    // onMouseClick({x}: { x: number;}) {
+    onMouseClick({x}: { x: number; y: number; }): boolean {
+      const data = this.fetcher.data;
+      if (data === undefined) return false;
+
+      // const time = visibleTimeScale.pxToHpTime(x);
+      // const index = search(data.timestamps, time.toTime());
+      // const id = index === -1 ? undefined : 0;
+      // if (!id) return false;
+      // globals.makeSelection(Actions.showTab({uri: 'dev.rtux.track#RTUXDetailTab'}))
+      // globals.makeSelection(Actions.selectRTUX({id, trackKey: this.trackKey}));
+      const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
+      const {visibleTimeScale} = globals.timeline;
+
+      for (let i = 0; i < data.timestamps.length; i++) {
+        const timestamp = Time.fromRaw(data.timestamps[i]);
+        const xPos = Math.floor(visibleTimeScale.timeToPx(timestamp));
+        if (x !== undefined && xPos - diamondSideLen / 2 < x && x < xPos + diamondSideLen / 2){
+          Actions.showTab({uri: 'dev.rtux.track#RTUXDetailTab'});
+          // globals.makeSelection(Actions.selectRTUX({id: 0}));
+          return true;
+        }
+      }
+      return false;
     }
 }
   
   
 class RTUX implements Plugin {
-  // onActivate(_ctx: PluginContext): void {}
-  
-  // async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
-  //     ctx.registerTrack({
-  //         uri: 'dev.rtux.track',
-  //         displayName: 'RTUX Events',
-  //         trackFactory: () => new RTUXTrack(),
-  //     });
-  //     ctx.addDefaultTrack({
-  //         uri: 'dev.rtux.track#RTUXTrack',
-  //         displayName: 'RTUX Events',
-  //         sortKey: PrimaryTrackSortKey.ORDINARY_TRACK,
-  //         // kind: CPU_PROFILE_TRACK_KIND,
-  //         // utid,
-  //         // trackFactory: () => new RTUXTrack(),
-  //     });
-  //     // ctx.registerTab({
-  //     //   uri: 'com.rtux.track#RTUXTab',
-  //     //   content: new RTUXTab(),
-  //     // });
-  //   }
-  // onActivate(ctx: PluginContextTrace): void {
-  //   ctx.registerCommand({
-  //     id: 'dev.rtux.track.AddRTUXTrackCommand',
-  //     name: 'Add RTUX track',
-  //     callback: () => {
-  //       ctx.timeline.addTrack(
-  //         'dev.rtux.track#RTUXTrack',
-  //         'RTUX Events',
-  //       );
-  //     },
-  //    });
-  //   }
   onActivate(_ctx: PluginContext): void {}
   
   async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
@@ -166,8 +186,20 @@ class RTUX implements Plugin {
       uri: 'dev.rtux.track#RTUXTrack',
       displayName: 'RTUX Events',
       kind: 'TRACK_KIND',
+      // trackFactory: ({trackKey}) => {
+      //   return new RTUXTrack(trackKey);
+      // },
       trackFactory: () => new RTUXTrack(),
     });
+
+    // ctx.registerDetailsPanel({
+    //   render: (sel) => {
+    //     if (sel.kind === 'RTUX') {
+    //       return m(RtuxDetailpanel);
+    //     }
+    //   },
+    // });
+
     ctx.registerCommand({
       id: 'dev.rtux.track.AddRTUXTrackCommand',
       name: 'Add RTUX track',
@@ -178,6 +210,7 @@ class RTUX implements Plugin {
         );
       },
     });
+
     const rtuxTabUri = 'dev.rtux.track#RTUXTab';
     ctx.registerTab({
       uri: rtuxTabUri,
@@ -188,6 +221,17 @@ class RTUX implements Plugin {
       },
     });
     ctx.addDefaultTab(rtuxTabUri);
+
+    const rtuxDetailTabUri = 'dev.rtux.track#RTUXDetailTab';
+    ctx.registerTab({
+      uri: rtuxDetailTabUri,
+      isEphemeral: true,
+      content: {
+        render: () => m(RTUXDetailsTab),
+        getTitle: () => 'RTUX Details Tab',
+      },
+    });
+    ctx.addDefaultTab(rtuxDetailTabUri);
   }
 }
   
