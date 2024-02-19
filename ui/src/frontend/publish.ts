@@ -36,6 +36,7 @@ import {
   FtraceStat,
   globals,
   QuantizedLoad,
+  RtuxPanelData,
   SliceDetails,
   ThreadDesc,
   ThreadStateDetails,
@@ -105,6 +106,11 @@ export function publishCpuProfileDetails(details: CpuProfileDetails) {
 
 export function publishFtraceCounters(counters: FtraceStat[]) {
   globals.ftraceCounters = counters;
+  globals.publishRedraw();
+}
+
+export function publishRtuxCounters(counters: FtraceStat[]) {
+  globals.rtuxCounters = counters;
   globals.publishRedraw();
 }
 
@@ -222,6 +228,11 @@ export function publishConnectedFlows(connectedFlows: Flow[]) {
 
 export function publishFtracePanelData(data: FtracePanelData) {
   globals.ftracePanelData = data;
+  globals.publishRedraw();
+}
+
+export function publishRtuxPanelData(data: RtuxPanelData) {
+  globals.rtuxPanelData = data;
   globals.publishRedraw();
 }
 

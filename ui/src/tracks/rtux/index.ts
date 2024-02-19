@@ -7,13 +7,14 @@ import {
     Track,
   } from '../../public';
 import { PanelSize } from 'src/frontend/panel';
-import {PrimaryTrackSortKey} from '../../public';
+// import {PrimaryTrackSortKey} from '../../public';
 import { rtux_loader } from '../../frontend/rtux_loader';
 import { TimelineFetcher } from '../../common/track_helper';
 import {globals} from '../../frontend/globals';
 import {time, duration, Time} from '../../base/time';
 import {TrackData} from '../../common/track_data';
 import {checkerboardExcept_debug} from '../../frontend/checkerboard';
+import {RTUXPanel} from '../../frontend/rtux_panel';
 // import {checkerboardExcept} from '../../frontend/checkerboard';
 
 export interface Data extends TrackData {
@@ -124,33 +125,73 @@ class RTUXTrack implements Track {
 }
   
   
-  class RTUX implements Plugin {
-      onActivate(_ctx: PluginContext): void {}
-    
-      // async onActivate(ctx: PluginContextTrace): Promise<void> {
-    //   async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
-    async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
-        ctx.registerTrack({
-            uri: 'dev.rtux.track',
-            displayName: 'RTUX Events',
-            trackFactory: () => new RTUXTrack(),
-        });
-        ctx.addDefaultTrack({
-            uri: 'dev.rtux.track#RTUXTrack',
-            displayName: 'RTUX Events',
-            sortKey: PrimaryTrackSortKey.ORDINARY_TRACK,
-            // kind: CPU_PROFILE_TRACK_KIND,
-            // utid,
-            // trackFactory: () => new RTUXTrack(),
-        });
-        // ctx.registerTab({
-        //   uri: 'com.rtux.track#RTUXTab',
-        //   content: new RTUXTab(),
-        // });
-      }
-    }
+class RTUX implements Plugin {
+  // onActivate(_ctx: PluginContext): void {}
   
-    export const plugin: PluginDescriptor = {
-      pluginId: 'dev.rtux.track',
-      plugin: RTUX,
-    };
+  // async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
+  //     ctx.registerTrack({
+  //         uri: 'dev.rtux.track',
+  //         displayName: 'RTUX Events',
+  //         trackFactory: () => new RTUXTrack(),
+  //     });
+  //     ctx.addDefaultTrack({
+  //         uri: 'dev.rtux.track#RTUXTrack',
+  //         displayName: 'RTUX Events',
+  //         sortKey: PrimaryTrackSortKey.ORDINARY_TRACK,
+  //         // kind: CPU_PROFILE_TRACK_KIND,
+  //         // utid,
+  //         // trackFactory: () => new RTUXTrack(),
+  //     });
+  //     // ctx.registerTab({
+  //     //   uri: 'com.rtux.track#RTUXTab',
+  //     //   content: new RTUXTab(),
+  //     // });
+  //   }
+  // onActivate(ctx: PluginContextTrace): void {
+  //   ctx.registerCommand({
+  //     id: 'dev.rtux.track.AddRTUXTrackCommand',
+  //     name: 'Add RTUX track',
+  //     callback: () => {
+  //       ctx.timeline.addTrack(
+  //         'dev.rtux.track#RTUXTrack',
+  //         'RTUX Events',
+  //       );
+  //     },
+  //    });
+  //   }
+  onActivate(_ctx: PluginContext): void {}
+  
+  async onTraceLoad(ctx: PluginContextTrace): Promise<void> {
+    ctx.registerTrack({
+      uri: 'dev.rtux.track#RTUXTrack',
+      displayName: 'RTUX Events',
+      kind: 'TRACK_KIND',
+      trackFactory: () => new RTUXTrack(),
+    });
+    ctx.registerCommand({
+      id: 'dev.rtux.track.AddRTUXTrackCommand',
+      name: 'Add RTUX track',
+      callback: () => {
+        ctx.timeline.addTrack(
+          'dev.rtux.track#RTUXTrack',
+          'RTUX Events',
+        );
+      },
+    });
+    const rtuxTabUri = 'dev.rtux.track#RTUXTab';
+    ctx.registerTab({
+      uri: rtuxTabUri,
+      isEphemeral: true,
+      content: {
+        render: () => m(RTUXPanel),
+        getTitle: () => 'RTUX Events',
+      },
+    });
+    ctx.addDefaultTab(rtuxTabUri);
+  }
+}
+  
+export const plugin: PluginDescriptor = {
+  pluginId: 'dev.rtux.track',
+  plugin: RTUX,
+};
