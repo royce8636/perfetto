@@ -313,6 +313,11 @@ export interface SliceSelection {
   id: number;
 }
 
+export interface RtuxSelection {
+  kind: 'RTUX';
+  id: number;
+}
+
 export interface CounterSelection {
   kind: 'COUNTER';
   leftTs: time;
@@ -383,7 +388,7 @@ export interface GenericSliceSelection {
 }
 
 export type Selection =
-    (NoteSelection|SliceSelection|CounterSelection|HeapProfileSelection|
+    (NoteSelection|SliceSelection|RtuxSelection|CounterSelection|HeapProfileSelection|
      CpuProfileSampleSelection|ChromeSliceSelection|ThreadStateSelection|
      AreaSelection|PerfSamplesSelection|LogSelection|GenericSliceSelection)&
     {trackKey?: string};
@@ -564,6 +569,7 @@ export interface State {
   currentFlamegraphState: FlamegraphState|null;
   logsPagination: Pagination;
   ftracePagination: Pagination;
+  rtuxPagination: Pagination;
   ftraceFilter: FtraceFilterState;
   traceConversionInProgress: boolean;
 
