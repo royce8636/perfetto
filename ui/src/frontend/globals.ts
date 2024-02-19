@@ -209,6 +209,17 @@ export interface FtracePanelData {
   numEvents: number;  // Number of events in the visible window
 }
 
+export interface RtuxEvent{
+  ts: time;
+  event: string;
+}
+
+export interface RtuxPanelData {
+  events: RtuxEvent[];
+  offset: number;
+  numEvents: number;  // Number of events in the visible window
+}
+
 export interface FtraceStat {
   name: string;
   count: number;
@@ -279,7 +290,9 @@ class Globals {
   private _embeddedMode?: boolean = undefined;
   private _hideSidebar?: boolean = undefined;
   private _ftraceCounters?: FtraceStat[] = undefined;
+  private _rtuxCounters?: FtraceStat[] = undefined;
   private _ftracePanelData?: FtracePanelData = undefined;
+  private _rtuxPanelData?: RtuxPanelData = undefined;
   private _cmdManager = new CommandManager();
   private _realtimeOffset = Time.ZERO;
   private _utcOffset = Time.ZERO;
@@ -537,6 +550,18 @@ class Globals {
     this._ftraceCounters = value;
   }
 
+  get hasRtux(): boolean {
+    return Boolean(this._rtuxCounters && this._rtuxCounters.length > 0);
+  }
+
+  get rtuxCounters(): FtraceStat[]|undefined {
+    return this._rtuxCounters;
+  }
+
+  set rtuxCounters(value: FtraceStat[]|undefined) {
+    this._rtuxCounters = value;
+  }
+
   getConversionJobStatus(name: ConversionJobName): ConversionJobStatus {
     return this.getJobStatusMap().get(name) || ConversionJobStatus.NotRunning;
   }
@@ -622,6 +647,14 @@ class Globals {
 
   set ftracePanelData(data: FtracePanelData|undefined) {
     this._ftracePanelData = data;
+  }
+
+  get rtuxPanelData(): RtuxPanelData|undefined {
+    return this._rtuxPanelData;
+  }
+
+  set rtuxPanelData(data: RtuxPanelData|undefined) {
+    this._rtuxPanelData = data;
   }
 
   makeSelection(action: DeferredAction<{}>, opts: MakeSelectionOpts = {}) {
