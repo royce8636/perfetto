@@ -20,6 +20,7 @@ let photoInfo: Array < [time, Array<{ image_path: string; time: any }> ]> = [];
 //define global log_directory
 let log_directory: string = "";
 // let photo_directory: string = "";
+let imageToDiplay: string = "";
 
 function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
     return new Promise((resolve, reject) => {
@@ -234,6 +235,14 @@ function getPhotoInfo(): Array<[time, Array<{ image_path: string; time: any }> ]
     return photoInfo;
 }
 
+function getImageToDisplay(): string {
+    return imageToDiplay;
+}
+
+function setImageToDisplay(images: string): void {
+    imageToDiplay = images;
+}
+
 // Optionally, adjust the structure to encapsulate the operations
 export const rtux_loader = {
     readRtuxFile,
@@ -246,6 +255,8 @@ export const rtux_loader = {
     getSortedFilePaths,
     readJsonRtuxFile,
     getPhotoInfo,
+    getImageToDisplay,
+    setImageToDisplay,
     openJsonRtuxFromFile: async (file: File) => {
         await readJsonRtuxFile(file);
     },
