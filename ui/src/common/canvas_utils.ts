@@ -15,6 +15,7 @@
 import {isString} from '../base/object_utils';
 import {globals} from '../frontend/globals';
 import {Time, time} from '../base/time';
+import { rtux_loader } from 'src/frontend/rtux_loader';
 // import { HighPrecisionTime } from './high_precision_time';
 // import {visbleTimeScale} from '../frontend/time_scale';
 
@@ -307,65 +308,63 @@ export function drawRtuxHoverScreen(
     // return photo_info.find(info => info.time === time);
   };
 
-  // Function to draw the text and possibly an image
-  // const drawContent = (imgHeight: number, image: HTMLImageElement, imageWidth: number, text: string) => {
-  const drawContent = (imgHeight: number, image: HTMLImageElement, imageWidth: number) => {
-    ctx.font = '10px Roboto Condensed';
-    ctx.textBaseline = 'middle';
-    ctx.textAlign = 'left';
+  // const drawContent = (imgHeight: number, image: HTMLImageElement, imageWidth: number) => {
+  //   ctx.font = '10px Roboto Condensed';
+  //   ctx.textBaseline = 'middle';
+  //   ctx.textAlign = 'left';
   
-    const paddingPx = 4;
-    const width = 150; // Set a fixed width for the tooltip
-    // Adjust height to include image if present
-    let height = imgHeight;
-    if (imgHeight > 0) {
-      height += paddingPx; // Add some padding between the image and the text
-    }
-    // const textMetrics = ctx.measureText(text);
-    // Adjust for text height
-    // height += textMetrics.fontBoundingBoxAscent;
-    // height += textMetrics.fontBoundingBoxDescent;
-    // height += paddingPx * 2;
+  //   const paddingPx = 4;
+  //   const width = 150; // Set a fixed width for the tooltip
+  //   // Adjust height to include image if present
+  //   let height = imgHeight;
+  //   if (imgHeight > 0) {
+  //     height += paddingPx; // Add some padding between the image and the text
+  //   }
+  //   // const textMetrics = ctx.measureText(text);
+  //   // Adjust for text height
+  //   // height += textMetrics.fontBoundingBoxAscent;
+  //   // height += textMetrics.fontBoundingBoxDescent;
+  //   // height += paddingPx * 2;
 
-    let x = pos.x;
-    let y = pos.y;
+  //   let x = pos.x;
+  //   let y = pos.y;
 
-    x += 10;
-    y -= 10 + imgHeight; // Adjust starting point based on image height
+  //   x += 10;
+  //   y -= 10 + imgHeight; // Adjust starting point based on image height
 
-    const endPx = globals.timeline.visibleTimeScale.pxSpan.end;
-    if (x + width > endPx) {
-      x -= x + width - endPx;
-    }
-    // if (y < 0) {
-    //   y = 0;
-    // }
-    // if (y + height > maxHeight) {
-    //   y -= y + height - maxHeight;
-    // }
-    y = 100;
-    x = 100;
+  //   const endPx = globals.timeline.visibleTimeScale.pxSpan.end;
+  //   if (x + width > endPx) {
+  //     x -= x + width - endPx;
+  //   }
+  //   // if (y < 0) {
+  //   //   y = 0;
+  //   // }
+  //   // if (y + height > maxHeight) {
+  //   //   y -= y + height - maxHeight;
+  //   // }
+  //   y = 100;
+  //   x = 100;
 
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.9)';             
-    ctx.fillRect(x, y, 50, 50);
+  //   ctx.fillStyle = 'rgba(255, 0, 0, 0.9)';             
+  //   ctx.fillRect(x, y, 50, 50);
 
-    // if (imgHeight > 0) {
-    //   ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
-    // }
-    // else{
-    //   drawTrackHoverTooltip(ctx, pos, maxHeight, "imgHeight < 0");
-    // }
-    ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
-    console.log("drawContent: ", imgHeight, imageWidth, x, y);
+  //   // if (imgHeight > 0) {
+  //   //   ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
+  //   // }
+  //   // else{
+  //   //   drawTrackHoverTooltip(ctx, pos, maxHeight, "imgHeight < 0");
+  //   // }
+  //   ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
+  //   console.log("drawContent: ", imgHeight, imageWidth, x, y);
 
-    // Draw the text
-    // ctx.fillStyle = 'hsl(200, 50%, 40%)';
-    // ctx.fillText(
-    //   text,
-    //   x + paddingPx,
-    //   y + paddingPx + imgHeight + textMetrics.fontBoundingBoxAscent
-    // );
-  };
+  //   // Draw the text
+  //   // ctx.fillStyle = 'hsl(200, 50%, 40%)';
+  //   // ctx.fillText(
+  //   //   text,
+  //   //   x + paddingPx,
+  //   //   y + paddingPx + imgHeight + textMetrics.fontBoundingBoxAscent
+  //   // );
+  // };
 
   // Find the image info corresponding to the given time
   // const timeToFind = new Time(/* provide the time value here */); // You need to provide the time to find
@@ -380,14 +379,15 @@ export function drawRtuxHoverScreen(
   if (imageInfo) {
     let { image_path } = imageInfo;
     image_path = `${globals.root}assets${image_path}`;
+    rtux_loader.setImageToDisplay(image_path);
     // const { image_path } = `${imageInfo}`;
     // drawTrackHoverTooltip(ctx, pos, maxHeight, imageInfo.image_path, imageInfo.time.toString());
     // Load the image
     const image = new Image();
     image.onload = () => {
-      const imageWidth = 100; // Set this to your desired width
-      const imgHeight = (image.height / image.width) * imageWidth; // Calculate height to maintain aspect ratio
-      drawContent(imgHeight, image, imageWidth);
+      // const imageWidth = 100; // Set this to your desired width
+      // const imgHeight = (image.height / image.width) * imageWidth; // Calculate height to maintain aspect ratio
+      // drawContent(imgHeight, image, imageWidth);
       // drawTrackHoverTooltip(ctx, pos, maxHeight, image.height.toString(), image.width.toString());
     };
     // drawTrackHoverTooltip(ctx, pos, maxHeight, imageInfo.image_path, imageInfo.time.toString());

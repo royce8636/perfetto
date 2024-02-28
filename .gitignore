@@ -21,6 +21,7 @@
 *.sock
 *.swp
 *.png
+*.jpg
 /bazel-*
 /compile_commands.json
 /fuzz_out/

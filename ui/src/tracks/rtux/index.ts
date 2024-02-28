@@ -244,7 +244,7 @@ class RTUX implements Plugin {
         getTitle: () => 'RTUX Details Tab',
       },
     });
-    // ctx.addDefaultTab(rtuxDetailTabUri);
+    ctx.addDefaultTab(rtuxDetailTabUri);
   }
 }
   
