@@ -1,14 +1,8 @@
 import {Time, time} from '../base/time';
-// const fs = require('fs').promises;
-// const path = require('path');
-// const os = require('os');
-// import fs from 'fs/promises';
-// import * as fs from 'fs/promises';
 import {promises as fs} from 'fs';
 import path from 'path';
 // import os from 'os';
 
-// import { Logger } from 'sass';
 // Define a module-level variable to store the vector
 import {
     // globals,
@@ -16,9 +10,16 @@ import {
     RtuxEvent,
 } from './globals';
 import { publishRtuxCounters, publishRtuxPanelData } from './publish';
+// import {HighPrecisionTime } from '../common/high_precision_time';
+
 let globalVector: Array<{ key: time, value: string }> = [];
+// let photoInfo: Array<{image_path: string, time: HighPrecisionTime}> = [];
+// let photoInfo: Array<{image_path: string, time: time}> = [];
+let photoInfo: Array < [time, Array<{ image_path: string; time: any }> ]> = [];
+// let globalVector: Array<{ key: string, value: time }> = [];
 //define global log_directory
 let log_directory: string = "";
+// let photo_directory: string = "";
 
 function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
     return new Promise((resolve, reject) => {
@@ -26,8 +27,6 @@ function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> 
         reader.onload = () => {
             // Convert the result to a string
             const str = reader.result as string;
-            // const configProtoBase64 = base64Encode(configProto);
-            // const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
             // Parse the string into a vector
             const lines = str.split('\n');
 
@@ -73,25 +72,55 @@ function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> 
     });
 }
 
+function readJsonRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const str = reader.result as string;
+            const json = JSON.parse(str);
+            let vector;
+            let realtime
+            try{
+                vector = Object.entries(json).map(([event, data]: [string, any]) => {
+                    realtime = BigInt(Math.floor(data.CLOCK_REALTIME * 1e9));
+                    return { key: Time.fromRaw(realtime), value: event };
+                });
+            }
+            catch(e){
+                vector = Object.entries(json).map(([event, data]: [string, any]) => {
+                    realtime = BigInt(Math.floor(data.CLOCK_REALTIME * 1e9));
+                    return { key: Time.INVALID, value: event };
+                });
+            }
+            const counters: FtraceStat[] = [];
+            let cnt = 0;
+            for (const event in json) {
+                counters.push({name: event, count: cnt});
+                cnt++;
+            }
+            publishRtuxCounters(counters);
+            
+            const events: RtuxEvent[] = [];
+            vector.forEach(({key, value}) => {
+                events.push({ts:key, event:value});
+            });
+            publishRtuxPanelData({events, offset:0,numEvents:cnt});
+
+            globalVector = vector;
+            resolve(vector);
+        };
+        reader.onerror = () => {
+            reject(reader.error);
+        };
+        reader.readAsText(file);
+    });
+}
+
+
 // A new function to access the stored vector
 function getStoredVector(): Array<{ key: time, value: string }> {
     return globalVector;
 }
-
-// function resolveHome(filepath: string) {
-//     if (filepath[0] === '~') {
-//         return path.join(os.homedir(), filepath.slice(1));
-//     }
-//     return filepath;
-// }
-
-// function resolveHome(filepath: string) {
-//     if (filepath[0] === '~') {
-//         return process.env.HOME + filepath.slice(1);
-//     }
-//     return filepath;
-// }
-
 
 type DetectedFile = {
     path: string;
@@ -113,17 +142,97 @@ async function getSortedFilePaths(): Promise<string[]> {
             })
             .sort((a: DetectedFile, b: DetectedFile) => a.number - b.number)
             .map((file: DetectedFile) => file.path);
-
         return detectedFiles;
     } catch (error) {
         console.error('Error reading directory:', error);
-        return [];
+        // return [`error: ${log_directory}`];
+        return [directory];
     }
 }
 
-// async function loadRtux(): Promise<void> {
-//     let     
+// interface StringFloatPair {
+//     key: string;
+//     value: HighPrecisionTime;
 // }
+
+// async function getPhotoInfo(file: File): Promise<Array<{image_path: string, time: HighPrecisionTime}>> {
+//     // const rawData = await fs.readFile(photo_directory);
+//     const rawData = await file.arrayBuffer();
+//     const jsonData = JSON.parse(rawData.toString());
+
+//     const result = Object.entries(jsonData).map(([key, value]: [string, any]) => ({
+//         image_path: key,
+//         time: value = HighPrecisionTime.fromTime(Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9)))),
+//       }));
+//     return result;
+// }
+
+
+// async function readPhotoInfo(file: File): Promise<Array<{image_path: string, time: time}>> {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onload = () => {
+//             const str = reader.result as string;
+//             const json = JSON.parse(str);
+//             const result = Object.entries(json).map(([key, value]: [string, any]) => ({
+//                 image_path: key,
+//                 // time: value = HighPrecisionTime.fromTime(Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9)))),
+//                 time: value = Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9))),
+//               }));
+//             photoInfo = result;
+//             resolve(result);
+//         };
+//         reader.onerror = () => {
+//             reject(reader.error);
+//         };
+//         reader.readAsText(file);
+//     });
+// }
+
+async function readPhotoInfo(file: File): Promise<Array<[time, Array<{ image_path: string; time: any }> ]>> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const str = reader.result as string;
+            const json = JSON.parse(str);
+            
+            // Initialize an empty array to store the result
+            const result: Array<[time, Array<{ image_path: string; time: any }>]> = [];
+            
+            // Iterate over each entry in the JSON object
+            Object.entries(json).forEach(([timestamp, value]: [any, any]) => {
+                timestamp = Time.fromRaw(BigInt(Math.floor(parseFloat(timestamp) * 1e9)));
+                // Initialize an array to hold this timestamp's images
+                const imagesForTimestamp: Array<{ image_path: string; time: any }> = [];
+                
+                // Iterate over each path in the value object
+                Object.entries(value).forEach(([imagePath, imageTime]: [string, any]) => {
+                    // Add each image with its path and time to the array
+                    imagesForTimestamp.push({
+                        image_path: imagePath,
+                        time: Time.fromRaw(BigInt(Math.floor(parseFloat(imageTime) * 1e9))),
+                    });
+                });
+                
+                // Add the timestamp and its images to the result
+                result.push([timestamp, imagesForTimestamp]);
+            });
+            
+            // Resolve the promise with the filled result array
+            photoInfo = result;
+            resolve(result);
+        };
+        reader.onerror = () => {
+            reject(reader.error);
+        };
+        reader.readAsText(file);
+    });
+}
+
+// function getPhotoInfo(): Array<{image_path: string, time: time}> {
+function getPhotoInfo(): Array<[time, Array<{ image_path: string; time: any }> ]> {
+    return photoInfo;
+}
 
 // Optionally, adjust the structure to encapsulate the operations
 export const rtux_loader = {
@@ -135,80 +244,12 @@ export const rtux_loader = {
     },
     getStoredVector, // Allow access to the stored vector
     getSortedFilePaths,
+    readJsonRtuxFile,
+    getPhotoInfo,
+    openJsonRtuxFromFile: async (file: File) => {
+        await readJsonRtuxFile(file);
+    },
+    openPhotoInfoFromFile: async (file: File) => {
+        await readPhotoInfo(file);
+    },
 };
-
-// import {Controller} from '../controller/controller';
-// import {Engine} from '../trace_processor/engine';
-// import {Actions} from '../common/actions';
-// import {globals} from './globals';
-// import {assertExists, assertTrue} from '../base/logging';
-
-// type States = 'init' | 'loading_trace' | 'ready';
-
-// export class RtuxController extends Controller<States>{
-//     private readonly engineId: string;
-//     private engine?: Engine;
-  
-//     constructor(engineId: string) {
-//       super('init');
-//       this.engineId = engineId;
-//     }
-//     run() {
-//         const engineCfg = assertExists(globals.state.engine);
-//         switch (this.state) {
-//         case 'init':
-//           this.loadRtux()
-//             .then((mode) => {
-//               globals.dispatch(Actions.setEngineReady({
-//                 engineId: this.engineId,
-//                 ready: true,
-//                 mode,
-//               }));
-//             })
-//             .catch((err) => {
-//               this.updateStatus(`${err}`);
-//               throw err;
-//             });
-//           this.updateStatus('Opening trace');
-//           this.setState('loading_trace');
-//           break;
-//     }
-//     }
-//     private updateStatus(msg: string): void {
-//         globals.dispatch(Actions.updateStatus({
-//         msg,
-//         timestamp: Date.now() / 1000,
-//         }));
-//     }
-
-//     private async loadRtux(): Promise<EngineMode>{
-//         this.updateStatus('Creating Rtux Processor');
-//         let engineMode: EngineMode;
-//         let useRpc = false;
-//         if (globals.state.newEngineMode === 'USE_HTTP_RPC_IF_AVAILABLE') {
-//           useRpc = (await HttpRpcEngine.checkConnection()).connected;
-//         }
-//         let engine;
-//         if (useRpc) {
-//           console.log('Opening trace using native accelerator over HTTP+RPC');
-//           engineMode = 'HTTP_RPC';
-//           engine = new HttpRpcEngine(this.engineId, LoadingManager.getInstance);
-//           engine.errorHandler = (err) => {
-//             globals.dispatch(
-//               Actions.setEngineFailed({mode: 'HTTP_RPC', failure: `${err}`}));
-//             throw err;
-//           };
-//         } else {
-//           console.log('Opening trace using built-in WASM engine');
-//           engineMode = 'WASM';
-//           const enginePort = resetEngineWorker();
-//           engine = new WasmEngineProxy(
-//             this.engineId, enginePort, LoadingManager.getInstance);
-//           engine.resetTraceProcessor({
-//             cropTrackEvents: CROP_TRACK_EVENTS_FLAG.get(),
-//             ingestFtraceInRawTable: INGEST_FTRACE_IN_RAW_TABLE_FLAG.get(),
-//             analyzeTraceProtoContent: ANALYZE_TRACE_PROTO_CONTENT_FLAG.get(),
-//           });
-//         }
-//     }
-// }
