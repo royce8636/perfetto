@@ -20,6 +20,7 @@
 *.pyc
 *.sock
 *.swp
+*.png
 /bazel-*
 /compile_commands.json
 /fuzz_out/

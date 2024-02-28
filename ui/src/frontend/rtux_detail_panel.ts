@@ -123,6 +123,7 @@ export class RTUXDetailsTab implements m.ClassComponent {
     );
   }
 
+
   // Render all the rows including the first title row
   private renderRows() {
     const data = globals.rtuxPanelData;
@@ -136,12 +137,12 @@ export class RTUXDetailsTab implements m.ClassComponent {
     //   m('.cell.row-header', 'Process'),
     //   m('.cell.row-header', 'Args'),
     ));
-    const paths = rtux_loader.getSortedFilePaths();
+    // const paths = rtux_loader.getSortedFilePaths();
     if (data) {
       const {events, offset, numEvents} = data;
       for (let i = 0; i < events.length; i++) {
         const {ts, event} = events[i];
-
+        const path = processPaths(i);
         const timestamp = m(Timestamp, {ts});
 
         const rank = i + offset;
@@ -158,7 +159,7 @@ export class RTUXDetailsTab implements m.ClassComponent {
           },
           m('.cell', timestamp),
           m('.cell', m('span.colour', {style: {background: color}}), event),
-          m('.cell', paths),
+        //   m('.cell', paths),
         ));
       }
       return m('.rows', {style: {height: `${numEvents * ROW_H}px`}}, rows);
@@ -166,6 +167,11 @@ export class RTUXDetailsTab implements m.ClassComponent {
       return m('.rows', rows);
     }
   }
+}
+
+async function processPaths(i: number) {
+    const paths = await rtux_loader.getSortedFilePaths();
+    return paths[i];
 }
 
 

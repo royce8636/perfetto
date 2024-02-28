@@ -18,7 +18,7 @@ import {RTUXPanel} from '../../frontend/rtux_panel';
 import { RTUXDetailsTab} from '../../frontend/rtux_detail_panel';
 import {Actions} from '../../common/actions';
 // import {search} from '../../base/binary_search';
-import { drawTrackHoverTooltip } from '../../common/canvas_utils';
+import { drawRtuxHoverScreen, drawTrackHoverTooltip } from '../../common/canvas_utils';
 // import {checkerboardExcept} from '../../frontend/checkerboard';
 
 
@@ -28,7 +28,7 @@ export interface Data extends TrackData {
 }
 
 const MARGIN = 2;
-const RECT_HEIGHT = 18;
+const RECT_HEIGHT = 35;
 const TRACK_HEIGHT = (RECT_HEIGHT) + (2 * MARGIN);
 
 interface Grouped {
@@ -119,6 +119,16 @@ class RTUXTrack implements Track {
     
         const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
 
+        // rtux_loader.getPhotoInfo().then((photo_array) => {
+        //   if (this.mousePos !== undefined){
+        //     drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photo_array);
+        //   }
+        // });
+        const photoInfo = rtux_loader.getPhotoInfo();
+        if (this.mousePos !== undefined){
+          drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photoInfo);
+        }
+
         for (let i = 0; i < data.timestamps.length; i++) {
           // const name = data.names[i];
           ctx.fillStyle = 'rgb(255, 0, 0)';
@@ -135,6 +145,9 @@ class RTUXTrack implements Track {
           if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2){
             drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), data.names[i]);
           }
+          // if (this.mousePos !== undefined){
+          //   drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photo_array);
+          // }
 
         }
 
@@ -231,7 +244,7 @@ class RTUX implements Plugin {
         getTitle: () => 'RTUX Details Tab',
       },
     });
-    ctx.addDefaultTab(rtuxDetailTabUri);
+    // ctx.addDefaultTab(rtuxDetailTabUri);
   }
 }
   
