@@ -1,9 +1,11 @@
 import m from 'mithril';
 
 
-import { rtux_loader } from './rtux_loader';
+// import { rtux_loader } from './rtux_loader';
 import {globals} from './globals';
 import {Timestamp} from './widgets/timestamp';
+
+// import {Tree, TreeNode} from '../widgets/tree';
 import {Tree, TreeNode} from '../widgets/tree';
 import {Section} from '../widgets/section';
 import {GridLayout} from '../widgets/grid_layout';
@@ -11,7 +13,7 @@ import {DetailsShell} from '../widgets/details_shell';
 
 export class RTUXDetailsTab implements m.ClassComponent {
     view() {
-        const imageUrl = rtux_loader.getImageToDisplay();
+        // const imageUrl = rtux_loader.getImageToDisplay();
         const counterInfo = globals.counterDetails;
         if (counterInfo.startTime && counterInfo.name !== undefined &&
             counterInfo.value !== undefined && counterInfo.delta !== undefined &&
@@ -38,10 +40,10 @@ export class RTUXDetailsTab implements m.ClassComponent {
                     left: 'Delta',
                     right: `${counterInfo.delta.toLocaleString()}`,
                   }),
-                  m(TreeNode, {
-                    left: 'Image',
-                    right: m('img', {src: imageUrl, alt: 'Descriptive alt text'}),
-                  }),
+                //   m(TreeNode, {
+                //     left: 'Image',
+                //     right: m('img', {src: imageUrl, alt: 'Descriptive alt text'}),
+                //   }),
                 ),
               )),
           );
