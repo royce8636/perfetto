@@ -1,11 +1,6 @@
 import {Time, time} from '../base/time';
-import {promises as fs} from 'fs';
-import path from 'path';
-// import os from 'os';
 
-// Define a module-level variable to store the vector
 import {
-    // globals,
     FtraceStat,
     RtuxEvent,
 } from './globals';
@@ -18,7 +13,7 @@ let globalVector: Array<{ key: time, value: string }> = [];
 let photoInfo: Array < [time, Array<{ image_path: string; time: any }> ]> = [];
 // let globalVector: Array<{ key: string, value: time }> = [];
 //define global log_directory
-let log_directory: string = "";
+// let log_directory: string = "";
 // let photo_directory: string = "";
 let imageToDiplay: string = "";
 
@@ -31,7 +26,7 @@ function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> 
             // Parse the string into a vector
             const lines = str.split('\n');
 
-            log_directory = lines.shift() || ""; // Removes and returns the first element of the array, which is the log directory
+            // log_directory = lines.shift() || ""; // Removes and returns the first element of the array, which is the log directory
 
             const vector = lines.map(line => {
                 const [key, value] = line.split(': ');
@@ -117,78 +112,10 @@ function readJsonRtuxFile(file: File): Promise<Array<{ key: time, value: string 
     });
 }
 
-
-// A new function to access the stored vector
 function getStoredVector(): Array<{ key: time, value: string }> {
     return globalVector;
 }
 
-type DetectedFile = {
-    path: string;
-    number: number;
-};
-async function getSortedFilePaths(): Promise<string[]> {
-    const directory = log_directory;
-    try {
-        const img_files = await fs.readdir(directory);
-        const detectedFiles: string[] = img_files
-            .filter((img_file: string) => img_file.startsWith('detected_') && img_file.endsWith('.png'))
-            .map((img_file: string): DetectedFile => {
-                const match = img_file.match(/detected_(\d+)\.png/);
-                const numberPart = match ? match[1] : '0'; // Fallback to '0' if match is null
-                return {
-                    path: path.join(directory, img_file),
-                    number: parseInt(numberPart, 10),
-                };
-            })
-            .sort((a: DetectedFile, b: DetectedFile) => a.number - b.number)
-            .map((file: DetectedFile) => file.path);
-        return detectedFiles;
-    } catch (error) {
-        console.error('Error reading directory:', error);
-        // return [`error: ${log_directory}`];
-        return [directory];
-    }
-}
-
-// interface StringFloatPair {
-//     key: string;
-//     value: HighPrecisionTime;
-// }
-
-// async function getPhotoInfo(file: File): Promise<Array<{image_path: string, time: HighPrecisionTime}>> {
-//     // const rawData = await fs.readFile(photo_directory);
-//     const rawData = await file.arrayBuffer();
-//     const jsonData = JSON.parse(rawData.toString());
-
-//     const result = Object.entries(jsonData).map(([key, value]: [string, any]) => ({
-//         image_path: key,
-//         time: value = HighPrecisionTime.fromTime(Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9)))),
-//       }));
-//     return result;
-// }
-
-
-// async function readPhotoInfo(file: File): Promise<Array<{image_path: string, time: time}>> {
-//     return new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-//         reader.onload = () => {
-//             const str = reader.result as string;
-//             const json = JSON.parse(str);
-//             const result = Object.entries(json).map(([key, value]: [string, any]) => ({
-//                 image_path: key,
-//                 // time: value = HighPrecisionTime.fromTime(Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9)))),
-//                 time: value = Time.fromRaw(BigInt(Math.floor(parseFloat(value) * 1e9))),
-//               }));
-//             photoInfo = result;
-//             resolve(result);
-//         };
-//         reader.onerror = () => {
-//             reject(reader.error);
-//         };
-//         reader.readAsText(file);
-//     });
-// }
 
 async function readPhotoInfo(file: File): Promise<Array<[time, Array<{ image_path: string; time: any }> ]>> {
     return new Promise((resolve, reject) => {
@@ -252,7 +179,6 @@ export const rtux_loader = {
         // You might want to return something or process the vector further here
     },
     getStoredVector, // Allow access to the stored vector
-    getSortedFilePaths,
     readJsonRtuxFile,
     getPhotoInfo,
     getImageToDisplay,

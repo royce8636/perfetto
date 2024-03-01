@@ -15,7 +15,7 @@
 import {isString} from '../base/object_utils';
 import {globals} from '../frontend/globals';
 import {Time, time} from '../base/time';
-import { rtux_loader } from 'src/frontend/rtux_loader';
+import { rtux_loader } from '../frontend/rtux_loader';
 // import { HighPrecisionTime } from './high_precision_time';
 // import {visbleTimeScale} from '../frontend/time_scale';
 
