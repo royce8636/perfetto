@@ -278,20 +278,17 @@ export function drawRtuxHoverScreen(
   ctx: CanvasRenderingContext2D,
   pos: { x: number, y: number },
   maxHeight: number,
-  // photo_info: {image_path: string, time: time}[]
   photo_info: Array<[time, Array<{ image_path: string; time: any }> ]>
 ) {
-  // Function to find the image info corresponding to the given time
-  // const findImageInfo = (time: HighPrecisionTime) => {
-  //   return photo_info.find(info => info.time === time);
-  // };
   const findImageInfo = (time: time) => {
     if (photo_info === undefined || photo_info.length === 0) {
+      console.log("photo_info is undefined or empty")
       return undefined;
     }
-    const rounted_time = roundToSignificantFigures(time, 7);
+    const rounted_time = roundToSignificantFigures(time, 6);
     const matchingEntry = photo_info.find(([key, _]) => key === rounted_time);
     if (!matchingEntry) {
+      console.log("matchingEntry is undefined", rounted_time)
       return undefined;
     }
     const [, image_info] = matchingEntry;
@@ -308,66 +305,6 @@ export function drawRtuxHoverScreen(
     // return photo_info.find(info => info.time === time);
   };
 
-  // const drawContent = (imgHeight: number, image: HTMLImageElement, imageWidth: number) => {
-  //   ctx.font = '10px Roboto Condensed';
-  //   ctx.textBaseline = 'middle';
-  //   ctx.textAlign = 'left';
-  
-  //   const paddingPx = 4;
-  //   const width = 150; // Set a fixed width for the tooltip
-  //   // Adjust height to include image if present
-  //   let height = imgHeight;
-  //   if (imgHeight > 0) {
-  //     height += paddingPx; // Add some padding between the image and the text
-  //   }
-  //   // const textMetrics = ctx.measureText(text);
-  //   // Adjust for text height
-  //   // height += textMetrics.fontBoundingBoxAscent;
-  //   // height += textMetrics.fontBoundingBoxDescent;
-  //   // height += paddingPx * 2;
-
-  //   let x = pos.x;
-  //   let y = pos.y;
-
-  //   x += 10;
-  //   y -= 10 + imgHeight; // Adjust starting point based on image height
-
-  //   const endPx = globals.timeline.visibleTimeScale.pxSpan.end;
-  //   if (x + width > endPx) {
-  //     x -= x + width - endPx;
-  //   }
-  //   // if (y < 0) {
-  //   //   y = 0;
-  //   // }
-  //   // if (y + height > maxHeight) {
-  //   //   y -= y + height - maxHeight;
-  //   // }
-  //   y = 100;
-  //   x = 100;
-
-  //   ctx.fillStyle = 'rgba(255, 0, 0, 0.9)';             
-  //   ctx.fillRect(x, y, 50, 50);
-
-  //   // if (imgHeight > 0) {
-  //   //   ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
-  //   // }
-  //   // else{
-  //   //   drawTrackHoverTooltip(ctx, pos, maxHeight, "imgHeight < 0");
-  //   // }
-  //   ctx.drawImage(image, x + paddingPx, y + paddingPx, imageWidth, imgHeight);
-  //   console.log("drawContent: ", imgHeight, imageWidth, x, y);
-
-  //   // Draw the text
-  //   // ctx.fillStyle = 'hsl(200, 50%, 40%)';
-  //   // ctx.fillText(
-  //   //   text,
-  //   //   x + paddingPx,
-  //   //   y + paddingPx + imgHeight + textMetrics.fontBoundingBoxAscent
-  //   // );
-  // };
-
-  // Find the image info corresponding to the given time
-  // const timeToFind = new Time(/* provide the time value here */); // You need to provide the time to find
   const {
     visibleTimeScale,
   } = globals.timeline;
@@ -375,7 +312,7 @@ export function drawRtuxHoverScreen(
   // const timeToFind = visibleTimeScale.pxToHpTime(pos.x);
   const timeToFind = visibleTimeScale.pxToHpTime(pos.x).toTime();
   const imageInfo = findImageInfo(timeToFind);
-
+  console.log("drawRtuxHoverScreen: ", pos, maxHeight, imageInfo, timeToFind.toString());
   if (imageInfo) {
     let { image_path } = imageInfo;
     image_path = `${globals.root}assets${image_path}`;

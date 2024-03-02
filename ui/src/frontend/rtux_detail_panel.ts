@@ -25,19 +25,6 @@ export class RTUXDetailsTab implements m.ClassComponent {
                 {title: 'Properties'},
                 m(
                   Tree,
-                //   m(TreeNode, {left: 'Name', right: `${counterInfo.name}`}),
-                //   m(TreeNode, {
-                    // left: 'Start time',
-                    // right: m(Timestamp, {ts: counterInfo.startTime}),
-                //   }),
-                //   m(TreeNode, {
-                //     left: 'Value',
-                //     right: `${counterInfo.value.toLocaleString()}`,
-                //   }),
-                //   m(TreeNode, {
-                //     left: 'Delta',
-                //     right: `${counterInfo.delta.toLocaleString()}`,
-                //   }),
                   m(TreeNode, {
                     left: 'Image',
                     right: m('img', {src: imageUrl, alt: 'Descriptive alt text'}),

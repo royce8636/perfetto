@@ -144,11 +144,6 @@ const SECTIONS: Section[] = [
         i: 'folder_open'
       },
 
-      {t: 'Open RTUX photo info file',
-      a: popupFileSelectionDialogRTUXPhotoInfo, 
-      i: 'folder_open'
-      },
-
       {
         t: 'Open with legacy UI',
         a: popupFileSelectionDialogOldUI,
@@ -314,12 +309,6 @@ function popupFileSelectionDialogRTUX(e: Event) {
   getFileElement().click();
 }
 
-function popupFileSelectionDialogRTUXPhotoInfo(e: Event) {
-  e.preventDefault();
-  getFileElement().dataset['rtuxPhotoInfo'] = '1';
-  getFileElement().click();
-}
-
 function popupFileSelectionDialogOldUI(e: Event) {
   e.preventDefault();
   getFileElement().dataset['useCatapultLegacyUi'] = '1';
@@ -433,13 +422,9 @@ function onInputElementFileSelectionChanged(e: Event) {
   }
   if (e.target.dataset['rtux'] === '1') {
     globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
-    // rtux_loader.openRtuxFromFile(file);
+    // rtux_loader.openJsonRtuxFromFile(file);
     rtux_loader.openJsonRtuxFromFile(file);
     e.target.dataset['rtux'] = '0';
-  } else if(e.target.dataset['rtuxPhotoInfo'] === '1') {
-    globals.logging.logEvent('Trace Actions', 'Open RTUX photo info file');
-    rtux_loader.openPhotoInfoFromFile(file);
-    e.target.dataset['rtuxPhotoInfo'] = '0';
   } else{
     globals.logging.logEvent('Trace Actions', 'Open trace from file');
     globals.dispatch(Actions.openTraceFromFile({file}));

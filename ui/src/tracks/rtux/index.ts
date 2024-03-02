@@ -18,7 +18,8 @@ import {RTUXPanel} from '../../frontend/rtux_panel';
 import { RTUXDetailsTab} from '../../frontend/rtux_detail_panel';
 import {Actions} from '../../common/actions';
 // import {search} from '../../base/binary_search';
-import { drawRtuxHoverScreen, drawTrackHoverTooltip } from '../../common/canvas_utils';
+// import { drawRtuxHoverScreen, drawTrackHoverTooltip } from '../../common/canvas_utils';
+import { drawTrackHoverTooltip } from '../../common/canvas_utils';
 // import {checkerboardExcept} from '../../frontend/checkerboard';
 
 
@@ -124,9 +125,14 @@ class RTUXTrack implements Track {
         //     drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photo_array);
         //   }
         // });
-        const photoInfo = rtux_loader.getPhotoInfo();
+        // const photoInfo = rtux_loader.getPhotoInfo();
         if (this.mousePos !== undefined){
-          drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photoInfo);
+          const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
+          const imageInfo = rtux_loader.findImageInfo(timeToFind);
+          if (imageInfo){
+            let image_path = `${globals.root}assets${imageInfo.image_path}`;
+            rtux_loader.setImageToDisplay(image_path);
+          }
         }
 
         for (let i = 0; i < data.timestamps.length; i++) {
@@ -156,6 +162,18 @@ class RTUXTrack implements Track {
       
     onMouseMove(pos: { x: number; y: number; }): void {
       this.mousePos = pos;
+
+      const {
+        visibleTimeScale,
+      } = globals.timeline;
+      if (this.mousePos !== undefined){
+        const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
+        const imageInfo = rtux_loader.findImageInfo(timeToFind);
+        if (imageInfo){
+          let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          rtux_loader.setImageToDisplay(image_path);
+        }
+      }
     }
 
     onMouseOut(){
