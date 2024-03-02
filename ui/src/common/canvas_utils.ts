@@ -289,7 +289,7 @@ export function drawRtuxHoverScreen(
     if (photo_info === undefined || photo_info.length === 0) {
       return undefined;
     }
-    const rounted_time = roundToSignificantFigures(time, 7);
+    const rounted_time = roundToSignificantFigures(time, 6);
     const matchingEntry = photo_info.find(([key, _]) => key === rounted_time);
     if (!matchingEntry) {
       return undefined;
