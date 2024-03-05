@@ -1,163 +1,21 @@
 import {Time, time} from '../base/time';
+// import m from 'mithril';
 
-import {
-    FtraceStat,
-    RtuxEvent,
-} from './globals';
 import { publishRtuxCounters, publishRtuxPanelData } from './publish';
-// import {HighPrecisionTime } from '../common/high_precision_time';
+import { publishRtuxCounters, publishRtuxPanelData } from './publish';
+
+import { publishRtuxCounters, publishRtuxPanelData } from './publish';
 
 let globalVector: Array<{ key: time, value: string }> = [];
-// let photoInfo: Array<{image_path: string, time: HighPrecisionTime}> = [];
 // let photoInfo: Array<{image_path: string, time: time}> = [];
 let photoInfo: Array < [time, Array<{ image_path: string; time: any }> ]> = [];
-// let globalVector: Array<{ key: string, value: time }> = [];
-//define global log_directory
-// let log_directory: string = "";
 // let photo_directory: string = "";
 let imageToDiplay: string = "";
-
-function readRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            // Convert the result to a string
-            const str = reader.result as string;
-            // Parse the string into a vector
-            const lines = str.split('\n');
-
-            // log_directory = lines.shift() || ""; // Removes and returns the first element of the array, which is the log directory
-
-            const vector = lines.map(line => {
-                const [key, value] = line.split(': ');
-                try{
-                    const rawkey = BigInt(Math.floor(parseFloat(key) * 1e9));
-                    return { key: Time.fromRaw(rawkey), value };
-                }
-                catch(e){
-                    console.log(e);
-                    return { key: Time.INVALID, value };
-
-                }
-            }).filter(item => {
-                return !(item.key === Time.INVALID)
-            })
-            const counters: FtraceStat[] = [];
-            let cnt = 0;
-            for (const line of lines) {
-                const [name, _] = line.split(': ');
-                counters.push({name, count: cnt});
-                cnt++;
-            }
-            publishRtuxCounters(counters);
-
-            const events: RtuxEvent[] = [];
-            vector.forEach(({key, value}) => {
-                events.push({ts:key, event:value});
-            });
-            publishRtuxPanelData({events, offset:0,numEvents:cnt});
-
-            globalVector = vector;
-
-            resolve(vector);
-        };
-        reader.onerror = () => {
-            reject(reader.error);
-        };
-        reader.readAsText(file);
-    });
-}
-
-function readJsonRtuxFile(file: File): Promise<Array<{ key: time, value: string }>> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const str = reader.result as string;
-            const json = JSON.parse(str);
-            let vector;
-            let realtime
-            try{
-                vector = Object.entries(json).map(([event, data]: [string, any]) => {
-                    realtime = BigInt(Math.floor(data.CLOCK_REALTIME * 1e9));
-                    return { key: Time.fromRaw(realtime), value: event };
-                });
-            }
-            catch(e){
-                vector = Object.entries(json).map(([event, data]: [string, any]) => {
-                    realtime = BigInt(Math.floor(data.CLOCK_REALTIME * 1e9));
-                    return { key: Time.INVALID, value: event };
-                });
-            }
-            const counters: FtraceStat[] = [];
-            let cnt = 0;
-            for (const event in json) {
-                counters.push({name: event, count: cnt});
-                cnt++;
-            }
-            publishRtuxCounters(counters);
-            
-            const events: RtuxEvent[] = [];
-            vector.forEach(({key, value}) => {
-                events.push({ts:key, event:value});
-            });
-            publishRtuxPanelData({events, offset:0,numEvents:cnt});
-
-            globalVector = vector;
-            resolve(vector);
-        };
-        reader.onerror = () => {
-            reject(reader.error);
-        };
-        reader.readAsText(file);
-    });
-}
 
 function getStoredVector(): Array<{ key: time, value: string }> {
     return globalVector;
 }
 
-
-async function readPhotoInfo(file: File): Promise<Array<[time, Array<{ image_path: string; time: any }> ]>> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const str = reader.result as string;
-            const json = JSON.parse(str);
-            
-            // Initialize an empty array to store the result
-            const result: Array<[time, Array<{ image_path: string; time: any }>]> = [];
-            
-            // Iterate over each entry in the JSON object
-            Object.entries(json).forEach(([timestamp, value]: [any, any]) => {
-                timestamp = Time.fromRaw(BigInt(Math.floor(parseFloat(timestamp) * 1e9)));
-                // Initialize an array to hold this timestamp's images
-                const imagesForTimestamp: Array<{ image_path: string; time: any }> = [];
-                
-                // Iterate over each path in the value object
-                Object.entries(value).forEach(([imagePath, imageTime]: [string, any]) => {
-                    // Add each image with its path and time to the array
-                    imagesForTimestamp.push({
-                        image_path: imagePath,
-                        time: Time.fromRaw(BigInt(Math.floor(parseFloat(imageTime) * 1e9))),
-                    });
-                });
-                
-                // Add the timestamp and its images to the result
-                result.push([timestamp, imagesForTimestamp]);
-            });
-            
-            // Resolve the promise with the filled result array
-            photoInfo = result;
-            resolve(result);
-        };
-        reader.onerror = () => {
-            reject(reader.error);
-        };
-        reader.readAsText(file);
-    });
-}
-
-// function getPhotoInfo(): Array<{image_path: string, time: time}> {
 function getPhotoInfo(): Array<[time, Array<{ image_path: string; time: any }> ]> {
     return photoInfo;
 }
@@ -168,25 +26,123 @@ function getImageToDisplay(): string {
 
 function setImageToDisplay(images: string): void {
     imageToDiplay = images;
+    // m.redraw();
+    console.log("imageToDiplay", imageToDiplay);
 }
+
+function roundToSignificantFigures(num: time, n: number): time {
+    const raw_num = Number(num);
+    const exponent = Math.floor(Math.log10(Math.abs(raw_num)));
+    const scaled = raw_num / Math.pow(10, exponent - n + 1);
+    const rounded = Math.round(scaled) * Math.pow(10, exponent - n + 1);
+    return Time.fromRaw(BigInt(rounded));
+  }
+
+function findImageInfo(timestamp: time): any{
+    if (photoInfo === undefined || photoInfo.length === 0) {
+        console.log("photo_info is undefined or empty")
+        return undefined;
+      }
+      const rounted_time = roundToSignificantFigures(timestamp, 6);
+      const matchingEntry = photoInfo.find(([key, _]) => key === rounted_time);
+      if (!matchingEntry) {
+        console.log("matchingEntry is undefined", rounted_time)
+        return undefined;
+      }
+      const [, image_info] = matchingEntry;
+      let closest = image_info[0];
+      let closest_time = Math.abs(Number(closest.time) - Number(timestamp));
+      image_info.forEach((info) => {
+        const diff = Math.abs(Number(info.time) - Number(timestamp));
+        if (diff < closest_time) {
+          closest = info;
+          closest_time = diff;
+        }
+      });
+      return closest;
+}
+
+function readJsonFile(file: File): Promise<{
+    vector: Array<{ key: time, value: string }>,
+    photoVector: Array<[time, Array<{ image_path: string; time: any }> ]>
+    }> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const str = reader.result as string;
+            const json = JSON.parse(str);
+
+            let vector: Array<{ key: time, value: string }> = [];
+            let photoVector: Array<[time, Array<{ image_path: string; time: any }>]> = [];
+
+            // Process "summary" section if it exists
+            if (json.summary) {
+                let realtime;
+                try {
+                    vector = Object.entries(json.summary).map(([event, data]: [string, any]) => {
+                        realtime = BigInt(Math.floor(data.CLOCK_REALTIME * 1e9));
+                        return { key: Time.fromRaw(realtime), value: event };
+                    });
+                } catch(e) {
+                    vector = Object.entries(json.summary).map(([event, ]: [string, any]) => {
+                        return { key: Time.INVALID, value: event };
+                    });
+                }
+                
+                // Process counters for Rtux
+                const counters: FtraceStat[] = [];
+                let cnt = 0;
+                for (const event in json.summary) {
+                    counters.push({name: event, count: cnt});
+                    cnt++;
+                }
+                publishRtuxCounters(counters);
+                
+                const events: RtuxEvent[] = [];
+                vector.forEach(({key, value}) => {
+                    events.push({ts: key, event: value});
+                });
+                publishRtuxPanelData({events, offset: 0, numEvents: cnt});
+            }
+
+            // Process "rounded_photo_info" section if it exists
+            if (json.rounded_photo_info) {
+                Object.entries(json.rounded_photo_info).forEach(([timestamp, value]: [any, any]) => {
+                    timestamp = Time.fromRaw(BigInt(Math.floor(parseFloat(timestamp) * 1e9)));
+                    const imagesForTimestamp: Array<{ image_path: string; time: any }> = [];
+                    
+                    Object.entries(value).forEach(([imagePath, imageTime]: [string, any]) => {
+                        imagesForTimestamp.push({
+                            image_path: imagePath,
+                            time: Time.fromRaw(BigInt(Math.floor(parseFloat(imageTime) * 1e9))),
+                        });
+                    });
+                    
+                    photoVector.push([timestamp, imagesForTimestamp]);
+                });
+            }
+
+            // Resolve the promise with both vectors and photoInfo
+            globalVector = vector;
+            photoInfo = photoVector;
+            resolve({ vector, photoVector });
+        };
+        reader.onerror = () => {
+            reject(reader.error);
+        };
+        reader.readAsText(file);
+    });
+}
+
 
 // Optionally, adjust the structure to encapsulate the operations
 export const rtux_loader = {
-    readRtuxFile,
-    openRtuxFromFile: async (file: File) => {
-        await readRtuxFile(file);
-        // await pluginManager.onRtuxLoad();
-        // You might want to return something or process the vector further here
-    },
     getStoredVector, // Allow access to the stored vector
-    readJsonRtuxFile,
     getPhotoInfo,
     getImageToDisplay,
     setImageToDisplay,
+    findImageInfo,
     openJsonRtuxFromFile: async (file: File) => {
-        await readJsonRtuxFile(file);
-    },
-    openPhotoInfoFromFile: async (file: File) => {
-        await readPhotoInfo(file);
+        await readJsonFile(file);
     },
 };

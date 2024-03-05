@@ -1,0 +1,108 @@
+// import m from 'mithril';
+// import { rtux_loader } from './rtux_loader';
+// import { Tree, TreeNode } from '../widgets/tree';
+// import { Section } from '../widgets/section';
+// import { GridLayout } from '../widgets/grid_layout';
+// import { DetailsShell } from '../widgets/details_shell';
+
+// export class RTUXDetailsTab implements m.ClassComponent {
+//     imageUrl: string = '';
+
+//     oninit() {
+//         // Subscribe to rtux_loader updates
+//         rtux_loader.subscribe(this.updateImage.bind(this));
+//     }
+
+//     onremove() {
+//         // Ideally, you should also unsubscribe to prevent memory leaks
+//         // This requires keeping track of your subscription callback or modifying the rtux_loader to support unsubscribe.
+//     }
+
+//     updateImage(imageUrl: string) {
+//         // Update local state and trigger redraw
+//         console.log("updateImage", imageUrl)
+//         this.imageUrl = imageUrl;
+//         m.redraw();
+//     }
+
+//     view() {
+//         // Use local state for imageUrl
+//         if (this.imageUrl !== undefined) {
+//             return m(
+//                 DetailsShell,
+//                 m(GridLayout,
+//                     m(
+//                         Section,
+//                         {title: 'Properties'},
+//                         m(
+//                             Tree,
+//                             m(TreeNode, {
+//                                 left: 'Image',
+//                                 right: m('img', {src: this.imageUrl, alt: 'Descriptive alt text', key: this.imageUrl}),
+//                                 // right: m('img', {src: rtux_loader.getActualImage(), alt: 'Descriptive alt text'}),
+//                               }),
+//                         ),
+//                     )),
+//             );
+//         } else {
+//             return m(DetailsShell, {title: 'Counter', description: 'Loading...'});
+//         }
+//     }
+
+//     renderCanvas() {}
+// }
+
+import m from 'mithril';
+import { rtux_loader } from './rtux_loader';
+import { Tree, TreeNode } from '../widgets/tree';
+import { Section } from '../widgets/section';
+import { GridLayout } from '../widgets/grid_layout';
+import { DetailsShell } from '../widgets/details_shell';
+import{raf} from '../core/raf_scheduler';
+
+export class RTUXDetailsTab implements m.ClassComponent {
+    imageUrl: string = '';
+    key: number = Date.now();
+
+    oninit() {
+        rtux_loader.subscribe(this.updateImage.bind(this));
+    }
+
+    updateImage(imageUrl: string) {
+        this.imageUrl = imageUrl;
+        this.key = Date.now(); // Update key to force redraw
+        // m.redraw();
+        raf.domRedraw = () => {
+            console.log("raf.domRedraw");
+            m.redraw();
+        }
+    }
+
+    view() {
+        if (this.imageUrl) {
+            return m(
+                DetailsShell,
+                m(GridLayout,
+                    m(
+                        Section,
+                        {title: 'Properties'},
+                        m(
+                            Tree,
+                            m(TreeNode, {
+                                left: 'Image',
+                                right: m('img', {
+                                    src: this.imageUrl,
+                                    alt: 'Descriptive alt text',
+                                    key: this.key, // Use key here
+                                    onload: () => console.log("Image loaded"),
+                                    onerror: () => console.log("Error loading image")
+                                }),
+                            }),
+                        ),
+                    )),
+            );
+        } else {
+            return m(DetailsShell, {title: 'Loading...', description: 'Please wait...'});
+        }
+    }
+}

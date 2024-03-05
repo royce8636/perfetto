@@ -841,6 +841,10 @@ export const StateActions = {
     state.rtuxPagination = args;
   },
 
+  updateRtuxImage(state: StateDraft, args: {image: string}): void {
+    state.rtuxImage = args.image;
+  },
+
   updateFtraceFilter(state: StateDraft, patch: FtraceFilterPatch) {
     const {excludedNames: diffs} = patch;
     const excludedNames = state.ftraceFilter.excludedNames;

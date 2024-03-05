@@ -570,6 +570,7 @@ export interface State {
   logsPagination: Pagination;
   ftracePagination: Pagination;
   rtuxPagination: Pagination;
+  rtuxImage: string;
   ftraceFilter: FtraceFilterState;
   traceConversionInProgress: boolean;
 

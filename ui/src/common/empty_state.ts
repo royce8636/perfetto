@@ -138,6 +138,8 @@ export function createEmptyState(): State {
       count: 0,
     },
 
+    rtuxImage: '',
+
     ftraceFilter: {
       excludedNames: [],
     },

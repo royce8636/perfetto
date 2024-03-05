@@ -423,7 +423,7 @@ function onInputElementFileSelectionChanged(e: Event) {
   if (e.target.dataset['rtux'] === '1') {
     globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
     // rtux_loader.openJsonRtuxFromFile(file);
-    rtux_loader.openJsonRtuxFromFile(file);
+    rtux_loader.readJsonFile(file);
     e.target.dataset['rtux'] = '0';
   } else{
     globals.logging.logEvent('Trace Actions', 'Open trace from file');

@@ -16,7 +16,7 @@ import {TrackData} from '../../common/track_data';
 import {checkerboardExcept_debug} from '../../frontend/checkerboard';
 import {RTUXPanel} from '../../frontend/rtux_panel';
 import { RTUXDetailsTab} from '../../frontend/rtux_detail_panel';
-import {Actions} from '../../common/actions';
+// import {Actions} from '../../common/actions';
 // import {search} from '../../base/binary_search';
 // import { drawRtuxHoverScreen, drawTrackHoverTooltip } from '../../common/canvas_utils';
 import { drawTrackHoverTooltip } from '../../common/canvas_utils';
@@ -44,8 +44,27 @@ class RTUXTrack implements Track {
   // }
 
   private mousePos? = {x: 0, y: 0};
+  private mouseX: number = 0;
 
   private fetcher = new TimelineFetcher(this.onBoundsChange.bind(this));
+
+  async onCreate(){
+    document.addEventListener('mousemove', (event: MouseEvent) => {
+      const element = document.getElementsByClassName('track-content')[0];
+      const rect = element.getBoundingClientRect();
+      this.mouseX = event.clientX - rect.left;
+      // console.log("globalEvent", this.mouseX);
+      const timeToFind = globals.timeline.visibleTimeScale.pxToHpTime(this.mouseX).toTime();
+      const imageInfo = rtux_loader.findImageInfo(timeToFind);
+      if (imageInfo){
+          let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          rtux_loader.setImageToDisplay(image_path);
+      }
+      else{
+        rtux_loader.setImageToDisplay("");
+      }
+      // this.mousePos = {x, y};
+  });  }
 
   async onUpdate(): Promise<void> {
     await this.fetcher.requestDataForCurrentTime();
@@ -120,12 +139,6 @@ class RTUXTrack implements Track {
     
         const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
 
-        // rtux_loader.getPhotoInfo().then((photo_array) => {
-        //   if (this.mousePos !== undefined){
-        //     drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photo_array);
-        //   }
-        // });
-        // const photoInfo = rtux_loader.getPhotoInfo();
         if (this.mousePos !== undefined){
           const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
           const imageInfo = rtux_loader.findImageInfo(timeToFind);
@@ -151,60 +164,32 @@ class RTUXTrack implements Track {
           if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2){
             drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), data.names[i]);
           }
-          // if (this.mousePos !== undefined){
-          //   drawRtuxHoverScreen(ctx, this.mousePos, this.getHeight(), photo_array);
-          // }
-
         }
 
     }
 
       
-    onMouseMove(pos: { x: number; y: number; }): void {
-      this.mousePos = pos;
-
-      const {
-        visibleTimeScale,
-      } = globals.timeline;
-      if (this.mousePos !== undefined){
-        const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
-        const imageInfo = rtux_loader.findImageInfo(timeToFind);
-        if (imageInfo){
-          let image_path = `${globals.root}assets${imageInfo.image_path}`;
-          rtux_loader.setImageToDisplay(image_path);
-        }
-      }
-    }
+    // onMouseMove(pos: { x: number; y: number; }): void {
+      // this.mousePos = pos;
+      // console.log("rtuxTrack", this.mousePos);
+    //   const {
+    //     visibleTimeScale,
+    //   } = globals.timeline;
+    //   if (this.mousePos !== undefined){
+    //     const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
+    //     const imageInfo = rtux_loader.findImageInfo(timeToFind);
+    //     if (imageInfo){
+    //       let image_path = `${globals.root}assets${imageInfo.image_path}`;
+    //       rtux_loader.setImageToDisplay(image_path);
+    //     }
+    //     else{
+    //       rtux_loader.setImageToDisplay("");
+    //     }
+    //   }
+    // }
 
     onMouseOut(){
       this.mousePos = undefined;
-    }
-
-
-    // onMouseClick({x}: { x: number;}) {
-    onMouseClick({x}: { x: number; y: number; }): boolean {
-      const data = this.fetcher.data;
-      if (data === undefined) return false;
-
-      // const time = visibleTimeScale.pxToHpTime(x);
-      // const index = search(data.timestamps, time.toTime());
-      // const id = index === -1 ? undefined : 0;
-      // if (!id) return false;
-      // globals.makeSelection(Actions.showTab({uri: 'dev.rtux.track#RTUXDetailTab'}))
-      // globals.makeSelection(Actions.selectRTUX({id, trackKey: this.trackKey}));
-      const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
-      const {visibleTimeScale} = globals.timeline;
-
-      for (let i = 0; i < data.timestamps.length; i++) {
-        const timestamp = Time.fromRaw(data.timestamps[i]);
-        const xPos = Math.floor(visibleTimeScale.timeToPx(timestamp));
-        if (x !== undefined && xPos - diamondSideLen / 2 < x && x < xPos + diamondSideLen / 2){
-          Actions.showTab({uri: 'dev.rtux.track#RTUXDetailTab'});
-          // globals.makeSelection(Actions.selectRTUX({id: 0}));
-          return true;
-        }
-      }
-      return false;
     }
 }
   
@@ -217,19 +202,8 @@ class RTUX implements Plugin {
       uri: 'dev.rtux.track#RTUXTrack',
       displayName: 'RTUX Events',
       kind: 'TRACK_KIND',
-      // trackFactory: ({trackKey}) => {
-      //   return new RTUXTrack(trackKey);
-      // },
       trackFactory: () => new RTUXTrack(),
     });
-
-    // ctx.registerDetailsPanel({
-    //   render: (sel) => {
-    //     if (sel.kind === 'RTUX') {
-    //       return m(RtuxDetailpanel);
-    //     }
-    //   },
-    // });
 
     ctx.registerCommand({
       id: 'dev.rtux.track.AddRTUXTrackCommand',
