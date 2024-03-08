@@ -50,7 +50,14 @@ class RTUXTrack implements Track {
 
   async onCreate(){
     document.addEventListener('mousemove', (event: MouseEvent) => {
-      const element = document.getElementsByClassName('track-content')[0];
+      // const element = document.getElementsByClassName('track-content')[0];
+      let element;
+      try{
+        element = document.getElementsByClassName('track-content')[0];
+      }
+      catch(e){
+        return;
+      }
       const rect = element.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
       // console.log("globalEvent", this.mouseX);
@@ -59,6 +66,7 @@ class RTUXTrack implements Track {
       if (imageInfo){
           let image_path = `${globals.root}assets${imageInfo.image_path}`;
           rtux_loader.setImageToDisplay(image_path);
+          rtux_loader.setImageDisplayedTime(imageInfo.time);
       }
       else{
         rtux_loader.setImageToDisplay("");

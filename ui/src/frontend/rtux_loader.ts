@@ -14,6 +14,7 @@ type Vector = Array<{ key: time, value: string }>;
 
 class RtuxLoader {
     private imageToDisplay: string = "";
+    private imageDisplayedTime: time = Time.INVALID;
     // private subscribers: ((imagePath: string) => void)[] = [];
     public photoInfo: PhotoInfo = [];
     private globalVector: Vector = [];
@@ -92,6 +93,14 @@ class RtuxLoader {
 
     getImageToDisplay(): string {
         return this.imageToDisplay;
+    }
+
+    setImageDisplayedTime(time: time): void {
+        this.imageDisplayedTime = time;
+    }
+
+    getImageDisplayedTime(): time {
+        return this.imageDisplayedTime;
     }
 
     // subscribe(callback: (imagePath: string) => void): void {
