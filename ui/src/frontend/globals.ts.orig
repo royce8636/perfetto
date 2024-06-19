@@ -161,6 +161,8 @@ export interface ThreadDesc {
 }
 type ThreadMap = Map<number, ThreadDesc>;
 
+<<<<<<< HEAD
+=======
 export interface FtraceEvent {
   id: number;
   ts: time;
@@ -193,6 +195,7 @@ export interface FtraceStat {
   count: number;
 }
 
+>>>>>>> eab64bc237 (TMP)
 function getRoot() {
   // Works out the root directory where the content should be served from
   // e.g. `http://origin/v1.2.3/`.
@@ -283,7 +286,6 @@ class Globals {
   private _threadStateDetails?: ThreadStateDetails = undefined;
   private _connectedFlows?: Flow[] = undefined;
   private _selectedFlows?: Flow[] = undefined;
-  // private _counterDetails?: CounterDetails = undefined;
   private _visibleFlowCategories?: Map<string, boolean> = undefined;
   private _cpuProfileDetails?: CpuProfileDetails = undefined;
   private _numQueriesQueued = 0;
@@ -296,10 +298,13 @@ class Globals {
   private _router?: Router = undefined;
   private _embeddedMode?: boolean = undefined;
   private _hideSidebar?: boolean = undefined;
+<<<<<<< HEAD
+=======
   private _ftraceCounters?: FtraceStat[] = undefined;
   private _rtuxCounters?: FtraceStat[] = undefined;
   private _ftracePanelData?: FtracePanelData = undefined;
   private _rtuxPanelData?: RtuxPanelData = undefined;
+>>>>>>> eab64bc237 (TMP)
   private _cmdManager = new CommandManager();
   private _tabManager = new TabManager();
   private _trackManager = new TrackManager(this._store);
@@ -473,14 +478,6 @@ class Globals {
     this._visibleFlowCategories = assertExists(visibleFlowCategories);
   }
 
-  // get counterDetails() {
-  //   return assertExists(this._counterDetails);
-  // }
-
-  // set counterDetails(click: CounterDetails) {
-  //   this._counterDetails = assertExists(click);
-  // }
-
   get aggregateDataStore(): AggregateDataStore {
     return assertExists(this._aggregateDataStore);
   }
@@ -541,16 +538,12 @@ class Globals {
     this._currentSearchResults = results;
   }
 
+  set hasFtrace(value: boolean) {
+    this._hasFtrace = value;
+  }
+
   get hasFtrace(): boolean {
-    return Boolean(this._ftraceCounters && this._ftraceCounters.length > 0);
-  }
-
-  get ftraceCounters(): FtraceStat[]|undefined {
-    return this._ftraceCounters;
-  }
-
-  set ftraceCounters(value: FtraceStat[]|undefined) {
-    this._ftraceCounters = value;
+    return this._hasFtrace;
   }
 
   get hasRtux(): boolean {
@@ -644,6 +637,8 @@ class Globals {
     return this.state.engine;
   }
 
+<<<<<<< HEAD
+=======
   get ftracePanelData(): FtracePanelData|undefined {
     return this._ftracePanelData;
   }
@@ -660,26 +655,57 @@ class Globals {
     this._rtuxPanelData = data;
   }
 
-  // private handleSelectionArgs(args: Partial<LegacySelectionArgs> = {}): void {
-  //   const {
-  //     clearSearch = true,
-  //     switchToCurrentSelectionTab = true,
-  //     pendingScrollId = undefined,
-  //   } = args;
-  //   if (clearSearch) {
-  //     globals.dispatch(Actions.setSearchIndex({index: -1}));
-  //   }
-  //   if (pendingScrollId !== undefined) {
-  //     globals.dispatch(
-  //       Actions.setPendingScrollId({
-  //         pendingScrollId,
-  //       }),
-  //     );
-  //   }
-  //   if (switchToCurrentSelectionTab) {
-  //     globals.dispatch(Actions.showTab({uri: 'current_selection'}));
-  //   }
-  // }
+>>>>>>> eab64bc237 (TMP)
+  makeSelection(action: DeferredAction<{}>, opts: MakeSelectionOpts = {}) {
+    const {switchToCurrentSelectionTab = true, clearSearch = true} = opts;
+    const currentSelectionTabUri = 'current_selection';
+
+    // A new selection should cancel the current search selection.
+    clearSearch && globals.dispatch(Actions.setSearchIndex({index: -1}));
+
+    if (switchToCurrentSelectionTab) {
+      globals.dispatch(Actions.showTab({uri: currentSelectionTabUri}));
+    }
+    globals.dispatch(action);
+  }
+
+  setLegacySelection(
+    legacySelection: LegacySelection,
+    args: Partial<LegacySelectionArgs> = {},
+  ): void {
+    this._selectionManager.setLegacy(legacySelection);
+    this.handleSelectionArgs(args);
+  }
+
+  selectSingleEvent(
+    trackKey: string,
+    eventId: number,
+    args: Partial<LegacySelectionArgs> = {},
+  ): void {
+    this._selectionManager.setEvent(trackKey, eventId);
+    this.handleSelectionArgs(args);
+  }
+
+  private handleSelectionArgs(args: Partial<LegacySelectionArgs> = {}): void {
+    const {
+      clearSearch = true,
+      switchToCurrentSelectionTab = true,
+      pendingScrollId = undefined,
+    } = args;
+    if (clearSearch) {
+      globals.dispatch(Actions.setSearchIndex({index: -1}));
+    }
+    if (pendingScrollId !== undefined) {
+      globals.dispatch(
+        Actions.setPendingScrollId({
+          pendingScrollId,
+        }),
+      );
+    }
+    if (switchToCurrentSelectionTab) {
+      globals.dispatch(Actions.showTab({uri: 'current_selection'}));
+    }
+  }
 
   clearSelection(): void {
     globals.dispatch(Actions.setSearchIndex({index: -1}));
