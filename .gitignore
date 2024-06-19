@@ -20,6 +20,8 @@
 *.pyc
 *.sock
 *.swp
+*.png
+*.jpg
 /bazel-*
 /compile_commands.json
 /fuzz_out/
@@ -33,3 +35,4 @@ examples/sdk/build/
 GPATH
 GRTAGS
 GTAGS
+/ui/src/assets/data/rtux_ai/logs
