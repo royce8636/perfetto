@@ -676,6 +676,49 @@ export const StateActions = {
         trackKey: args.trackKey,
       },
     };
+    state.pendingScrollId = args.scroll ? args.id : undefined;
+  },
+
+  deselect(state: StateDraft, _: {}): void {
+    state.currentSelection = null;
+  },
+
+  updateLogsPagination(state: StateDraft, args: Pagination): void {
+    state.logsPagination = args;
+  },
+
+  updateFtracePagination(state: StateDraft, args: Pagination): void {
+    state.ftracePagination = args;
+  },
+
+  updateRtuxPagination(state: StateDraft, args: Pagination): void {
+    state.rtuxPagination = args;
+  },
+
+  updateRtuxImage(state: StateDraft, args: {image: string}): void {
+    state.rtuxImage = args.image;
+  },
+
+  updateFtraceFilter(state: StateDraft, patch: FtraceFilterPatch) {
+    const {excludedNames: diffs} = patch;
+    const excludedNames = state.ftraceFilter.excludedNames;
+    for (const [addRemove, name] of diffs) {
+      switch (addRemove) {
+      case 'add':
+        if (!excludedNames.some((excluded: string) => excluded === name)) {
+          excludedNames.push(name);
+        }
+        break;
+      case 'remove':
+        state.ftraceFilter.excludedNames =
+              state.ftraceFilter.excludedNames.filter(
+                (excluded: string) => excluded !== name);
+        break;
+      default:
+        assertUnreachable(addRemove);
+        break;
+      }
+    }
   },
 
   startRecording(state: StateDraft, _: {}): void {

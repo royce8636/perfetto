@@ -161,6 +161,38 @@ export interface ThreadDesc {
 }
 type ThreadMap = Map<number, ThreadDesc>;
 
+export interface FtraceEvent {
+  id: number;
+  ts: time;
+  name: string;
+  cpu: number;
+  thread: string|null;
+  process: string|null;
+  args: string;
+}
+
+export interface FtracePanelData {
+  events: FtraceEvent[];
+  offset: number;
+  numEvents: number;  // Number of events in the visible window
+}
+
+export interface RtuxEvent{
+  ts: time;
+  event: string;
+}
+
+export interface RtuxPanelData {
+  events: RtuxEvent[];
+  offset: number;
+  numEvents: number;  // Number of events in the visible window
+}
+
+export interface FtraceStat {
+  name: string;
+  count: number;
+}
+
 function getRoot() {
   // Works out the root directory where the content should be served from
   // e.g. `http://origin/v1.2.3/`.
@@ -263,6 +295,10 @@ class Globals {
   private _router?: Router = undefined;
   private _embeddedMode?: boolean = undefined;
   private _hideSidebar?: boolean = undefined;
+  private _ftraceCounters?: FtraceStat[] = undefined;
+  private _rtuxCounters?: FtraceStat[] = undefined;
+  private _ftracePanelData?: FtracePanelData = undefined;
+  private _rtuxPanelData?: RtuxPanelData = undefined;
   private _cmdManager = new CommandManager();
   private _tabManager = new TabManager();
   private _trackManager = new TrackManager(this._store);
@@ -436,6 +472,14 @@ class Globals {
     this._visibleFlowCategories = assertExists(visibleFlowCategories);
   }
 
+  get counterDetails() {
+    return assertExists(this._counterDetails);
+  }
+
+  set counterDetails(click: CounterDetails) {
+    this._counterDetails = assertExists(click);
+  }
+
   get aggregateDataStore(): AggregateDataStore {
     return assertExists(this._aggregateDataStore);
   }
@@ -496,12 +540,28 @@ class Globals {
     this._currentSearchResults = results;
   }
 
-  set hasFtrace(value: boolean) {
-    this._hasFtrace = value;
+  get hasFtrace(): boolean {
+    return Boolean(this._ftraceCounters && this._ftraceCounters.length > 0);
   }
 
-  get hasFtrace(): boolean {
-    return this._hasFtrace;
+  get ftraceCounters(): FtraceStat[]|undefined {
+    return this._ftraceCounters;
+  }
+
+  set ftraceCounters(value: FtraceStat[]|undefined) {
+    this._ftraceCounters = value;
+  }
+
+  get hasRtux(): boolean {
+    return Boolean(this._rtuxCounters && this._rtuxCounters.length > 0);
+  }
+
+  get rtuxCounters(): FtraceStat[]|undefined {
+    return this._rtuxCounters;
+  }
+
+  set rtuxCounters(value: FtraceStat[]|undefined) {
+    this._rtuxCounters = value;
   }
 
   getConversionJobStatus(name: ConversionJobName): ConversionJobStatus {
@@ -583,34 +643,20 @@ class Globals {
     return this.state.engine;
   }
 
-  makeSelection(action: DeferredAction<{}>, opts: MakeSelectionOpts = {}) {
-    const {switchToCurrentSelectionTab = true, clearSearch = true} = opts;
-    const currentSelectionTabUri = 'current_selection';
-
-    // A new selection should cancel the current search selection.
-    clearSearch && globals.dispatch(Actions.setSearchIndex({index: -1}));
-
-    if (switchToCurrentSelectionTab) {
-      globals.dispatch(Actions.showTab({uri: currentSelectionTabUri}));
-    }
-    globals.dispatch(action);
+  get ftracePanelData(): FtracePanelData|undefined {
+    return this._ftracePanelData;
   }
 
-  setLegacySelection(
-    legacySelection: LegacySelection,
-    args: Partial<LegacySelectionArgs> = {},
-  ): void {
-    this._selectionManager.setLegacy(legacySelection);
-    this.handleSelectionArgs(args);
+  set ftracePanelData(data: FtracePanelData|undefined) {
+    this._ftracePanelData = data;
   }
 
-  selectSingleEvent(
-    trackKey: string,
-    eventId: number,
-    args: Partial<LegacySelectionArgs> = {},
-  ): void {
-    this._selectionManager.setEvent(trackKey, eventId);
-    this.handleSelectionArgs(args);
+  get rtuxPanelData(): RtuxPanelData|undefined {
+    return this._rtuxPanelData;
+  }
+
+  set rtuxPanelData(data: RtuxPanelData|undefined) {
+    this._rtuxPanelData = data;
   }
 
   private handleSelectionArgs(args: Partial<LegacySelectionArgs> = {}): void {

@@ -17,6 +17,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from 'rollup-plugin-re';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import {uglify} from 'rollup-plugin-uglify';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 const path = require('path');
 const ROOT_DIR = path.dirname(path.dirname(__dirname)); // The repo root.
@@ -33,6 +34,7 @@ function defBundle(tsRoot, bundle, distDir) {
       sourcemap: true,
     },
     plugins: [
+      nodePolyfills(),
       nodeResolve({
         mainFields: ['browser'],
         browser: true,

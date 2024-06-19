@@ -120,6 +120,26 @@ export function createEmptyState(): State {
     selection: {
       kind: 'empty',
     },
+
+    ftracePagination: {
+      offset: 0,
+      count: 0,
+    },
+
+    rtuxPagination: {
+      offset: 0,
+      count: 0,
+    },
+
+    rtuxImage: '',
+
+    ftraceFilter: {
+      excludedNames: [],
+    },
+
+    status: {msg: '', timestamp: 0},
+    currentSelection: null,
+    currentFlamegraphState: null,
     traceConversionInProgress: false,
 
     perfDebug: false,

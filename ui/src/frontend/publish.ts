@@ -12,9 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import {time} from '../base/time';
 import {Actions} from '../common/actions';
 import {AggregateData} from '../common/aggregation_data';
 import {ConversionJobStatusUpdate} from '../common/conversion_jobs';
+import {
+  LogBoundsKey,
+  LogEntriesKey,
+  LogExists,
+  LogExistsKey,
+} from '../common/logs';
 import {MetricResult} from '../common/metric_data';
 import {CurrentSearchResults, SearchSummary} from '../common/search_data';
 import {raf} from '../core/raf_scheduler';
@@ -22,10 +29,15 @@ import {HttpRpcState} from '../trace_processor/http_rpc_engine';
 import {getLegacySelection} from '../common/state';
 
 import {
+  CounterDetails,
   CpuProfileDetails,
+  FlamegraphDetails,
   Flow,
+  FtracePanelData,
+  FtraceStat,
   globals,
   QuantizedLoad,
+  RtuxPanelData,
   SliceDetails,
   ThreadDesc,
   ThreadStateDetails,
@@ -74,6 +86,16 @@ export function publishHttpRpcState(httpRpcState: HttpRpcState) {
   raf.scheduleFullRedraw();
 }
 
+export function publishCounterDetails(click: CounterDetails) {
+  globals.counterDetails = click;
+  globals.publishRedraw();
+}
+
+export function publishFlamegraphDetails(click: FlamegraphDetails) {
+  globals.flamegraphDetails = click;
+  globals.publishRedraw();
+}
+
 export function publishCpuProfileDetails(details: CpuProfileDetails) {
   globals.cpuProfileDetails = details;
   globals.publishRedraw();
@@ -83,6 +105,17 @@ export function publishHasFtrace(value: boolean): void {
   globals.hasFtrace = value;
   globals.publishRedraw();
 }
+
+export function publishRtuxCounters(counters: FtraceStat[]) {
+  globals.rtuxCounters = counters;
+  globals.publishRedraw();
+}
+
+export function publishRealtimeOffset(
+  offset: time, utcOffset: time, traceTzOffset: time) {
+  globals.realtimeOffset = offset;
+  globals.utcOffset = utcOffset;
+  globals.traceTzOffset = traceTzOffset;
 
 export function publishTraceContext(details: TraceContext): void {
   globals.traceContext = details;
@@ -199,5 +232,15 @@ export function publishShowPanningHint() {
 
 export function publishPermalinkHash(hash: string | undefined): void {
   globals.permalinkHash = hash;
+  globals.publishRedraw();
+}
+
+export function publishFtracePanelData(data: FtracePanelData) {
+  globals.ftracePanelData = data;
+  globals.publishRedraw();
+}
+
+export function publishRtuxPanelData(data: RtuxPanelData) {
+  globals.rtuxPanelData = data;
   globals.publishRedraw();
 }

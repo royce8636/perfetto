@@ -21,6 +21,7 @@
 // - Not directly rely on any other plugins.
 // - Be approved by one of Perfetto UI owners.
 export const defaultPlugins = [
+  'dev.rtux.track',
   'dev.perfetto.AndroidBinderVizPlugin',
   'dev.perfetto.AndroidClientServer',
   'dev.perfetto.AndroidCujs',

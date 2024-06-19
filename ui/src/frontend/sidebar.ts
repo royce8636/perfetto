@@ -48,6 +48,7 @@ import {
   convertTraceToSystraceAndDownload,
 } from './trace_converter';
 import {HttpRpcEngine} from '../trace_processor/http_rpc_engine';
+import {rtux_loader} from './rtux_loader';
 
 const GITILES_URL =
   'https://android.googlesource.com/platform/external/perfetto';
@@ -130,32 +131,38 @@ interface Section {
 
 function getSections(): Section[] {
   return [
-    {
-      title: 'Navigation',
-      summary: 'Open or record a new trace',
-      expanded: true,
-      items: [
-        {t: 'Open trace file', a: popupFileSelectionDialog, i: 'folder_open'},
-        {
-          t: 'Open with legacy UI',
-          a: popupFileSelectionDialogOldUI,
-          i: 'filter_none',
-        },
-        {t: 'Record new trace', a: navigateRecord, i: 'fiber_smart_record'},
-        {
-          t: 'Widgets',
-          a: navigateWidgets,
-          i: 'widgets',
-          isVisible: () => WIDGETS_PAGE_IN_NAV_FLAG.get(),
-        },
-        {
-          t: 'Plugins',
-          a: navigatePlugins,
-          i: 'extension',
-          isVisible: () => PLUGINS_PAGE_IN_NAV_FLAG.get(),
-        },
-      ],
-    },
+  {
+    title: 'Navigation',
+    summary: 'Open or record a new trace',
+    expanded: true,
+    items: [
+      {t: 'Open trace file', a: popupFileSelectionDialog, i: 'folder_open'},
+
+      {t: 'Open RTUX event file',
+        a: popupFileSelectionDialogRTUX, 
+        i: 'folder_open'
+      },
+
+      {
+        t: 'Open with legacy UI',
+        a: popupFileSelectionDialogOldUI,
+        i: 'filter_none',
+      },
+      {t: 'Record new trace', a: navigateRecord, i: 'fiber_smart_record'},
+      {
+        t: 'Widgets',
+        a: navigateWidgets,
+        i: 'widgets',
+        isVisible: () => WIDGETS_PAGE_IN_NAV_FLAG.get(),
+      },
+      {
+        t: 'Plugins',
+        a: navigatePlugins,
+        i: 'extension',
+        isVisible: () => PLUGINS_PAGE_IN_NAV_FLAG.get(),
+      },
+    ],
+  },
 
     {
       title: 'Current Trace',
@@ -300,6 +307,12 @@ function popupFileSelectionDialog(e: Event) {
   getFileElement().click();
 }
 
+function popupFileSelectionDialogRTUX(e: Event) {
+  e.preventDefault();
+  getFileElement().dataset['rtux'] = '1';
+  getFileElement().click();
+}
+
 function popupFileSelectionDialogOldUI(e: Event) {
   e.preventDefault();
   getFileElement().dataset['useCatapultLegacyUi'] = '1';
@@ -412,9 +425,15 @@ function onInputElementFileSelectionChanged(e: Event) {
     openWithLegacyUi(file);
     return;
   }
-
-  globals.logging.logEvent('Trace Actions', 'Open trace from file');
-  globals.dispatch(Actions.openTraceFromFile({file}));
+  if (e.target.dataset['rtux'] === '1') {
+    globals.logging.logEvent('Trace Actions', 'Open RTUX event file');
+    // rtux_loader.openJsonRtuxFromFile(file);
+    rtux_loader.readJsonFile(file);
+    e.target.dataset['rtux'] = '0';
+  } else{
+    globals.logging.logEvent('Trace Actions', 'Open trace from file');
+    globals.dispatch(Actions.openTraceFromFile({file}));
+  }
 }
 
 async function openWithLegacyUi(file: File) {

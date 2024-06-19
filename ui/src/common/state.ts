@@ -318,6 +318,97 @@ export interface SpanNote {
   text: string;
 }
 
+export interface NoteSelection {
+  kind: 'NOTE';
+  id: string;
+}
+
+export interface SliceSelection {
+  kind: 'SLICE';
+  id: number;
+}
+
+export interface RtuxSelection {
+  kind: 'RTUX';
+  id: number;
+}
+
+export interface CounterSelection {
+  kind: 'COUNTER';
+  leftTs: time;
+  rightTs: time;
+  id: number;
+}
+
+export interface HeapProfileSelection {
+  kind: 'HEAP_PROFILE';
+  id: number;
+  upid: number;
+  ts: time;
+  type: ProfileType;
+}
+
+export interface PerfSamplesSelection {
+  kind: 'PERF_SAMPLES';
+  id: number;
+  upid: number;
+  leftTs: time;
+  rightTs: time;
+  type: ProfileType;
+}
+
+export interface FlamegraphState {
+  kind: 'FLAMEGRAPH_STATE';
+  upids: number[];
+  start: time;
+  end: time;
+  type: ProfileType;
+  viewingOption: FlamegraphStateViewingOption;
+  focusRegex: string;
+  expandedCallsite?: CallsiteInfo;
+}
+
+export interface CpuProfileSampleSelection {
+  kind: 'CPU_PROFILE_SAMPLE';
+  id: number;
+  utid: number;
+  ts: time;
+}
+
+export interface ChromeSliceSelection {
+  kind: 'CHROME_SLICE';
+  id: number;
+  table?: string;
+}
+
+export interface ThreadStateSelection {
+  kind: 'THREAD_STATE';
+  id: number;
+}
+
+export interface LogSelection {
+  kind: 'LOG';
+  id: number;
+  trackKey: string;
+}
+
+export interface GenericSliceSelection {
+  kind: 'GENERIC_SLICE';
+  id: number;
+  sqlTableName: string;
+  start: time;
+  duration: duration;
+  // NOTE: this config can be expanded for multiple details panel types.
+  detailsPanelConfig: {kind: string; config: GenericSliceDetailsTabConfigBase;};
+}
+
+export type Selection =
+    (NoteSelection|SliceSelection|RtuxSelection|CounterSelection|HeapProfileSelection|
+     CpuProfileSampleSelection|ChromeSliceSelection|ThreadStateSelection|
+     AreaSelection|PerfSamplesSelection|LogSelection|GenericSliceSelection)&
+    {trackKey?: string};
+export type SelectionKind = Selection['kind'];  // 'THREAD_STATE' | 'SLICE' ...
+
 export interface Pagination {
   offset: number;
   count: number;

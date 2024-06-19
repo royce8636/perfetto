@@ -20,6 +20,8 @@
 *.pyc
 *.sock
 *.swp
+*.png
+*.jpg
 /bazel-*
 /compile_commands.json
 /fuzz_out/
@@ -34,3 +36,6 @@ GPATH
 GRTAGS
 GTAGS
 depot_tools/
+/ui/src/assets/data_copied/rtux_ai/logs/
+/ui/src/assets/data/rtux_ai/logs
+/ui/src/assets/logs
