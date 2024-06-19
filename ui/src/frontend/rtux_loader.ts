@@ -6,24 +6,17 @@ import {
     globals,
 } from './globals';
 import {Actions} from '../common/actions';
-// import { getContainingTrackId } from 'src/common/state';
-// import { Num } from 'src/common/event_set';
-// Define the types for clarity
 type PhotoInfo = Array<[time, Array<{ image_path: string; time: any }> ]>;
 type Vector = Array<{ key: time, value: string }>;
 
 class RtuxLoader {
     private imageToDisplay: string = "";
     private imageDisplayedTime: time = Time.INVALID;
-    // private subscribers: ((imagePath: string) => void)[] = [];
     public photoInfo: PhotoInfo = [];
     private globalVector: Vector = [];
     private oldImage: string = "";
     private minKey: number = -1;
     private minStep: number = -1;
-    // private mouseX: number = 0;
-    // private trackGroupId = getContainingTrackId(globals.state, );
-    // private tracksContainer = document.querySelectorAll('#track_');
 
 
     getStoredVector(): Vector {
@@ -64,9 +57,6 @@ class RtuxLoader {
                 console.log("Hash: matchingEntry is undefined", rounded_time, index);
                 return undefined;
             }
-            // if (matchingEntry.length === 0){
-                // return undefined;
-            // }
         }
         const [, image_info] = matchingEntry;
         let closest = image_info[0];
@@ -86,9 +76,7 @@ class RtuxLoader {
             globals.dispatch(Actions.updateRtuxImage({image: imagePath}));
             this.imageToDisplay = imagePath;
             this.oldImage = imagePath;
-            // console.log("imageToDisplay", this.imageToDisplay);
         }
-        // this.notifySubscribers();
     }
 
     getImageToDisplay(): string {
@@ -102,14 +90,6 @@ class RtuxLoader {
     getImageDisplayedTime(): time {
         return this.imageDisplayedTime;
     }
-
-    // subscribe(callback: (imagePath: string) => void): void {
-    //     this.subscribers.push(callback);
-    // }
-
-    // private notifySubscribers(): void {
-    //     this.subscribers.forEach(callback => callback(this.imageToDisplay));
-    // }
 
     async readJsonFile(file: File): Promise<{ vector: Vector, photoVector: PhotoInfo }> {
         return new Promise((resolve, reject) => {
@@ -178,26 +158,9 @@ class RtuxLoader {
                     console.log("minKey and minStep not found");
                 }
 
-                // Assign processed data to class properties
                 this.globalVector = vector;
                 this.photoInfo = photoVector;
 
-                // window.addEventListener('mousemove', (event: MouseEvent) => {
-                //     this.mouseX = event.clientX;
-                //     console.log("rtuxLoader", this.mouseX);
-                //     const timeToFind = globals.timeline.visibleTimeScale.pxToHpTime(this.mouseX).toTime();
-                //     const imageInfo = this.findImageInfo(timeToFind);
-                //     if (imageInfo){
-                //         let image_path = `${globals.root}assets${imageInfo.image_path}`;
-                //         this.setImageToDisplay(image_path);
-                //     }
-                //     else{
-                //         this.setImageToDisplay("");
-                //     }
-                //     // this.mousePos = {x, y};
-                // });
-
-                // Resolve with the processed data
                 resolve({ vector, photoVector });
             };
             reader.onerror = () => {
@@ -208,9 +171,6 @@ class RtuxLoader {
 
     }
 
-    // Add other methods here...
-    
 }
 
-// Export an instance of the class
 export const rtux_loader = new RtuxLoader();

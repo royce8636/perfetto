@@ -303,7 +303,8 @@ class PERFETTO_EXPORT_COMPONENT TracingService {
 
   // Default sizes used by the service implementation and client library.
   static constexpr size_t kDefaultShmPageSize = 4096ul;
-  static constexpr size_t kDefaultShmSize = 256 * 1024ul;
+  // static constexpr size_t kDefaultShmSize = 256 * 1024ul;
+  static constexpr size_t kDefaultShmSize = 512 * 1024ul;
 
   enum class ProducerSMBScrapingMode {
     // Use service's default setting for SMB scraping. Currently, the default
