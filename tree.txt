@@ -1,0 +1,1394 @@
+.
+├── build
+├── BUILD.gn
+├── build.js
+├── config
+│   ├── gn_deprecation_banner.txt
+│   ├── integrationtest_env.js
+│   ├── integrationtest_setup.js
+│   ├── integrationtest_teardown.js
+│   ├── jest.integrationtest.config.js
+│   ├── jest.unittest.config.js
+│   └── rollup.config.js
+├── eslint
+├── eslint-all
+├── node
+├── node_modules
+│   ├── abab -> .pnpm/abab@2.0.6/node_modules/abab
+│   ├── acorn -> .pnpm/acorn@8.9.0/node_modules/acorn
+│   ├── acorn-globals -> .pnpm/acorn-globals@6.0.0/node_modules/acorn-globals
+│   ├── acorn-jsx -> .pnpm/acorn-jsx@5.3.2_acorn@8.9.0/node_modules/acorn-jsx
+│   ├── acorn-walk -> .pnpm/acorn-walk@7.2.0/node_modules/acorn-walk
+│   ├── agent-base -> .pnpm/agent-base@7.1.0/node_modules/agent-base
+│   ├── ajv -> .pnpm/ajv@6.12.6/node_modules/ajv
+│   ├── @ampproject
+│   │   └── remapping -> ../.pnpm/@ampproject+remapping@2.2.1/node_modules/@ampproject/remapping
+│   ├── ansi-escapes -> .pnpm/ansi-escapes@4.3.2/node_modules/ansi-escapes
+│   ├── ansi-regex -> .pnpm/ansi-regex@5.0.1/node_modules/ansi-regex
+│   ├── ansi-styles -> .pnpm/ansi-styles@4.3.0/node_modules/ansi-styles
+│   ├── anymatch -> .pnpm/anymatch@3.1.3/node_modules/anymatch
+│   ├── argparse -> .pnpm/argparse@2.0.1/node_modules/argparse
+│   ├── array-union -> .pnpm/array-union@2.1.0/node_modules/array-union
+│   ├── array-unique -> .pnpm/array-unique@0.3.2/node_modules/array-unique
+│   ├── arr-diff -> .pnpm/arr-diff@4.0.0/node_modules/arr-diff
+│   ├── arr-flatten -> .pnpm/arr-flatten@1.1.0/node_modules/arr-flatten
+│   ├── arr-union -> .pnpm/arr-union@3.1.0/node_modules/arr-union
+│   ├── assign-symbols -> .pnpm/assign-symbols@1.0.0/node_modules/assign-symbols
+│   ├── ast-types -> .pnpm/ast-types@0.13.4/node_modules/ast-types
+│   ├── asynckit -> .pnpm/asynckit@0.4.0/node_modules/asynckit
+│   ├── atob -> .pnpm/atob@2.1.2/node_modules/atob
+│   ├── available-typed-arrays -> .pnpm/available-typed-arrays@1.0.5/node_modules/available-typed-arrays
+│   ├── b4a -> .pnpm/b4a@1.6.4/node_modules/b4a
+│   ├── @babel
+│   │   ├── code-frame -> ../.pnpm/@babel+code-frame@7.22.5/node_modules/@babel/code-frame
+│   │   ├── compat-data -> ../.pnpm/@babel+compat-data@7.22.5/node_modules/@babel/compat-data
+│   │   ├── core -> ../.pnpm/@babel+core@7.22.5/node_modules/@babel/core
+│   │   ├── generator -> ../.pnpm/@babel+generator@7.22.5/node_modules/@babel/generator
+│   │   ├── helper-compilation-targets -> ../.pnpm/@babel+helper-compilation-targets@7.22.5_@babel+core@7.22.5/node_modules/@babel/helper-compilation-targets
+│   │   ├── helper-environment-visitor -> ../.pnpm/@babel+helper-environment-visitor@7.22.5/node_modules/@babel/helper-environment-visitor
+│   │   ├── helper-function-name -> ../.pnpm/@babel+helper-function-name@7.22.5/node_modules/@babel/helper-function-name
+│   │   ├── helper-hoist-variables -> ../.pnpm/@babel+helper-hoist-variables@7.22.5/node_modules/@babel/helper-hoist-variables
+│   │   ├── helper-module-imports -> ../.pnpm/@babel+helper-module-imports@7.22.5/node_modules/@babel/helper-module-imports
+│   │   ├── helper-module-transforms -> ../.pnpm/@babel+helper-module-transforms@7.22.5/node_modules/@babel/helper-module-transforms
+│   │   ├── helper-plugin-utils -> ../.pnpm/@babel+helper-plugin-utils@7.22.5/node_modules/@babel/helper-plugin-utils
+│   │   ├── helpers -> ../.pnpm/@babel+helpers@7.22.5/node_modules/@babel/helpers
+│   │   ├── helper-simple-access -> ../.pnpm/@babel+helper-simple-access@7.22.5/node_modules/@babel/helper-simple-access
+│   │   ├── helper-split-export-declaration -> ../.pnpm/@babel+helper-split-export-declaration@7.22.5/node_modules/@babel/helper-split-export-declaration
+│   │   ├── helper-string-parser -> ../.pnpm/@babel+helper-string-parser@7.22.5/node_modules/@babel/helper-string-parser
+│   │   ├── helper-validator-identifier -> ../.pnpm/@babel+helper-validator-identifier@7.22.5/node_modules/@babel/helper-validator-identifier
+│   │   ├── helper-validator-option -> ../.pnpm/@babel+helper-validator-option@7.22.5/node_modules/@babel/helper-validator-option
+│   │   ├── highlight -> ../.pnpm/@babel+highlight@7.22.5/node_modules/@babel/highlight
+│   │   ├── parser -> ../.pnpm/@babel+parser@7.22.5/node_modules/@babel/parser
+│   │   ├── plugin-syntax-async-generators -> ../.pnpm/@babel+plugin-syntax-async-generators@7.8.4_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-async-generators
+│   │   ├── plugin-syntax-bigint -> ../.pnpm/@babel+plugin-syntax-bigint@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-bigint
+│   │   ├── plugin-syntax-class-properties -> ../.pnpm/@babel+plugin-syntax-class-properties@7.12.13_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-class-properties
+│   │   ├── plugin-syntax-import-meta -> ../.pnpm/@babel+plugin-syntax-import-meta@7.10.4_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-import-meta
+│   │   ├── plugin-syntax-json-strings -> ../.pnpm/@babel+plugin-syntax-json-strings@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-json-strings
+│   │   ├── plugin-syntax-logical-assignment-operators -> ../.pnpm/@babel+plugin-syntax-logical-assignment-operators@7.10.4_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-logical-assignment-operators
+│   │   ├── plugin-syntax-nullish-coalescing-operator -> ../.pnpm/@babel+plugin-syntax-nullish-coalescing-operator@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-nullish-coalescing-operator
+│   │   ├── plugin-syntax-numeric-separator -> ../.pnpm/@babel+plugin-syntax-numeric-separator@7.10.4_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-numeric-separator
+│   │   ├── plugin-syntax-object-rest-spread -> ../.pnpm/@babel+plugin-syntax-object-rest-spread@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-object-rest-spread
+│   │   ├── plugin-syntax-optional-catch-binding -> ../.pnpm/@babel+plugin-syntax-optional-catch-binding@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-optional-catch-binding
+│   │   ├── plugin-syntax-optional-chaining -> ../.pnpm/@babel+plugin-syntax-optional-chaining@7.8.3_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-optional-chaining
+│   │   ├── plugin-syntax-top-level-await -> ../.pnpm/@babel+plugin-syntax-top-level-await@7.14.5_@babel+core@7.22.5/node_modules/@babel/plugin-syntax-top-level-await
+│   │   ├── template -> ../.pnpm/@babel+template@7.22.5/node_modules/@babel/template
+│   │   ├── traverse -> ../.pnpm/@babel+traverse@7.22.5/node_modules/@babel/traverse
+│   │   └── types -> ../.pnpm/@babel+types@7.22.5/node_modules/@babel/types
+│   ├── babel-jest -> .pnpm/babel-jest@26.6.3_@babel+core@7.22.5/node_modules/babel-jest
+│   ├── babel-plugin-istanbul -> .pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul
+│   ├── babel-plugin-jest-hoist -> .pnpm/babel-plugin-jest-hoist@26.6.2/node_modules/babel-plugin-jest-hoist
+│   ├── babel-preset-current-node-syntax -> .pnpm/babel-preset-current-node-syntax@1.0.1_@babel+core@7.22.5/node_modules/babel-preset-current-node-syntax
+│   ├── babel-preset-jest -> .pnpm/babel-preset-jest@26.6.2_@babel+core@7.22.5/node_modules/babel-preset-jest
+│   ├── balanced-match -> .pnpm/balanced-match@1.0.2/node_modules/balanced-match
+│   ├── base -> .pnpm/base@0.11.2/node_modules/base
+│   ├── base64-js -> .pnpm/base64-js@1.5.1/node_modules/base64-js
+│   ├── basic-ftp -> .pnpm/basic-ftp@5.0.3/node_modules/basic-ftp
+│   ├── @bcoe
+│   │   └── v8-coverage -> ../.pnpm/@bcoe+v8-coverage@0.2.3/node_modules/@bcoe/v8-coverage
+│   ├── binary-extensions -> .pnpm/binary-extensions@2.2.0/node_modules/binary-extensions
+│   ├── bluebird -> .pnpm/bluebird@3.7.2/node_modules/bluebird
+│   ├── brace-expansion -> .pnpm/brace-expansion@1.1.11/node_modules/brace-expansion
+│   ├── braces -> .pnpm/braces@3.0.2/node_modules/braces
+│   ├── browser-process-hrtime -> .pnpm/browser-process-hrtime@1.0.0/node_modules/browser-process-hrtime
+│   ├── browserslist -> .pnpm/browserslist@4.21.9/node_modules/browserslist
+│   ├── bser -> .pnpm/bser@2.1.1/node_modules/bser
+│   ├── buffer -> .pnpm/buffer@5.7.1/node_modules/buffer
+│   ├── buffer-crc32 -> .pnpm/buffer-crc32@0.2.13/node_modules/buffer-crc32
+│   ├── buffer-from -> .pnpm/buffer-from@1.1.2/node_modules/buffer-from
+│   ├── builtin-modules -> .pnpm/builtin-modules@3.3.0/node_modules/builtin-modules
+│   ├── cache-base -> .pnpm/cache-base@1.0.1/node_modules/cache-base
+│   ├── call-bind -> .pnpm/call-bind@1.0.2/node_modules/call-bind
+│   ├── callsites -> .pnpm/callsites@3.1.0/node_modules/callsites
+│   ├── camelcase -> .pnpm/camelcase@6.3.0/node_modules/camelcase
+│   ├── caniuse-lite -> .pnpm/caniuse-lite@1.0.30001507/node_modules/caniuse-lite
+│   ├── capture-exit -> .pnpm/capture-exit@2.0.0/node_modules/capture-exit
+│   ├── catharsis -> .pnpm/catharsis@0.9.0/node_modules/catharsis
+│   ├── chalk -> .pnpm/chalk@4.1.2/node_modules/chalk
+│   ├── char-regex -> .pnpm/char-regex@1.0.2/node_modules/char-regex
+│   ├── chokidar -> .pnpm/chokidar@3.5.3/node_modules/chokidar
+│   ├── chromium-bidi -> .pnpm/chromium-bidi@0.4.12_devtools-protocol@0.0.1135028/node_modules/chromium-bidi
+│   ├── ci-info -> .pnpm/ci-info@2.0.0/node_modules/ci-info
+│   ├── cjs-module-lexer -> .pnpm/cjs-module-lexer@0.6.0/node_modules/cjs-module-lexer
+│   ├── class-utils -> .pnpm/class-utils@0.3.6/node_modules/class-utils
+│   ├── cliui -> .pnpm/cliui@8.0.1/node_modules/cliui
+│   ├── clone -> .pnpm/clone@2.1.2/node_modules/clone
+│   ├── @cnakazawa
+│   │   └── watch -> ../.pnpm/@cnakazawa+watch@1.0.4/node_modules/@cnakazawa/watch
+│   ├── co -> .pnpm/co@4.6.0/node_modules/co
+│   ├── @codemirror
+│   │   ├── autocomplete -> ../.pnpm/@codemirror+autocomplete@6.8.1_@codemirror+language@6.9.0_@codemirror+state@6.2.1_@codemirror_2kdk2ye2nuognd3cvwrkuo46r4/node_modules/@codemirror/autocomplete
+│   │   ├── commands -> ../.pnpm/@codemirror+commands@6.2.4/node_modules/@codemirror/commands
+│   │   ├── language -> ../.pnpm/@codemirror+language@6.9.0/node_modules/@codemirror/language
+│   │   ├── lint -> ../.pnpm/@codemirror+lint@6.3.0/node_modules/@codemirror/lint
+│   │   ├── search -> ../.pnpm/@codemirror+search@6.5.0/node_modules/@codemirror/search
+│   │   ├── state -> ../.pnpm/@codemirror+state@6.2.1/node_modules/@codemirror/state
+│   │   ├── theme-one-dark -> ../.pnpm/@codemirror+theme-one-dark@6.1.2/node_modules/@codemirror/theme-one-dark
+│   │   └── view -> ../.pnpm/@codemirror+view@6.18.1/node_modules/@codemirror/view
+│   ├── codemirror -> .pnpm/codemirror@6.0.1_@lezer+common@1.0.4/node_modules/codemirror
+│   ├── collection-visit -> .pnpm/collection-visit@1.0.0/node_modules/collection-visit
+│   ├── collect-v8-coverage -> .pnpm/collect-v8-coverage@1.0.1/node_modules/collect-v8-coverage
+│   ├── color-convert -> .pnpm/color-convert@2.0.1/node_modules/color-convert
+│   ├── color-name -> .pnpm/color-name@1.1.4/node_modules/color-name
+│   ├── combined-stream -> .pnpm/combined-stream@1.0.8/node_modules/combined-stream
+│   ├── commander -> .pnpm/commander@7.2.0/node_modules/commander
+│   ├── commondir -> .pnpm/commondir@1.0.1/node_modules/commondir
+│   ├── component-emitter -> .pnpm/component-emitter@1.3.0/node_modules/component-emitter
+│   ├── concat-map -> .pnpm/concat-map@0.0.1/node_modules/concat-map
+│   ├── convert-source-map -> .pnpm/convert-source-map@1.9.0/node_modules/convert-source-map
+│   ├── copy-descriptor -> .pnpm/copy-descriptor@0.1.1/node_modules/copy-descriptor
+│   ├── cosmiconfig -> .pnpm/cosmiconfig@8.2.0/node_modules/cosmiconfig
+│   ├── crelt -> .pnpm/crelt@1.0.6/node_modules/crelt
+│   ├── cross-fetch -> .pnpm/cross-fetch@3.1.6/node_modules/cross-fetch
+│   ├── cross-spawn -> .pnpm/cross-spawn@7.0.3/node_modules/cross-spawn
+│   ├── cssom -> .pnpm/cssom@0.4.4/node_modules/cssom
+│   ├── cssstyle -> .pnpm/cssstyle@2.3.0/node_modules/cssstyle
+│   ├── custom_utils -> .pnpm/file+src+base+utils/node_modules/custom_utils
+│   ├── d3-array -> .pnpm/d3-array@3.2.4/node_modules/d3-array
+│   ├── d3-color -> .pnpm/d3-color@3.1.0/node_modules/d3-color
+│   ├── d3-delaunay -> .pnpm/d3-delaunay@6.0.4/node_modules/d3-delaunay
+│   ├── d3-dispatch -> .pnpm/d3-dispatch@3.0.1/node_modules/d3-dispatch
+│   ├── d3-dsv -> .pnpm/d3-dsv@3.0.1/node_modules/d3-dsv
+│   ├── d3-force -> .pnpm/d3-force@3.0.0/node_modules/d3-force
+│   ├── d3-format -> .pnpm/d3-format@3.1.0/node_modules/d3-format
+│   ├── d3-geo -> .pnpm/d3-geo@3.1.0/node_modules/d3-geo
+│   ├── d3-geo-projection -> .pnpm/d3-geo-projection@4.0.0/node_modules/d3-geo-projection
+│   ├── d3-hierarchy -> .pnpm/d3-hierarchy@3.1.2/node_modules/d3-hierarchy
+│   ├── d3-interpolate -> .pnpm/d3-interpolate@3.0.1/node_modules/d3-interpolate
+│   ├── d3-path -> .pnpm/d3-path@3.1.0/node_modules/d3-path
+│   ├── d3-quadtree -> .pnpm/d3-quadtree@3.0.1/node_modules/d3-quadtree
+│   ├── d3-scale -> .pnpm/d3-scale@4.0.2/node_modules/d3-scale
+│   ├── d3-shape -> .pnpm/d3-shape@3.2.0/node_modules/d3-shape
+│   ├── d3-time -> .pnpm/d3-time@3.1.0/node_modules/d3-time
+│   ├── d3-time-format -> .pnpm/d3-time-format@4.1.0/node_modules/d3-time-format
+│   ├── d3-timer -> .pnpm/d3-timer@3.0.1/node_modules/d3-timer
+│   ├── data-uri-to-buffer -> .pnpm/data-uri-to-buffer@5.0.1/node_modules/data-uri-to-buffer
+│   ├── data-urls -> .pnpm/data-urls@2.0.0/node_modules/data-urls
+│   ├── debug -> .pnpm/debug@4.3.4/node_modules/debug
+│   ├── decamelize -> .pnpm/decamelize@1.2.0/node_modules/decamelize
+│   ├── decimal.js -> .pnpm/decimal.js@10.4.3/node_modules/decimal.js
+│   ├── decode-uri-component -> .pnpm/decode-uri-component@0.2.2/node_modules/decode-uri-component
+│   ├── deep-is -> .pnpm/deep-is@0.1.4/node_modules/deep-is
+│   ├── deepmerge -> .pnpm/deepmerge@4.3.1/node_modules/deepmerge
+│   ├── define-property -> .pnpm/define-property@2.0.2/node_modules/define-property
+│   ├── degenerator -> .pnpm/degenerator@4.0.3/node_modules/degenerator
+│   ├── delaunator -> .pnpm/delaunator@5.0.0/node_modules/delaunator
+│   ├── delayed-stream -> .pnpm/delayed-stream@1.0.0/node_modules/delayed-stream
+│   ├── detect-newline -> .pnpm/detect-newline@3.1.0/node_modules/detect-newline
+│   ├── devtools-protocol -> .pnpm/devtools-protocol@0.0.1159816/node_modules/devtools-protocol
+│   ├── diff-sequences -> .pnpm/diff-sequences@26.6.2/node_modules/diff-sequences
+│   ├── dingusjs -> .pnpm/dingusjs@0.0.3/node_modules/dingusjs
+│   ├── dir-glob -> .pnpm/dir-glob@3.0.1/node_modules/dir-glob
+│   ├── doctrine -> .pnpm/doctrine@3.0.0/node_modules/doctrine
+│   ├── domexception -> .pnpm/domexception@2.0.1/node_modules/domexception
+│   ├── electron-to-chromium -> .pnpm/electron-to-chromium@1.4.440/node_modules/electron-to-chromium
+│   ├── emittery -> .pnpm/emittery@0.7.2/node_modules/emittery
+│   ├── emoji-regex -> .pnpm/emoji-regex@8.0.0/node_modules/emoji-regex
+│   ├── end-of-stream -> .pnpm/end-of-stream@1.4.4/node_modules/end-of-stream
+│   ├── entities -> .pnpm/entities@2.1.0/node_modules/entities
+│   ├── error-ex -> .pnpm/error-ex@1.3.2/node_modules/error-ex
+│   ├── esbuild -> .pnpm/esbuild@0.15.18/node_modules/esbuild
+│   ├── esbuild-linux-64 -> .pnpm/esbuild-linux-64@0.15.18/node_modules/esbuild-linux-64
+│   ├── escalade -> .pnpm/escalade@3.1.1/node_modules/escalade
+│   ├── escape-string-regexp -> .pnpm/escape-string-regexp@4.0.0/node_modules/escape-string-regexp
+│   ├── escodegen -> .pnpm/escodegen@1.14.3/node_modules/escodegen
+│   ├── @eslint
+│   │   ├── eslintrc -> ../.pnpm/@eslint+eslintrc@2.0.3/node_modules/@eslint/eslintrc
+│   │   └── js -> ../.pnpm/@eslint+js@8.43.0/node_modules/@eslint/js
+│   ├── eslint -> .pnpm/eslint@8.43.0/node_modules/eslint
+│   ├── @eslint-community
+│   │   ├── eslint-utils -> ../.pnpm/@eslint-community+eslint-utils@4.4.0_eslint@8.43.0/node_modules/@eslint-community/eslint-utils
+│   │   └── regexpp -> ../.pnpm/@eslint-community+regexpp@4.5.1/node_modules/@eslint-community/regexpp
+│   ├── eslint-config-google -> .pnpm/eslint-config-google@0.14.0_eslint@8.43.0/node_modules/eslint-config-google
+│   ├── eslint-scope -> .pnpm/eslint-scope@7.2.0/node_modules/eslint-scope
+│   ├── eslint-visitor-keys -> .pnpm/eslint-visitor-keys@3.4.1/node_modules/eslint-visitor-keys
+│   ├── espree -> .pnpm/espree@9.5.2/node_modules/espree
+│   ├── esprima -> .pnpm/esprima@4.0.1/node_modules/esprima
+│   ├── esquery -> .pnpm/esquery@1.5.0/node_modules/esquery
+│   ├── esrecurse -> .pnpm/esrecurse@4.3.0/node_modules/esrecurse
+│   ├── estraverse -> .pnpm/estraverse@5.3.0/node_modules/estraverse
+│   ├── estree-walker -> .pnpm/estree-walker@2.0.2/node_modules/estree-walker
+│   ├── esutils -> .pnpm/esutils@2.0.3/node_modules/esutils
+│   ├── events -> .pnpm/events@3.3.0/node_modules/events
+│   ├── execa -> .pnpm/execa@4.1.0/node_modules/execa
+│   ├── exec-sh -> .pnpm/exec-sh@0.3.6/node_modules/exec-sh
+│   ├── exit -> .pnpm/exit@0.1.2/node_modules/exit
+│   ├── expand-brackets -> .pnpm/expand-brackets@2.1.4/node_modules/expand-brackets
+│   ├── expect -> .pnpm/expect@26.6.2/node_modules/expect
+│   ├── extend-shallow -> .pnpm/extend-shallow@3.0.2/node_modules/extend-shallow
+│   ├── extglob -> .pnpm/extglob@2.0.4/node_modules/extglob
+│   ├── extract-zip -> .pnpm/extract-zip@2.0.1/node_modules/extract-zip
+│   ├── fast-deep-equal -> .pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal
+│   ├── fast-fifo -> .pnpm/fast-fifo@1.2.0/node_modules/fast-fifo
+│   ├── fast-glob -> .pnpm/fast-glob@3.2.12/node_modules/fast-glob
+│   ├── fast-json-stable-stringify -> .pnpm/fast-json-stable-stringify@2.1.0/node_modules/fast-json-stable-stringify
+│   ├── fast-levenshtein -> .pnpm/fast-levenshtein@2.0.6/node_modules/fast-levenshtein
+│   ├── fastq -> .pnpm/fastq@1.15.0/node_modules/fastq
+│   ├── fb-watchman -> .pnpm/fb-watchman@2.0.2/node_modules/fb-watchman
+│   ├── fd-slicer -> .pnpm/fd-slicer@1.1.0/node_modules/fd-slicer
+│   ├── file-entry-cache -> .pnpm/file-entry-cache@6.0.1/node_modules/file-entry-cache
+│   ├── fill-range -> .pnpm/fill-range@4.0.0/node_modules/fill-range
+│   ├── find-up -> .pnpm/find-up@5.0.0/node_modules/find-up
+│   ├── flat-cache -> .pnpm/flat-cache@3.0.4/node_modules/flat-cache
+│   ├── flatted -> .pnpm/flatted@3.2.7/node_modules/flatted
+│   ├── for-each -> .pnpm/for-each@0.3.3/node_modules/for-each
+│   ├── for-in -> .pnpm/for-in@1.0.2/node_modules/for-in
+│   ├── form-data -> .pnpm/form-data@3.0.1/node_modules/form-data
+│   ├── fragment-cache -> .pnpm/fragment-cache@0.2.1/node_modules/fragment-cache
+│   ├── fs-extra -> .pnpm/fs-extra@8.1.0/node_modules/fs-extra
+│   ├── fs.realpath -> .pnpm/fs.realpath@1.0.0/node_modules/fs.realpath
+│   ├── function-bind -> .pnpm/function-bind@1.1.1/node_modules/function-bind
+│   ├── gensync -> .pnpm/gensync@1.0.0-beta.2/node_modules/gensync
+│   ├── get-caller-file -> .pnpm/get-caller-file@2.0.5/node_modules/get-caller-file
+│   ├── get-intrinsic -> .pnpm/get-intrinsic@1.2.1/node_modules/get-intrinsic
+│   ├── get-package-type -> .pnpm/get-package-type@0.1.0/node_modules/get-package-type
+│   ├── get-stream -> .pnpm/get-stream@5.2.0/node_modules/get-stream
+│   ├── get-uri -> .pnpm/get-uri@6.0.1/node_modules/get-uri
+│   ├── get-value -> .pnpm/get-value@2.0.6/node_modules/get-value
+│   ├── glob -> .pnpm/glob@8.1.0/node_modules/glob
+│   ├── globals -> .pnpm/globals@13.20.0/node_modules/globals
+│   ├── globby -> .pnpm/globby@11.1.0/node_modules/globby
+│   ├── glob-parent -> .pnpm/glob-parent@6.0.2/node_modules/glob-parent
+│   ├── gopd -> .pnpm/gopd@1.0.1/node_modules/gopd
+│   ├── graceful-fs -> .pnpm/graceful-fs@4.2.11/node_modules/graceful-fs
+│   ├── graphemer -> .pnpm/graphemer@1.4.0/node_modules/graphemer
+│   ├── grapheme-splitter -> .pnpm/grapheme-splitter@1.0.4/node_modules/grapheme-splitter
+│   ├── growly -> .pnpm/growly@1.3.0/node_modules/growly
+│   ├── has -> .pnpm/has@1.0.3/node_modules/has
+│   ├── has-flag -> .pnpm/has-flag@4.0.0/node_modules/has-flag
+│   ├── has-proto -> .pnpm/has-proto@1.0.1/node_modules/has-proto
+│   ├── has-symbols -> .pnpm/has-symbols@1.0.3/node_modules/has-symbols
+│   ├── has-tostringtag -> .pnpm/has-tostringtag@1.0.0/node_modules/has-tostringtag
+│   ├── has-value -> .pnpm/has-value@1.0.0/node_modules/has-value
+│   ├── has-values -> .pnpm/has-values@1.0.0/node_modules/has-values
+│   ├── hosted-git-info -> .pnpm/hosted-git-info@2.8.9/node_modules/hosted-git-info
+│   ├── hsluv -> .pnpm/hsluv@0.1.0/node_modules/hsluv
+│   ├── html-encoding-sniffer -> .pnpm/html-encoding-sniffer@2.0.1/node_modules/html-encoding-sniffer
+│   ├── html-escaper -> .pnpm/html-escaper@2.0.2/node_modules/html-escaper
+│   ├── http-proxy-agent -> .pnpm/http-proxy-agent@7.0.0/node_modules/http-proxy-agent
+│   ├── https-proxy-agent -> .pnpm/https-proxy-agent@7.0.0/node_modules/https-proxy-agent
+│   ├── human-signals -> .pnpm/human-signals@1.1.1/node_modules/human-signals
+│   ├── @humanwhocodes
+│   │   ├── config-array -> ../.pnpm/@humanwhocodes+config-array@0.11.10/node_modules/@humanwhocodes/config-array
+│   │   ├── module-importer -> ../.pnpm/@humanwhocodes+module-importer@1.0.1/node_modules/@humanwhocodes/module-importer
+│   │   └── object-schema -> ../.pnpm/@humanwhocodes+object-schema@1.2.1/node_modules/@humanwhocodes/object-schema
+│   ├── iconv-lite -> .pnpm/iconv-lite@0.6.3/node_modules/iconv-lite
+│   ├── ieee754 -> .pnpm/ieee754@1.2.1/node_modules/ieee754
+│   ├── ignore -> .pnpm/ignore@5.2.4/node_modules/ignore
+│   ├── immer -> .pnpm/immer@9.0.21/node_modules/immer
+│   ├── immutable -> .pnpm/immutable@4.3.0/node_modules/immutable
+│   ├── import-fresh -> .pnpm/import-fresh@3.3.0/node_modules/import-fresh
+│   ├── import-local -> .pnpm/import-local@3.1.0/node_modules/import-local
+│   ├── imurmurhash -> .pnpm/imurmurhash@0.1.4/node_modules/imurmurhash
+│   ├── inflight -> .pnpm/inflight@1.0.6/node_modules/inflight
+│   ├── inherits -> .pnpm/inherits@2.0.4/node_modules/inherits
+│   ├── internmap -> .pnpm/internmap@2.0.3/node_modules/internmap
+│   ├── ip -> .pnpm/ip@1.1.8/node_modules/ip
+│   ├── is-accessor-descriptor -> .pnpm/is-accessor-descriptor@1.0.0/node_modules/is-accessor-descriptor
+│   ├── is-arguments -> .pnpm/is-arguments@1.1.1/node_modules/is-arguments
+│   ├── isarray -> .pnpm/isarray@1.0.0/node_modules/isarray
+│   ├── is-arrayish -> .pnpm/is-arrayish@0.2.1/node_modules/is-arrayish
+│   ├── is-binary-path -> .pnpm/is-binary-path@2.1.0/node_modules/is-binary-path
+│   ├── is-buffer -> .pnpm/is-buffer@1.1.6/node_modules/is-buffer
+│   ├── is-builtin-module -> .pnpm/is-builtin-module@3.2.1/node_modules/is-builtin-module
+│   ├── is-callable -> .pnpm/is-callable@1.2.7/node_modules/is-callable
+│   ├── is-ci -> .pnpm/is-ci@2.0.0/node_modules/is-ci
+│   ├── is-core-module -> .pnpm/is-core-module@2.12.1/node_modules/is-core-module
+│   ├── is-data-descriptor -> .pnpm/is-data-descriptor@1.0.0/node_modules/is-data-descriptor
+│   ├── is-descriptor -> .pnpm/is-descriptor@1.0.2/node_modules/is-descriptor
+│   ├── is-docker -> .pnpm/is-docker@2.2.1/node_modules/is-docker
+│   ├── isexe -> .pnpm/isexe@2.0.0/node_modules/isexe
+│   ├── is-extendable -> .pnpm/is-extendable@1.0.1/node_modules/is-extendable
+│   ├── is-extglob -> .pnpm/is-extglob@2.1.1/node_modules/is-extglob
+│   ├── is-fullwidth-code-point -> .pnpm/is-fullwidth-code-point@3.0.0/node_modules/is-fullwidth-code-point
+│   ├── is-generator-fn -> .pnpm/is-generator-fn@2.1.0/node_modules/is-generator-fn
+│   ├── is-generator-function -> .pnpm/is-generator-function@1.0.10/node_modules/is-generator-function
+│   ├── is-glob -> .pnpm/is-glob@4.0.3/node_modules/is-glob
+│   ├── is-module -> .pnpm/is-module@1.0.0/node_modules/is-module
+│   ├── is-number -> .pnpm/is-number@3.0.0/node_modules/is-number
+│   ├── isobject -> .pnpm/isobject@3.0.1/node_modules/isobject
+│   ├── is-path-inside -> .pnpm/is-path-inside@3.0.3/node_modules/is-path-inside
+│   ├── is-plain-object -> .pnpm/is-plain-object@2.0.4/node_modules/is-plain-object
+│   ├── is-potential-custom-element-name -> .pnpm/is-potential-custom-element-name@1.0.1/node_modules/is-potential-custom-element-name
+│   ├── is-reference -> .pnpm/is-reference@1.2.1/node_modules/is-reference
+│   ├── is-stream -> .pnpm/is-stream@2.0.1/node_modules/is-stream
+│   ├── @istanbuljs
+│   │   ├── load-nyc-config -> ../.pnpm/@istanbuljs+load-nyc-config@1.1.0/node_modules/@istanbuljs/load-nyc-config
+│   │   └── schema -> ../.pnpm/@istanbuljs+schema@0.1.3/node_modules/@istanbuljs/schema
+│   ├── istanbul-lib-coverage -> .pnpm/istanbul-lib-coverage@3.2.0/node_modules/istanbul-lib-coverage
+│   ├── istanbul-lib-instrument -> .pnpm/istanbul-lib-instrument@4.0.3/node_modules/istanbul-lib-instrument
+│   ├── istanbul-lib-report -> .pnpm/istanbul-lib-report@3.0.0/node_modules/istanbul-lib-report
+│   ├── istanbul-lib-source-maps -> .pnpm/istanbul-lib-source-maps@4.0.1/node_modules/istanbul-lib-source-maps
+│   ├── istanbul-reports -> .pnpm/istanbul-reports@3.1.5/node_modules/istanbul-reports
+│   ├── is-typed-array -> .pnpm/is-typed-array@1.1.10/node_modules/is-typed-array
+│   ├── is-typedarray -> .pnpm/is-typedarray@1.0.0/node_modules/is-typedarray
+│   ├── is-windows -> .pnpm/is-windows@1.0.2/node_modules/is-windows
+│   ├── is-wsl -> .pnpm/is-wsl@2.2.0/node_modules/is-wsl
+│   ├── @jest
+│   │   ├── console -> ../.pnpm/@jest+console@26.6.2/node_modules/@jest/console
+│   │   ├── core -> ../.pnpm/@jest+core@26.6.3/node_modules/@jest/core
+│   │   ├── environment -> ../.pnpm/@jest+environment@26.6.2/node_modules/@jest/environment
+│   │   ├── fake-timers -> ../.pnpm/@jest+fake-timers@26.6.2/node_modules/@jest/fake-timers
+│   │   ├── globals -> ../.pnpm/@jest+globals@26.6.2/node_modules/@jest/globals
+│   │   ├── reporters -> ../.pnpm/@jest+reporters@26.6.2/node_modules/@jest/reporters
+│   │   ├── source-map -> ../.pnpm/@jest+source-map@26.6.2/node_modules/@jest/source-map
+│   │   ├── test-result -> ../.pnpm/@jest+test-result@26.6.2/node_modules/@jest/test-result
+│   │   ├── test-sequencer -> ../.pnpm/@jest+test-sequencer@26.6.3/node_modules/@jest/test-sequencer
+│   │   ├── transform -> ../.pnpm/@jest+transform@26.6.2/node_modules/@jest/transform
+│   │   └── types -> ../.pnpm/@jest+types@26.6.2/node_modules/@jest/types
+│   ├── jest -> .pnpm/jest@26.6.3/node_modules/jest
+│   ├── jest-changed-files -> .pnpm/jest-changed-files@26.6.2/node_modules/jest-changed-files
+│   ├── jest-cli -> .pnpm/jest-cli@26.6.3/node_modules/jest-cli
+│   ├── jest-config -> .pnpm/jest-config@26.6.3/node_modules/jest-config
+│   ├── jest-diff -> .pnpm/jest-diff@26.6.2/node_modules/jest-diff
+│   ├── jest-docblock -> .pnpm/jest-docblock@26.0.0/node_modules/jest-docblock
+│   ├── jest-each -> .pnpm/jest-each@26.6.2/node_modules/jest-each
+│   ├── jest-environment-jsdom -> .pnpm/jest-environment-jsdom@26.6.2/node_modules/jest-environment-jsdom
+│   ├── jest-environment-node -> .pnpm/jest-environment-node@26.6.2/node_modules/jest-environment-node
+│   ├── jest-get-type -> .pnpm/jest-get-type@26.3.0/node_modules/jest-get-type
+│   ├── jest-haste-map -> .pnpm/jest-haste-map@26.6.2/node_modules/jest-haste-map
+│   ├── jest-jasmine2 -> .pnpm/jest-jasmine2@26.6.3/node_modules/jest-jasmine2
+│   ├── jest-leak-detector -> .pnpm/jest-leak-detector@26.6.2/node_modules/jest-leak-detector
+│   ├── jest-matcher-utils -> .pnpm/jest-matcher-utils@26.6.2/node_modules/jest-matcher-utils
+│   ├── jest-message-util -> .pnpm/jest-message-util@26.6.2/node_modules/jest-message-util
+│   ├── jest-mock -> .pnpm/jest-mock@26.6.2/node_modules/jest-mock
+│   ├── jest-pnp-resolver -> .pnpm/jest-pnp-resolver@1.2.3_jest-resolve@26.6.2/node_modules/jest-pnp-resolver
+│   ├── jest-regex-util -> .pnpm/jest-regex-util@26.0.0/node_modules/jest-regex-util
+│   ├── jest-resolve -> .pnpm/jest-resolve@26.6.2/node_modules/jest-resolve
+│   ├── jest-resolve-dependencies -> .pnpm/jest-resolve-dependencies@26.6.3/node_modules/jest-resolve-dependencies
+│   ├── jest-runner -> .pnpm/jest-runner@26.6.3/node_modules/jest-runner
+│   ├── jest-runtime -> .pnpm/jest-runtime@26.6.3/node_modules/jest-runtime
+│   ├── jest-serializer -> .pnpm/jest-serializer@26.6.2/node_modules/jest-serializer
+│   ├── jest-snapshot -> .pnpm/jest-snapshot@26.6.2/node_modules/jest-snapshot
+│   ├── jest-util -> .pnpm/jest-util@26.6.2/node_modules/jest-util
+│   ├── jest-validate -> .pnpm/jest-validate@26.6.2/node_modules/jest-validate
+│   ├── jest-watcher -> .pnpm/jest-watcher@26.6.2/node_modules/jest-watcher
+│   ├── jest-worker -> .pnpm/jest-worker@26.6.2/node_modules/jest-worker
+│   ├── @jridgewell
+│   │   ├── gen-mapping -> ../.pnpm/@jridgewell+gen-mapping@0.3.3/node_modules/@jridgewell/gen-mapping
+│   │   ├── resolve-uri -> ../.pnpm/@jridgewell+resolve-uri@3.1.0/node_modules/@jridgewell/resolve-uri
+│   │   ├── set-array -> ../.pnpm/@jridgewell+set-array@1.1.2/node_modules/@jridgewell/set-array
+│   │   ├── sourcemap-codec -> ../.pnpm/@jridgewell+sourcemap-codec@1.4.15/node_modules/@jridgewell/sourcemap-codec
+│   │   └── trace-mapping -> ../.pnpm/@jridgewell+trace-mapping@0.3.18/node_modules/@jridgewell/trace-mapping
+│   ├── js2xmlparser -> .pnpm/js2xmlparser@4.0.2/node_modules/js2xmlparser
+│   ├── jsbn-rsa -> .pnpm/jsbn-rsa@1.0.4/node_modules/jsbn-rsa
+│   ├── @jsdoc
+│   │   └── salty -> ../.pnpm/@jsdoc+salty@0.2.5/node_modules/@jsdoc/salty
+│   ├── jsdoc -> .pnpm/jsdoc@4.0.2/node_modules/jsdoc
+│   ├── jsdom -> .pnpm/jsdom@16.7.0/node_modules/jsdom
+│   ├── jsesc -> .pnpm/jsesc@2.5.2/node_modules/jsesc
+│   ├── json5 -> .pnpm/json5@2.2.3/node_modules/json5
+│   ├── jsonfile -> .pnpm/jsonfile@4.0.0/node_modules/jsonfile
+│   ├── json-parse-even-better-errors -> .pnpm/json-parse-even-better-errors@2.3.1/node_modules/json-parse-even-better-errors
+│   ├── json-schema-traverse -> .pnpm/json-schema-traverse@0.4.1/node_modules/json-schema-traverse
+│   ├── json-stable-stringify-without-jsonify -> .pnpm/json-stable-stringify-without-jsonify@1.0.1/node_modules/json-stable-stringify-without-jsonify
+│   ├── json-stringify-pretty-compact -> .pnpm/json-stringify-pretty-compact@3.0.0/node_modules/json-stringify-pretty-compact
+│   ├── js-tokens -> .pnpm/js-tokens@4.0.0/node_modules/js-tokens
+│   ├── js-yaml -> .pnpm/js-yaml@4.1.0/node_modules/js-yaml
+│   ├── kind-of -> .pnpm/kind-of@6.0.3/node_modules/kind-of
+│   ├── klaw -> .pnpm/klaw@3.0.0/node_modules/klaw
+│   ├── kleur -> .pnpm/kleur@3.0.3/node_modules/kleur
+│   ├── leven -> .pnpm/leven@3.1.0/node_modules/leven
+│   ├── levn -> .pnpm/levn@0.4.1/node_modules/levn
+│   ├── @lezer
+│   │   ├── common -> ../.pnpm/@lezer+common@1.0.4/node_modules/@lezer/common
+│   │   ├── highlight -> ../.pnpm/@lezer+highlight@1.1.6/node_modules/@lezer/highlight
+│   │   └── lr -> ../.pnpm/@lezer+lr@1.3.7/node_modules/@lezer/lr
+│   ├── lines-and-columns -> .pnpm/lines-and-columns@1.2.4/node_modules/lines-and-columns
+│   ├── linkify-it -> .pnpm/linkify-it@3.0.3/node_modules/linkify-it
+│   ├── locate-path -> .pnpm/locate-path@6.0.0/node_modules/locate-path
+│   ├── lodash -> .pnpm/lodash@4.17.21/node_modules/lodash
+│   ├── lodash.merge -> .pnpm/lodash.merge@4.6.2/node_modules/lodash.merge
+│   ├── long -> .pnpm/long@5.2.3/node_modules/long
+│   ├── lru-cache -> .pnpm/lru-cache@6.0.0/node_modules/lru-cache
+│   ├── magic-string -> .pnpm/magic-string@0.27.0/node_modules/magic-string
+│   ├── make-dir -> .pnpm/make-dir@3.1.0/node_modules/make-dir
+│   ├── makeerror -> .pnpm/makeerror@1.0.12/node_modules/makeerror
+│   ├── map-cache -> .pnpm/map-cache@0.2.2/node_modules/map-cache
+│   ├── map-visit -> .pnpm/map-visit@1.0.0/node_modules/map-visit
+│   ├── markdown-it -> .pnpm/markdown-it@12.3.2/node_modules/markdown-it
+│   ├── markdown-it-anchor -> .pnpm/markdown-it-anchor@8.6.7_@types+markdown-it@12.2.3_markdown-it@12.3.2/node_modules/markdown-it-anchor
+│   ├── marked -> .pnpm/marked@4.3.0/node_modules/marked
+│   ├── mdurl -> .pnpm/mdurl@1.0.1/node_modules/mdurl
+│   ├── merge2 -> .pnpm/merge2@1.4.1/node_modules/merge2
+│   ├── merge-stream -> .pnpm/merge-stream@2.0.0/node_modules/merge-stream
+│   ├── micromatch -> .pnpm/micromatch@4.0.5/node_modules/micromatch
+│   ├── mime-db -> .pnpm/mime-db@1.52.0/node_modules/mime-db
+│   ├── mime-types -> .pnpm/mime-types@2.1.35/node_modules/mime-types
+│   ├── mimic-fn -> .pnpm/mimic-fn@2.1.0/node_modules/mimic-fn
+│   ├── minimatch -> .pnpm/minimatch@3.1.2/node_modules/minimatch
+│   ├── minimist -> .pnpm/minimist@1.2.8/node_modules/minimist
+│   ├── mithril -> .pnpm/mithril@2.2.2/node_modules/mithril
+│   ├── mitt -> .pnpm/mitt@3.0.0/node_modules/mitt
+│   ├── mixin-deep -> .pnpm/mixin-deep@1.3.2/node_modules/mixin-deep
+│   ├── mkdirp -> .pnpm/mkdirp@1.0.4/node_modules/mkdirp
+│   ├── mkdirp-classic -> .pnpm/mkdirp-classic@0.5.3/node_modules/mkdirp-classic
+│   ├── ms -> .pnpm/ms@2.1.2/node_modules/ms
+│   ├── nanomatch -> .pnpm/nanomatch@1.2.13/node_modules/nanomatch
+│   ├── natural-compare -> .pnpm/natural-compare@1.4.0/node_modules/natural-compare
+│   ├── natural-compare-lite -> .pnpm/natural-compare-lite@1.4.0/node_modules/natural-compare-lite
+│   ├── netmask -> .pnpm/netmask@2.0.2/node_modules/netmask
+│   ├── nice-try -> .pnpm/nice-try@1.0.5/node_modules/nice-try
+│   ├── node-fetch -> .pnpm/node-fetch@2.6.11/node_modules/node-fetch
+│   ├── node-int64 -> .pnpm/node-int64@0.4.0/node_modules/node-int64
+│   ├── @nodelib
+│   │   ├── fs.scandir -> ../.pnpm/@nodelib+fs.scandir@2.1.5/node_modules/@nodelib/fs.scandir
+│   │   ├── fs.stat -> ../.pnpm/@nodelib+fs.stat@2.0.5/node_modules/@nodelib/fs.stat
+│   │   └── fs.walk -> ../.pnpm/@nodelib+fs.walk@1.2.8/node_modules/@nodelib/fs.walk
+│   ├── node-notifier -> .pnpm/node-notifier@8.0.2/node_modules/node-notifier
+│   ├── node-releases -> .pnpm/node-releases@2.0.12/node_modules/node-releases
+│   ├── node-watch -> .pnpm/node-watch@0.7.3/node_modules/node-watch
+│   ├── noice-json-rpc -> .pnpm/noice-json-rpc@1.2.0/node_modules/noice-json-rpc
+│   ├── normalize-package-data -> .pnpm/normalize-package-data@2.5.0/node_modules/normalize-package-data
+│   ├── normalize-path -> .pnpm/normalize-path@3.0.0/node_modules/normalize-path
+│   ├── npm-run-path -> .pnpm/npm-run-path@4.0.1/node_modules/npm-run-path
+│   ├── nwsapi -> .pnpm/nwsapi@2.2.5/node_modules/nwsapi
+│   ├── object-copy -> .pnpm/object-copy@0.1.0/node_modules/object-copy
+│   ├── object.pick -> .pnpm/object.pick@1.3.0/node_modules/object.pick
+│   ├── object-visit -> .pnpm/object-visit@1.0.1/node_modules/object-visit
+│   ├── once -> .pnpm/once@1.4.0/node_modules/once
+│   ├── onetime -> .pnpm/onetime@5.1.2/node_modules/onetime
+│   ├── optionator -> .pnpm/optionator@0.9.1/node_modules/optionator
+│   ├── ospec -> .pnpm/ospec@4.0.0/node_modules/ospec
+│   ├── pac-proxy-agent -> .pnpm/pac-proxy-agent@6.0.3/node_modules/pac-proxy-agent
+│   ├── pac-resolver -> .pnpm/pac-resolver@6.0.1/node_modules/pac-resolver
+│   ├── pako -> .pnpm/pako@1.0.11/node_modules/pako
+│   ├── parent-module -> .pnpm/parent-module@1.0.1/node_modules/parent-module
+│   ├── parse5 -> .pnpm/parse5@6.0.1/node_modules/parse5
+│   ├── parse-json -> .pnpm/parse-json@5.2.0/node_modules/parse-json
+│   ├── pascalcase -> .pnpm/pascalcase@0.1.1/node_modules/pascalcase
+│   ├── path-exists -> .pnpm/path-exists@4.0.0/node_modules/path-exists
+│   ├── path-is-absolute -> .pnpm/path-is-absolute@1.0.1/node_modules/path-is-absolute
+│   ├── path-key -> .pnpm/path-key@3.1.1/node_modules/path-key
+│   ├── path-parse -> .pnpm/path-parse@1.0.7/node_modules/path-parse
+│   ├── path-type -> .pnpm/path-type@4.0.0/node_modules/path-type
+│   ├── p-each-series -> .pnpm/p-each-series@2.2.0/node_modules/p-each-series
+│   ├── pend -> .pnpm/pend@1.2.0/node_modules/pend
+│   ├── p-finally -> .pnpm/p-finally@1.0.0/node_modules/p-finally
+│   ├── picocolors -> .pnpm/picocolors@1.0.0/node_modules/picocolors
+│   ├── picomatch -> .pnpm/picomatch@2.3.1/node_modules/picomatch
+│   ├── pirates -> .pnpm/pirates@4.0.6/node_modules/pirates
+│   ├── pixelmatch -> .pnpm/pixelmatch@5.3.0/node_modules/pixelmatch
+│   ├── pkg-dir -> .pnpm/pkg-dir@4.2.0/node_modules/pkg-dir
+│   ├── p-limit -> .pnpm/p-limit@3.1.0/node_modules/p-limit
+│   ├── p-locate -> .pnpm/p-locate@5.0.0/node_modules/p-locate
+│   ├── pngjs -> .pnpm/pngjs@6.0.0/node_modules/pngjs
+│   ├── @popperjs
+│   │   └── core -> ../.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core
+│   ├── posix-character-classes -> .pnpm/posix-character-classes@0.1.1/node_modules/posix-character-classes
+│   ├── prelude-ls -> .pnpm/prelude-ls@1.2.1/node_modules/prelude-ls
+│   ├── prettier -> .pnpm/prettier@2.8.8/node_modules/prettier
+│   ├── pretty-format -> .pnpm/pretty-format@26.6.2/node_modules/pretty-format
+│   ├── progress -> .pnpm/progress@2.0.3/node_modules/progress
+│   ├── prompts -> .pnpm/prompts@2.4.2/node_modules/prompts
+│   ├── @protobufjs
+│   │   ├── aspromise -> ../.pnpm/@protobufjs+aspromise@1.1.2/node_modules/@protobufjs/aspromise
+│   │   ├── base64 -> ../.pnpm/@protobufjs+base64@1.1.2/node_modules/@protobufjs/base64
+│   │   ├── codegen -> ../.pnpm/@protobufjs+codegen@2.0.4/node_modules/@protobufjs/codegen
+│   │   ├── eventemitter -> ../.pnpm/@protobufjs+eventemitter@1.1.0/node_modules/@protobufjs/eventemitter
+│   │   ├── fetch -> ../.pnpm/@protobufjs+fetch@1.1.0/node_modules/@protobufjs/fetch
+│   │   ├── float -> ../.pnpm/@protobufjs+float@1.0.2/node_modules/@protobufjs/float
+│   │   ├── inquire -> ../.pnpm/@protobufjs+inquire@1.1.0/node_modules/@protobufjs/inquire
+│   │   ├── path -> ../.pnpm/@protobufjs+path@1.1.2/node_modules/@protobufjs/path
+│   │   ├── pool -> ../.pnpm/@protobufjs+pool@1.1.0/node_modules/@protobufjs/pool
+│   │   └── utf8 -> ../.pnpm/@protobufjs+utf8@1.1.0/node_modules/@protobufjs/utf8
+│   ├── protobufjs -> .pnpm/protobufjs@7.2.5/node_modules/protobufjs
+│   ├── protobufjs-cli -> .pnpm/protobufjs-cli@1.1.2_protobufjs@7.2.5/node_modules/protobufjs-cli
+│   ├── proxy-agent -> .pnpm/proxy-agent@6.2.1/node_modules/proxy-agent
+│   ├── proxy-from-env -> .pnpm/proxy-from-env@1.1.0/node_modules/proxy-from-env
+│   ├── psl -> .pnpm/psl@1.9.0/node_modules/psl
+│   ├── p-try -> .pnpm/p-try@2.2.0/node_modules/p-try
+│   ├── pump -> .pnpm/pump@3.0.0/node_modules/pump
+│   ├── punycode -> .pnpm/punycode@2.3.0/node_modules/punycode
+│   ├── @puppeteer
+│   │   └── browsers -> ../.pnpm/@puppeteer+browsers@1.4.2_typescript@5.0.4/node_modules/@puppeteer/browsers
+│   ├── puppeteer -> .pnpm/puppeteer@20.7.3_typescript@5.0.4/node_modules/puppeteer
+│   ├── puppeteer-core -> .pnpm/puppeteer-core@20.7.3_typescript@5.0.4/node_modules/puppeteer-core
+│   ├── querystringify -> .pnpm/querystringify@2.2.0/node_modules/querystringify
+│   ├── queue-microtask -> .pnpm/queue-microtask@1.2.3/node_modules/queue-microtask
+│   ├── queue-tick -> .pnpm/queue-tick@1.0.1/node_modules/queue-tick
+│   ├── react-is -> .pnpm/react-is@17.0.2/node_modules/react-is
+│   ├── readdirp -> .pnpm/readdirp@3.6.0/node_modules/readdirp
+│   ├── read-pkg -> .pnpm/read-pkg@5.2.0/node_modules/read-pkg
+│   ├── read-pkg-up -> .pnpm/read-pkg-up@7.0.1/node_modules/read-pkg-up
+│   ├── regex-not -> .pnpm/regex-not@1.0.2/node_modules/regex-not
+│   ├── remove-trailing-separator -> .pnpm/remove-trailing-separator@1.1.0/node_modules/remove-trailing-separator
+│   ├── repeat-element -> .pnpm/repeat-element@1.1.4/node_modules/repeat-element
+│   ├── repeat-string -> .pnpm/repeat-string@1.6.1/node_modules/repeat-string
+│   ├── require-directory -> .pnpm/require-directory@2.1.1/node_modules/require-directory
+│   ├── require-main-filename -> .pnpm/require-main-filename@2.0.0/node_modules/require-main-filename
+│   ├── requires-port -> .pnpm/requires-port@1.0.0/node_modules/requires-port
+│   ├── requizzle -> .pnpm/requizzle@0.2.4/node_modules/requizzle
+│   ├── resolve -> .pnpm/resolve@1.22.2/node_modules/resolve
+│   ├── resolve-cwd -> .pnpm/resolve-cwd@3.0.0/node_modules/resolve-cwd
+│   ├── resolve-from -> .pnpm/resolve-from@4.0.0/node_modules/resolve-from
+│   ├── resolve-url -> .pnpm/resolve-url@0.2.1/node_modules/resolve-url
+│   ├── ret -> .pnpm/ret@0.1.15/node_modules/ret
+│   ├── reusify -> .pnpm/reusify@1.0.4/node_modules/reusify
+│   ├── rimraf -> .pnpm/rimraf@3.0.2/node_modules/rimraf
+│   ├── robust-predicates -> .pnpm/robust-predicates@3.0.2/node_modules/robust-predicates
+│   ├── @rollup
+│   │   ├── plugin-commonjs -> ../.pnpm/@rollup+plugin-commonjs@24.1.0_rollup@2.79.1/node_modules/@rollup/plugin-commonjs
+│   │   ├── plugin-node-resolve -> ../.pnpm/@rollup+plugin-node-resolve@15.1.0_rollup@2.79.1/node_modules/@rollup/plugin-node-resolve
+│   │   └── pluginutils -> ../.pnpm/@rollup+pluginutils@5.0.2_rollup@2.79.1/node_modules/@rollup/pluginutils
+│   ├── rollup -> .pnpm/rollup@2.79.1/node_modules/rollup
+│   ├── rollup-plugin-re -> .pnpm/rollup-plugin-re@1.0.7/node_modules/rollup-plugin-re
+│   ├── rollup-plugin-sourcemaps -> .pnpm/rollup-plugin-sourcemaps@0.6.3_@types+node@14.18.51_rollup@2.79.1/node_modules/rollup-plugin-sourcemaps
+│   ├── rollup-pluginutils -> .pnpm/rollup-pluginutils@2.8.2/node_modules/rollup-pluginutils
+│   ├── rsvp -> .pnpm/rsvp@4.8.5/node_modules/rsvp
+│   ├── run-parallel -> .pnpm/run-parallel@1.2.0/node_modules/run-parallel
+│   ├── rw -> .pnpm/rw@1.3.3/node_modules/rw
+│   ├── safer-buffer -> .pnpm/safer-buffer@2.1.2/node_modules/safer-buffer
+│   ├── safe-regex -> .pnpm/safe-regex@1.1.0/node_modules/safe-regex
+│   ├── sane -> .pnpm/sane@4.1.0/node_modules/sane
+│   ├── sass -> .pnpm/sass@1.63.6/node_modules/sass
+│   ├── saxes -> .pnpm/saxes@5.0.1/node_modules/saxes
+│   ├── semver -> .pnpm/semver@7.5.3/node_modules/semver
+│   ├── set-blocking -> .pnpm/set-blocking@2.0.0/node_modules/set-blocking
+│   ├── set-value -> .pnpm/set-value@2.0.1/node_modules/set-value
+│   ├── shebang-command -> .pnpm/shebang-command@2.0.0/node_modules/shebang-command
+│   ├── shebang-regex -> .pnpm/shebang-regex@3.0.0/node_modules/shebang-regex
+│   ├── shellwords -> .pnpm/shellwords@0.1.1/node_modules/shellwords
+│   ├── signal-exit -> .pnpm/signal-exit@3.0.7/node_modules/signal-exit
+│   ├── @sinonjs
+│   │   ├── commons -> ../.pnpm/@sinonjs+commons@1.8.6/node_modules/@sinonjs/commons
+│   │   └── fake-timers -> ../.pnpm/@sinonjs+fake-timers@6.0.1/node_modules/@sinonjs/fake-timers
+│   ├── sisteransi -> .pnpm/sisteransi@1.0.5/node_modules/sisteransi
+│   ├── slash -> .pnpm/slash@3.0.0/node_modules/slash
+│   ├── smart-buffer -> .pnpm/smart-buffer@4.2.0/node_modules/smart-buffer
+│   ├── snapdragon -> .pnpm/snapdragon@0.8.2/node_modules/snapdragon
+│   ├── snapdragon-node -> .pnpm/snapdragon-node@2.1.1/node_modules/snapdragon-node
+│   ├── snapdragon-util -> .pnpm/snapdragon-util@3.0.1/node_modules/snapdragon-util
+│   ├── socks -> .pnpm/socks@2.7.1/node_modules/socks
+│   ├── socks-proxy-agent -> .pnpm/socks-proxy-agent@8.0.1/node_modules/socks-proxy-agent
+│   ├── source-map -> .pnpm/source-map@0.6.1/node_modules/source-map
+│   ├── source-map-js -> .pnpm/source-map-js@1.0.2/node_modules/source-map-js
+│   ├── source-map-resolve -> .pnpm/source-map-resolve@0.6.0/node_modules/source-map-resolve
+│   ├── source-map-support -> .pnpm/source-map-support@0.5.21/node_modules/source-map-support
+│   ├── source-map-url -> .pnpm/source-map-url@0.4.1/node_modules/source-map-url
+│   ├── spdx-correct -> .pnpm/spdx-correct@3.2.0/node_modules/spdx-correct
+│   ├── spdx-exceptions -> .pnpm/spdx-exceptions@2.3.0/node_modules/spdx-exceptions
+│   ├── spdx-expression-parse -> .pnpm/spdx-expression-parse@3.0.1/node_modules/spdx-expression-parse
+│   ├── spdx-license-ids -> .pnpm/spdx-license-ids@3.0.13/node_modules/spdx-license-ids
+│   ├── split-string -> .pnpm/split-string@3.1.0/node_modules/split-string
+│   ├── sprintf-js -> .pnpm/sprintf-js@1.0.3/node_modules/sprintf-js
+│   ├── stack-utils -> .pnpm/stack-utils@2.0.6/node_modules/stack-utils
+│   ├── static-extend -> .pnpm/static-extend@0.1.2/node_modules/static-extend
+│   ├── streamx -> .pnpm/streamx@2.15.0/node_modules/streamx
+│   ├── string-length -> .pnpm/string-length@4.0.2/node_modules/string-length
+│   ├── string-width -> .pnpm/string-width@4.2.3/node_modules/string-width
+│   ├── strip-ansi -> .pnpm/strip-ansi@6.0.1/node_modules/strip-ansi
+│   ├── strip-bom -> .pnpm/strip-bom@4.0.0/node_modules/strip-bom
+│   ├── strip-eof -> .pnpm/strip-eof@1.0.0/node_modules/strip-eof
+│   ├── strip-final-newline -> .pnpm/strip-final-newline@2.0.0/node_modules/strip-final-newline
+│   ├── strip-json-comments -> .pnpm/strip-json-comments@3.1.1/node_modules/strip-json-comments
+│   ├── style-mod -> .pnpm/style-mod@4.0.3/node_modules/style-mod
+│   ├── supports-color -> .pnpm/supports-color@7.2.0/node_modules/supports-color
+│   ├── supports-hyperlinks -> .pnpm/supports-hyperlinks@2.3.0/node_modules/supports-hyperlinks
+│   ├── supports-preserve-symlinks-flag -> .pnpm/supports-preserve-symlinks-flag@1.0.0/node_modules/supports-preserve-symlinks-flag
+│   ├── symbol-tree -> .pnpm/symbol-tree@3.2.4/node_modules/symbol-tree
+│   ├── tar-fs -> .pnpm/tar-fs@3.0.2/node_modules/tar-fs
+│   ├── tar-stream -> .pnpm/tar-stream@3.1.4/node_modules/tar-stream
+│   ├── terminal-link -> .pnpm/terminal-link@2.1.1/node_modules/terminal-link
+│   ├── test-exclude -> .pnpm/test-exclude@6.0.0/node_modules/test-exclude
+│   ├── text-table -> .pnpm/text-table@0.2.0/node_modules/text-table
+│   ├── throat -> .pnpm/throat@5.0.0/node_modules/throat
+│   ├── through -> .pnpm/through@2.3.8/node_modules/through
+│   ├── tmp -> .pnpm/tmp@0.2.1/node_modules/tmp
+│   ├── tmpl -> .pnpm/tmpl@1.0.5/node_modules/tmpl
+│   ├── to-fast-properties -> .pnpm/to-fast-properties@2.0.0/node_modules/to-fast-properties
+│   ├── to-object-path -> .pnpm/to-object-path@0.3.0/node_modules/to-object-path
+│   ├── @tootallnate
+│   │   └── once -> ../.pnpm/@tootallnate+once@1.1.2/node_modules/@tootallnate/once
+│   ├── topojson-client -> .pnpm/topojson-client@3.1.0/node_modules/topojson-client
+│   ├── to-regex -> .pnpm/to-regex@3.0.2/node_modules/to-regex
+│   ├── to-regex-range -> .pnpm/to-regex-range@2.1.1/node_modules/to-regex-range
+│   ├── tough-cookie -> .pnpm/tough-cookie@4.1.3/node_modules/tough-cookie
+│   ├── tr46 -> .pnpm/tr46@0.0.3/node_modules/tr46
+│   ├── tslib -> .pnpm/tslib@2.5.3/node_modules/tslib
+│   ├── tsutils -> .pnpm/tsutils@3.21.0_typescript@5.0.4/node_modules/tsutils
+│   ├── type-check -> .pnpm/type-check@0.4.0/node_modules/type-check
+│   ├── typedarray-to-buffer -> .pnpm/typedarray-to-buffer@3.1.5/node_modules/typedarray-to-buffer
+│   ├── type-detect -> .pnpm/type-detect@4.0.8/node_modules/type-detect
+│   ├── type-fest -> .pnpm/type-fest@0.20.2/node_modules/type-fest
+│   ├── @types
+│   │   ├── babel__core -> ../.pnpm/@types+babel__core@7.20.1/node_modules/@types/babel__core
+│   │   ├── babel__generator -> ../.pnpm/@types+babel__generator@7.6.4/node_modules/@types/babel__generator
+│   │   ├── babel__template -> ../.pnpm/@types+babel__template@7.4.1/node_modules/@types/babel__template
+│   │   ├── babel__traverse -> ../.pnpm/@types+babel__traverse@7.20.1/node_modules/@types/babel__traverse
+│   │   ├── chrome -> ../.pnpm/@types+chrome@0.0.186/node_modules/@types/chrome
+│   │   ├── clone -> ../.pnpm/@types+clone@2.1.1/node_modules/@types/clone
+│   │   ├── color-convert -> ../.pnpm/@types+color-convert@1.9.0/node_modules/@types/color-convert
+│   │   ├── color-name -> ../.pnpm/@types+color-name@1.1.1/node_modules/@types/color-name
+│   │   ├── estree -> ../.pnpm/@types+estree@0.0.39/node_modules/@types/estree
+│   │   ├── filesystem -> ../.pnpm/@types+filesystem@0.0.32/node_modules/@types/filesystem
+│   │   ├── filewriter -> ../.pnpm/@types+filewriter@0.0.29/node_modules/@types/filewriter
+│   │   ├── geojson -> ../.pnpm/@types+geojson@7946.0.4/node_modules/@types/geojson
+│   │   ├── graceful-fs -> ../.pnpm/@types+graceful-fs@4.1.6/node_modules/@types/graceful-fs
+│   │   ├── har-format -> ../.pnpm/@types+har-format@1.2.11/node_modules/@types/har-format
+│   │   ├── istanbul-lib-coverage -> ../.pnpm/@types+istanbul-lib-coverage@2.0.4/node_modules/@types/istanbul-lib-coverage
+│   │   ├── istanbul-lib-report -> ../.pnpm/@types+istanbul-lib-report@3.0.0/node_modules/@types/istanbul-lib-report
+│   │   ├── istanbul-reports -> ../.pnpm/@types+istanbul-reports@3.0.1/node_modules/@types/istanbul-reports
+│   │   ├── jest -> ../.pnpm/@types+jest@26.0.24/node_modules/@types/jest
+│   │   ├── json-schema -> ../.pnpm/@types+json-schema@7.0.12/node_modules/@types/json-schema
+│   │   ├── linkify-it -> ../.pnpm/@types+linkify-it@3.0.3/node_modules/@types/linkify-it
+│   │   ├── markdown-it -> ../.pnpm/@types+markdown-it@12.2.3/node_modules/@types/markdown-it
+│   │   ├── mdurl -> ../.pnpm/@types+mdurl@1.0.2/node_modules/@types/mdurl
+│   │   ├── mithril -> ../.pnpm/@types+mithril@2.0.12/node_modules/@types/mithril
+│   │   ├── node -> ../.pnpm/@types+node@14.18.51/node_modules/@types/node
+│   │   ├── normalize-package-data -> ../.pnpm/@types+normalize-package-data@2.4.1/node_modules/@types/normalize-package-data
+│   │   ├── pako -> ../.pnpm/@types+pako@1.0.4/node_modules/@types/pako
+│   │   ├── pixelmatch -> ../.pnpm/@types+pixelmatch@5.2.4/node_modules/@types/pixelmatch
+│   │   ├── pngjs -> ../.pnpm/@types+pngjs@6.0.1/node_modules/@types/pngjs
+│   │   ├── prettier -> ../.pnpm/@types+prettier@2.7.3/node_modules/@types/prettier
+│   │   ├── resolve -> ../.pnpm/@types+resolve@1.20.2/node_modules/@types/resolve
+│   │   ├── semver -> ../.pnpm/@types+semver@7.5.0/node_modules/@types/semver
+│   │   ├── stack-utils -> ../.pnpm/@types+stack-utils@2.0.1/node_modules/@types/stack-utils
+│   │   ├── uuid -> ../.pnpm/@types+uuid@8.3.4/node_modules/@types/uuid
+│   │   ├── w3c-web-usb -> ../.pnpm/@types+w3c-web-usb@1.0.6/node_modules/@types/w3c-web-usb
+│   │   ├── yargs -> ../.pnpm/@types+yargs@15.0.15/node_modules/@types/yargs
+│   │   ├── yargs-parser -> ../.pnpm/@types+yargs-parser@21.0.0/node_modules/@types/yargs-parser
+│   │   └── yauzl -> ../.pnpm/@types+yauzl@2.10.0/node_modules/@types/yauzl
+│   ├── typescript -> .pnpm/typescript@5.0.4/node_modules/typescript
+│   ├── @typescript-eslint
+│   │   ├── eslint-plugin -> ../.pnpm/@typescript-eslint+eslint-plugin@5.60.0_@typescript-eslint+parser@5.60.0_eslint@8.43.0_typescript@5.0.4/node_modules/@typescript-eslint/eslint-plugin
+│   │   ├── parser -> ../.pnpm/@typescript-eslint+parser@5.60.0_eslint@8.43.0_typescript@5.0.4/node_modules/@typescript-eslint/parser
+│   │   ├── scope-manager -> ../.pnpm/@typescript-eslint+scope-manager@5.60.0/node_modules/@typescript-eslint/scope-manager
+│   │   ├── types -> ../.pnpm/@typescript-eslint+types@5.60.0/node_modules/@typescript-eslint/types
+│   │   ├── typescript-estree -> ../.pnpm/@typescript-eslint+typescript-estree@5.60.0_typescript@5.0.4/node_modules/@typescript-eslint/typescript-estree
+│   │   ├── type-utils -> ../.pnpm/@typescript-eslint+type-utils@5.60.0_eslint@8.43.0_typescript@5.0.4/node_modules/@typescript-eslint/type-utils
+│   │   ├── utils -> ../.pnpm/@typescript-eslint+utils@5.60.0_eslint@8.43.0_typescript@5.0.4/node_modules/@typescript-eslint/utils
+│   │   └── visitor-keys -> ../.pnpm/@typescript-eslint+visitor-keys@5.60.0/node_modules/@typescript-eslint/visitor-keys
+│   ├── uc.micro -> .pnpm/uc.micro@1.0.6/node_modules/uc.micro
+│   ├── uglify-js -> .pnpm/uglify-js@3.17.4/node_modules/uglify-js
+│   ├── unbzip2-stream -> .pnpm/unbzip2-stream@1.4.3/node_modules/unbzip2-stream
+│   ├── underscore -> .pnpm/underscore@1.13.6/node_modules/underscore
+│   ├── union-value -> .pnpm/union-value@1.0.1/node_modules/union-value
+│   ├── universalify -> .pnpm/universalify@0.1.2/node_modules/universalify
+│   ├── unset-value -> .pnpm/unset-value@1.0.0/node_modules/unset-value
+│   ├── update-browserslist-db -> .pnpm/update-browserslist-db@1.0.11_browserslist@4.21.9/node_modules/update-browserslist-db
+│   ├── uri-js -> .pnpm/uri-js@4.4.1/node_modules/uri-js
+│   ├── urix -> .pnpm/urix@0.1.0/node_modules/urix
+│   ├── url-parse -> .pnpm/url-parse@1.5.10/node_modules/url-parse
+│   ├── use -> .pnpm/use@3.1.1/node_modules/use
+│   ├── util -> .pnpm/util@0.12.5/node_modules/util
+│   ├── uuid -> .pnpm/uuid@9.0.0/node_modules/uuid
+│   ├── v8-to-istanbul -> .pnpm/v8-to-istanbul@7.1.2/node_modules/v8-to-istanbul
+│   ├── validate-npm-package-license -> .pnpm/validate-npm-package-license@3.0.4/node_modules/validate-npm-package-license
+│   ├── vega -> .pnpm/vega@5.25.0/node_modules/vega
+│   ├── vega-canvas -> .pnpm/vega-canvas@1.2.7/node_modules/vega-canvas
+│   ├── vega-crossfilter -> .pnpm/vega-crossfilter@4.1.1/node_modules/vega-crossfilter
+│   ├── vega-dataflow -> .pnpm/vega-dataflow@5.7.5/node_modules/vega-dataflow
+│   ├── vega-encode -> .pnpm/vega-encode@4.9.2/node_modules/vega-encode
+│   ├── vega-event-selector -> .pnpm/vega-event-selector@3.0.1/node_modules/vega-event-selector
+│   ├── vega-expression -> .pnpm/vega-expression@5.1.0/node_modules/vega-expression
+│   ├── vega-force -> .pnpm/vega-force@4.2.0/node_modules/vega-force
+│   ├── vega-format -> .pnpm/vega-format@1.1.1/node_modules/vega-format
+│   ├── vega-functions -> .pnpm/vega-functions@5.13.2/node_modules/vega-functions
+│   ├── vega-geo -> .pnpm/vega-geo@4.4.1/node_modules/vega-geo
+│   ├── vega-hierarchy -> .pnpm/vega-hierarchy@4.1.1/node_modules/vega-hierarchy
+│   ├── vega-label -> .pnpm/vega-label@1.2.1/node_modules/vega-label
+│   ├── vega-lite -> .pnpm/vega-lite@5.11.0_vega@5.25.0/node_modules/vega-lite
+│   ├── vega-loader -> .pnpm/vega-loader@4.5.1/node_modules/vega-loader
+│   ├── vega-parser -> .pnpm/vega-parser@6.2.0/node_modules/vega-parser
+│   ├── vega-projection -> .pnpm/vega-projection@1.6.0/node_modules/vega-projection
+│   ├── vega-regression -> .pnpm/vega-regression@1.2.0/node_modules/vega-regression
+│   ├── vega-runtime -> .pnpm/vega-runtime@6.1.4/node_modules/vega-runtime
+│   ├── vega-scale -> .pnpm/vega-scale@7.3.0/node_modules/vega-scale
+│   ├── vega-scenegraph -> .pnpm/vega-scenegraph@4.10.2/node_modules/vega-scenegraph
+│   ├── vega-selections -> .pnpm/vega-selections@5.4.1/node_modules/vega-selections
+│   ├── vega-statistics -> .pnpm/vega-statistics@1.9.0/node_modules/vega-statistics
+│   ├── vega-time -> .pnpm/vega-time@2.1.1/node_modules/vega-time
+│   ├── vega-transforms -> .pnpm/vega-transforms@4.10.2/node_modules/vega-transforms
+│   ├── vega-typings -> .pnpm/vega-typings@0.24.1/node_modules/vega-typings
+│   ├── vega-util -> .pnpm/vega-util@1.17.2/node_modules/vega-util
+│   ├── vega-view -> .pnpm/vega-view@5.11.1/node_modules/vega-view
+│   ├── vega-view-transforms -> .pnpm/vega-view-transforms@4.5.9/node_modules/vega-view-transforms
+│   ├── vega-voronoi -> .pnpm/vega-voronoi@4.2.1/node_modules/vega-voronoi
+│   ├── vega-wordcloud -> .pnpm/vega-wordcloud@4.1.4/node_modules/vega-wordcloud
+│   ├── vlq -> .pnpm/vlq@0.2.3/node_modules/vlq
+│   ├── vm2 -> .pnpm/vm2@3.9.19/node_modules/vm2
+│   ├── w3c-hr-time -> .pnpm/w3c-hr-time@1.0.2/node_modules/w3c-hr-time
+│   ├── w3c-keyname -> .pnpm/w3c-keyname@2.2.8/node_modules/w3c-keyname
+│   ├── w3c-xmlserializer -> .pnpm/w3c-xmlserializer@2.0.0/node_modules/w3c-xmlserializer
+│   ├── walker -> .pnpm/walker@1.0.8/node_modules/walker
+│   ├── webidl-conversions -> .pnpm/webidl-conversions@6.1.0/node_modules/webidl-conversions
+│   ├── whatwg-encoding -> .pnpm/whatwg-encoding@1.0.5/node_modules/whatwg-encoding
+│   ├── whatwg-mimetype -> .pnpm/whatwg-mimetype@2.3.0/node_modules/whatwg-mimetype
+│   ├── whatwg-url -> .pnpm/whatwg-url@5.0.0/node_modules/whatwg-url
+│   ├── which -> .pnpm/which@2.0.2/node_modules/which
+│   ├── which-module -> .pnpm/which-module@2.0.1/node_modules/which-module
+│   ├── which-typed-array -> .pnpm/which-typed-array@1.1.9/node_modules/which-typed-array
+│   ├── word-wrap -> .pnpm/word-wrap@1.2.3/node_modules/word-wrap
+│   ├── wrap-ansi -> .pnpm/wrap-ansi@6.2.0/node_modules/wrap-ansi
+│   ├── wrappy -> .pnpm/wrappy@1.0.2/node_modules/wrappy
+│   ├── write-file-atomic -> .pnpm/write-file-atomic@3.0.3/node_modules/write-file-atomic
+│   ├── ws -> .pnpm/ws@8.13.0/node_modules/ws
+│   ├── xmlchars -> .pnpm/xmlchars@2.2.0/node_modules/xmlchars
+│   ├── xmlcreate -> .pnpm/xmlcreate@2.0.4/node_modules/xmlcreate
+│   ├── xml-name-validator -> .pnpm/xml-name-validator@3.0.0/node_modules/xml-name-validator
+│   ├── y18n -> .pnpm/y18n@5.0.8/node_modules/y18n
+│   ├── yallist -> .pnpm/yallist@4.0.0/node_modules/yallist
+│   ├── yargs -> .pnpm/yargs@17.7.2/node_modules/yargs
+│   ├── yargs-parser -> .pnpm/yargs-parser@21.1.1/node_modules/yargs-parser
+│   ├── yauzl -> .pnpm/yauzl@2.10.0/node_modules/yauzl
+│   └── yocto-queue -> .pnpm/yocto-queue@0.1.0/node_modules/yocto-queue
+├── npm
+├── out -> /home/royce/python/lab/benchmark/perfetto/out/ui/ui
+├── OWNERS
+├── package.json
+├── pnpm
+├── pnpm-lock.yaml
+├── PRESUBMIT.py
+├── README.md
+├── release
+│   ├── build_all_channels.py
+│   ├── builder_entrypoint.sh
+│   ├── channels.json
+│   ├── OWNERS
+│   ├── roll_branch.py
+│   ├── roll_canary.sh
+│   └── roll_stable.sh
+├── run-all-tests
+├── run-dev-server
+├── run-integrationtests
+├── run-unittests
+├── src
+│   ├── assets
+│   │   ├── bigtrace.html
+│   │   ├── brand.png
+│   │   ├── common.scss
+│   │   ├── details.scss
+│   │   ├── favicon.png
+│   │   ├── flags_page.scss
+│   │   ├── fonts.scss
+│   │   ├── hiring_banner.scss
+│   │   ├── home_page.scss
+│   │   ├── index.html
+│   │   ├── logo-128.png
+│   │   ├── logo-3d.png
+│   │   ├── metrics_page.scss
+│   │   ├── modal.scss
+│   │   ├── panel_container.scss
+│   │   ├── perfetto.scss
+│   │   ├── plugins_page.scss
+│   │   ├── query_page.scss
+│   │   ├── rec_atrace.png
+│   │   ├── rec_battery_counters.png
+│   │   ├── rec_board_voltage.png
+│   │   ├── rec_cpu_coarse.png
+│   │   ├── rec_cpu_fine.png
+│   │   ├── rec_cpu_freq.png
+│   │   ├── rec_cpu_voltage.png
+│   │   ├── rec_frame_timeline.png
+│   │   ├── rec_ftrace.png
+│   │   ├── rec_gpu_mem_total.png
+│   │   ├── rec_java_heap_dump.png
+│   │   ├── rec_lmk.png
+│   │   ├── rec_logcat.png
+│   │   ├── rec_long_trace.png
+│   │   ├── rec_mem_hifreq.png
+│   │   ├── rec_meminfo.png
+│   │   ├── rec_native_heap_profiler.png
+│   │   ├── rec_one_shot.png
+│   │   ├── record.scss
+│   │   ├── rec_profiling.png
+│   │   ├── rec_ps_stats.png
+│   │   ├── rec_ring_buf.png
+│   │   ├── rec_syscalls.png
+│   │   ├── rec_vmstat.png
+│   │   ├── scheduling_latency.png
+│   │   ├── sidebar.scss
+│   │   ├── topbar.scss
+│   │   ├── trace_info_page.scss
+│   │   ├── typefaces.scss
+│   │   ├── viz_page.scss
+│   │   ├── widgets
+│   │   │   ├── anchor.scss
+│   │   │   ├── button.scss
+│   │   │   ├── callout.scss
+│   │   │   ├── checkbox.scss
+│   │   │   ├── details_shell.scss
+│   │   │   ├── details_table.scss
+│   │   │   ├── editor.scss
+│   │   │   ├── empty_state.scss
+│   │   │   ├── error.scss
+│   │   │   ├── form.scss
+│   │   │   ├── grid_layout.scss
+│   │   │   ├── hotkey.scss
+│   │   │   ├── menu.scss
+│   │   │   ├── multiselect.scss
+│   │   │   ├── popup.scss
+│   │   │   ├── section.scss
+│   │   │   ├── select.scss
+│   │   │   ├── spinner.scss
+│   │   │   ├── switch.scss
+│   │   │   ├── text_input.scss
+│   │   │   ├── text_paragraph.scss
+│   │   │   ├── theme.scss
+│   │   │   ├── timestamp.scss
+│   │   │   ├── tree.scss
+│   │   │   ├── vega_view.scss
+│   │   │   └── virtual_scroll_container.scss
+│   │   └── widgets_page.scss
+│   ├── base
+│   │   ├── array_utils.ts
+│   │   ├── array_utils_unittest.ts
+│   │   ├── bigint_math.ts
+│   │   ├── bigint_math_unittest.ts
+│   │   ├── binary_search.ts
+│   │   ├── binary_search_unittest.ts
+│   │   ├── brand.ts
+│   │   ├── classnames.ts
+│   │   ├── classnames_unittest.ts
+│   │   ├── clipboard.ts
+│   │   ├── comparison_utils.ts
+│   │   ├── deferred.ts
+│   │   ├── deferred_unittest.ts
+│   │   ├── disposable.ts
+│   │   ├── disposable_unittest.ts
+│   │   ├── dom_utils.ts
+│   │   ├── dom_utils_unittest.ts
+│   │   ├── errors.ts
+│   │   ├── fuzzy.ts
+│   │   ├── fuzzy_unittest.ts
+│   │   ├── generic_set.ts
+│   │   ├── hotkeys.ts
+│   │   ├── hotkeys_unittest.ts
+│   │   ├── http_utils.ts
+│   │   ├── json_utils.ts
+│   │   ├── json_utils_unittest.ts
+│   │   ├── logging.ts
+│   │   ├── math_utils.ts
+│   │   ├── mithril_utils.ts
+│   │   ├── object_utils.ts
+│   │   ├── object_utils_unittest.ts
+│   │   ├── resize_observer.ts
+│   │   ├── result.ts
+│   │   ├── semantic_icons.ts
+│   │   ├── set_utils.ts
+│   │   ├── set_utils_unittest.ts
+│   │   ├── static_initializers.ts
+│   │   ├── string_utils.ts
+│   │   ├── string_utils_unittest.ts
+│   │   ├── time.ts
+│   │   ├── time_unittest.ts
+│   │   ├── utils
+│   │   │   ├── index-browser.js
+│   │   │   ├── index.d.ts
+│   │   │   ├── index.js
+│   │   │   └── package.json
+│   │   ├── utils.ts
+│   │   ├── uuid.ts
+│   │   ├── validators.ts
+│   │   └── validators_unittest.ts
+│   ├── bigtrace
+│   │   ├── index.ts
+│   │   └── tsconfig.json
+│   ├── chrome_extension
+│   │   ├── chrome_tracing_controller.ts
+│   │   ├── devtools_socket.ts
+│   │   ├── index.ts
+│   │   └── manifest.json
+│   ├── common
+│   │   ├── actions.ts
+│   │   ├── actions_unittest.ts
+│   │   ├── aggregation_data.ts
+│   │   ├── arg_types.ts
+│   │   ├── array_buffer_builder.ts
+│   │   ├── cache_manager.ts
+│   │   ├── cache_utils.ts
+│   │   ├── canvas_utils.ts
+│   │   ├── canvas_utils_unittest.ts
+│   │   ├── channels.ts
+│   │   ├── colorizer.ts
+│   │   ├── colorizer_unittest.ts
+│   │   ├── color.ts
+│   │   ├── color_unittest.ts
+│   │   ├── commands.ts
+│   │   ├── comparator_builder.ts
+│   │   ├── constants.ts
+│   │   ├── conversion_jobs.ts
+│   │   ├── default_plugins.ts
+│   │   ├── dragndrop_logic.ts
+│   │   ├── dragndrop_logic_unittest.ts
+│   │   ├── empty_state.ts
+│   │   ├── event_set_nocompile_test.ts
+│   │   ├── event_set.ts
+│   │   ├── event_set_unittest.ts
+│   │   ├── flamegraph_unittest.ts
+│   │   ├── flamegraph_util.ts
+│   │   ├── hash.ts
+│   │   ├── high_precision_time.ts
+│   │   ├── high_precision_time_unittest.ts
+│   │   ├── internal_layout_utils.ts
+│   │   ├── logs.ts
+│   │   ├── metatracing.ts
+│   │   ├── metatracing_unittest.ts
+│   │   ├── metric_data.ts
+│   │   ├── plugins.ts
+│   │   ├── plugins_unittest.ts
+│   │   ├── protos_unittest.ts
+│   │   ├── queries.ts
+│   │   ├── recordingV2
+│   │   │   ├── adb_connection_impl.ts
+│   │   │   ├── adb_connection_over_websocket.ts
+│   │   │   ├── adb_connection_over_webusb.ts
+│   │   │   ├── adb_file_handler.ts
+│   │   │   ├── auth
+│   │   │   │   ├── adb_auth.ts
+│   │   │   │   ├── adb_key_manager.ts
+│   │   │   │   └── credentials_interfaces.d.ts
+│   │   │   ├── chrome_traced_tracing_session.ts
+│   │   │   ├── host_os_byte_stream.ts
+│   │   │   ├── recording_config_utils.ts
+│   │   │   ├── recording_config_utils_unittest.ts
+│   │   │   ├── recording_error_handling.ts
+│   │   │   ├── recording_interfaces_v2.ts
+│   │   │   ├── recording_page_controller.ts
+│   │   │   ├── recording_utils.ts
+│   │   │   ├── target_factories
+│   │   │   │   ├── android_websocket_target_factory.ts
+│   │   │   │   ├── android_websocket_target_factory_unittest.ts
+│   │   │   │   ├── android_webusb_target_factory.ts
+│   │   │   │   ├── chrome_target_factory.ts
+│   │   │   │   ├── chrome_target_factory_unittest.ts
+│   │   │   │   ├── host_os_target_factory.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   └── virtual_target_factory.ts
+│   │   │   ├── target_factory_registry.ts
+│   │   │   ├── targets
+│   │   │   │   ├── android_target.ts
+│   │   │   │   ├── android_virtual_target.ts
+│   │   │   │   ├── android_websocket_target.ts
+│   │   │   │   ├── android_webusb_target.ts
+│   │   │   │   ├── chrome_target.ts
+│   │   │   │   └── host_os_target.ts
+│   │   │   ├── traced_tracing_session.ts
+│   │   │   └── websocket_menu_controller.ts
+│   │   ├── registry.ts
+│   │   ├── registry_unittest.ts
+│   │   ├── schema.ts
+│   │   ├── schema_unittest.ts
+│   │   ├── search_data.ts
+│   │   ├── selection_observer.ts
+│   │   ├── state.ts
+│   │   ├── state_unittest.ts
+│   │   ├── tab_registry.ts
+│   │   ├── thread_state.ts
+│   │   ├── timestamp_format.ts
+│   │   ├── track_cache.ts
+│   │   ├── track_cache_unittest.ts
+│   │   ├── track_data.ts
+│   │   ├── track_helper.ts
+│   │   ├── upload_utils.ts
+│   │   └── upload_utils_unittest.ts
+│   ├── controller
+│   │   ├── adb_base_controller.ts
+│   │   ├── adb_interfaces.ts
+│   │   ├── adb_jsdomtest.ts
+│   │   ├── adb_record_controller_jsdomtest.ts
+│   │   ├── adb_shell_controller.ts
+│   │   ├── adb_socket_controller.ts
+│   │   ├── adb.ts
+│   │   ├── aggregation
+│   │   │   ├── aggregation_controller.ts
+│   │   │   ├── counter_aggregation_controller.ts
+│   │   │   ├── cpu_aggregation_controller.ts
+│   │   │   ├── cpu_by_process_aggregation_controller.ts
+│   │   │   ├── frame_aggregation_controller.ts
+│   │   │   ├── slice_aggregation_controller.ts
+│   │   │   └── thread_aggregation_controller.ts
+│   │   ├── app_controller.ts
+│   │   ├── area_selection_handler.ts
+│   │   ├── area_selection_handler_unittest.ts
+│   │   ├── args_parser.ts
+│   │   ├── args_parser_unittest.ts
+│   │   ├── chrome_proxy_record_controller.ts
+│   │   ├── consumer_port_types.ts
+│   │   ├── controller.ts
+│   │   ├── controller_unittest.ts
+│   │   ├── cpu_profile_controller.ts
+│   │   ├── flamegraph_controller.ts
+│   │   ├── flow_events_controller.ts
+│   │   ├── ftrace_controller.ts
+│   │   ├── index.ts
+│   │   ├── loading_manager.ts
+│   │   ├── logs_controller.ts
+│   │   ├── permalink_controller.ts
+│   │   ├── pivot_table_controller.ts
+│   │   ├── pivot_table_tree_builder_unittest.ts
+│   │   ├── record_config_types.ts
+│   │   ├── record_controller_interfaces.ts
+│   │   ├── record_controller_jsdomtest.ts
+│   │   ├── record_controller.ts
+│   │   ├── rtux_controller
+│   │   ├── search_controller.ts
+│   │   ├── selection_controller.ts
+│   │   ├── trace_controller.ts
+│   │   ├── trace_error_controller.ts
+│   │   ├── trace_stream.ts
+│   │   └── track_decider.ts
+│   ├── core
+│   │   ├── feature_flags.ts
+│   │   ├── feature_flags_unittest.ts
+│   │   ├── live_reload.ts
+│   │   ├── perf.ts
+│   │   ├── perf_unittest.ts
+│   │   ├── raf_scheduler.ts
+│   │   └── trace_config_utils.ts
+│   ├── engine
+│   │   ├── index.ts
+│   │   └── wasm_bridge.ts
+│   ├── frontend
+│   │   ├── aggregation_panel.ts
+│   │   ├── aggregation_tab.ts
+│   │   ├── analytics.ts
+│   │   ├── android_bug_tool.ts
+│   │   ├── animation.ts
+│   │   ├── app.ts
+│   │   ├── base_counter_track.ts
+│   │   ├── base_slice_track.ts
+│   │   ├── base_slice_track_unittest.ts
+│   │   ├── bottom_tab.ts
+│   │   ├── checkerboard.ts
+│   │   ├── chrome_slice_details_tab.ts
+│   │   ├── clipboard.ts
+│   │   ├── close_track_button.ts
+│   │   ├── cookie_consent.ts
+│   │   ├── counter_panel.ts
+│   │   ├── cpu_profile_panel.ts
+│   │   ├── css_constants.ts
+│   │   ├── debug_tracks.ts
+│   │   ├── debug.ts
+│   │   ├── details_panel.ts
+│   │   ├── download_utils.ts
+│   │   ├── drag
+│   │   │   ├── border_drag_strategy.ts
+│   │   │   ├── drag_strategy.ts
+│   │   │   ├── inner_drag_strategy.ts
+│   │   │   └── outer_drag_strategy.ts
+│   │   ├── drag_gesture_handler.ts
+│   │   ├── drag_handle.ts
+│   │   ├── error_dialog.ts
+│   │   ├── file_drop_handler.ts
+│   │   ├── flags_page.ts
+│   │   ├── flamegraph_panel.ts
+│   │   ├── flamegraph.ts
+│   │   ├── flamegraph_unittest.ts
+│   │   ├── flow_events_panel.ts
+│   │   ├── flow_events_renderer.ts
+│   │   ├── frontend_local_state.ts
+│   │   ├── ftrace_panel.ts
+│   │   ├── generic_slice_details_tab.ts
+│   │   ├── globals.ts
+│   │   ├── gridline_helper.ts
+│   │   ├── gridline_helper_unittest.ts
+│   │   ├── help_modal.ts
+│   │   ├── home_page.ts
+│   │   ├── index.ts
+│   │   ├── insights_page.ts
+│   │   ├── keyboard_event_handler.ts
+│   │   ├── keyboard_layout_map.ts
+│   │   ├── legacy_trace_viewer.ts
+│   │   ├── logs_filters.ts
+│   │   ├── logs_panel.ts
+│   │   ├── metrics_page.ts
+│   │   ├── named_slice_track.ts
+│   │   ├── notes_panel.ts
+│   │   ├── notes.ts
+│   │   ├── omnibox.ts
+│   │   ├── overview_timeline_panel.ts
+│   │   ├── pages.ts
+│   │   ├── pan_and_zoom_handler.ts
+│   │   ├── panel_container.ts
+│   │   ├── panel.ts
+│   │   ├── pivot_table_argument_popup.ts
+│   │   ├── pivot_table_query_generator.ts
+│   │   ├── pivot_table.ts
+│   │   ├── pivot_table_types.ts
+│   │   ├── plugins_page.ts
+│   │   ├── popup_menu.ts
+│   │   ├── post_message_handler.ts
+│   │   ├── publish.ts
+│   │   ├── query_history.ts
+│   │   ├── query_page.ts
+│   │   ├── query_result_tab.ts
+│   │   ├── query_table.ts
+│   │   ├── query_table_unittest.ts
+│   │   ├── rate_limiters.ts
+│   │   ├── record_config.ts
+│   │   ├── recording
+│   │   │   ├── advanced_settings.ts
+│   │   │   ├── android_settings.ts
+│   │   │   ├── chrome_settings.ts
+│   │   │   ├── cpu_settings.ts
+│   │   │   ├── gpu_settings.ts
+│   │   │   ├── linux_perf_settings.ts
+│   │   │   ├── memory_settings.ts
+│   │   │   ├── power_settings.ts
+│   │   │   ├── recording_multiple_choice.ts
+│   │   │   ├── recording_sections.ts
+│   │   │   ├── recording_settings.ts
+│   │   │   ├── recording_ui_utils.ts
+│   │   │   ├── reset_interface_modal.ts
+│   │   │   └── reset_target_modal.ts
+│   │   ├── record_page.ts
+│   │   ├── record_page_v2.ts
+│   │   ├── record_widgets.ts
+│   │   ├── reorderable_cells.ts
+│   │   ├── router.ts
+│   │   ├── router_unittest.ts
+│   │   ├── rpc_http_dialog.ts
+│   │   ├── rtux_detail_panel_old
+│   │   ├── rtux_detail_panel.ts
+│   │   ├── rtux_loader_old
+│   │   ├── rtux_loader.ts
+│   │   ├── rtux_panel.ts
+│   │   ├── scroll_helper.ts
+│   │   ├── search_handler.ts
+│   │   ├── service_worker_controller.ts
+│   │   ├── sidebar.ts
+│   │   ├── simple_counter_track.ts
+│   │   ├── simple_slice_track.ts
+│   │   ├── slice_args.ts
+│   │   ├── slice_details_panel.ts
+│   │   ├── slice_details.ts
+│   │   ├── slice_layout.ts
+│   │   ├── slice_panel.ts
+│   │   ├── slice_track.ts
+│   │   ├── sql
+│   │   │   ├── args.ts
+│   │   │   ├── details
+│   │   │   │   ├── details.ts
+│   │   │   │   └── well_known_types.ts
+│   │   │   ├── slice.ts
+│   │   │   └── thread_state.ts
+│   │   ├── sql_table
+│   │   │   ├── argument_selector.ts
+│   │   │   ├── column.ts
+│   │   │   ├── column_unittest.ts
+│   │   │   ├── render_cell.ts
+│   │   │   ├── state.ts
+│   │   │   ├── state_unittest.ts
+│   │   │   ├── table_description.ts
+│   │   │   ├── table.ts
+│   │   │   ├── tab.ts
+│   │   │   └── well_known_tables.ts
+│   │   ├── sql_types.ts
+│   │   ├── sql_utils.ts
+│   │   ├── sql_utils_unittest.ts
+│   │   ├── store.ts
+│   │   ├── store_unittest.ts
+│   │   ├── tables
+│   │   │   ├── attribute_modal_holder.ts
+│   │   │   ├── table_showcase.ts
+│   │   │   └── table.ts
+│   │   ├── tab_panel.ts
+│   │   ├── task_tracker.ts
+│   │   ├── task_tracker_unittest.ts
+│   │   ├── thread_and_process_info.ts
+│   │   ├── thread_state_tab.ts
+│   │   ├── thread_state.ts
+│   │   ├── tickmark_panel.ts
+│   │   ├── time_axis_panel.ts
+│   │   ├── time_scale.ts
+│   │   ├── time_scale_unittest.ts
+│   │   ├── time_selection_panel.ts
+│   │   ├── topbar.ts
+│   │   ├── trace_attrs.ts
+│   │   ├── trace_converter.ts
+│   │   ├── trace_info_page.ts
+│   │   ├── trace_url_handler.ts
+│   │   ├── track_cache.ts
+│   │   ├── track_cache_unittest.ts
+│   │   ├── track_group_panel.ts
+│   │   ├── track_panel.ts
+│   │   ├── track.ts
+│   │   ├── value.ts
+│   │   ├── vertical_line_helper.ts
+│   │   ├── viewer_page.ts
+│   │   ├── visualized_args_tracks.ts
+│   │   ├── viz_page.ts
+│   │   ├── widgets
+│   │   │   ├── duration.ts
+│   │   │   └── timestamp.ts
+│   │   └── widgets_page.ts
+│   ├── gen -> /home/royce/python/lab/benchmark/perfetto/out/ui/ui/tsc/gen
+│   ├── plugins
+│   │   ├── com.example.Skeleton
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.AndroidBinderViz
+│   │   │   └── index.ts
+│   │   ├── dev.perfetto.AndroidClientServer
+│   │   │   └── index.ts
+│   │   ├── dev.perfetto.AndroidCujs
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.AndroidLongBatteryTracing
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.AndroidNetwork
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.AndroidPerf
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.AndroidPerfTraceCounters
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.BookmarkletApi
+│   │   │   ├── index.ts
+│   │   │   └── OWNERS
+│   │   ├── dev.perfetto.CoreCommands
+│   │   │   └── index.ts
+│   │   ├── dev.perfetto.ExampleSimpleCommand
+│   │   │   └── index.ts
+│   │   ├── dev.perfetto.ExampleState
+│   │   │   └── index.ts
+│   │   └── dev.perfetto.LargeScreensPerf
+│   │       ├── index.ts
+│   │       └── OWNERS
+│   ├── protos
+│   │   └── index.ts
+│   ├── public
+│   │   ├── index.ts
+│   │   └── utils.ts
+│   ├── service_worker
+│   │   ├── service_worker.ts
+│   │   └── tsconfig.json
+│   ├── test
+│   │   ├── diff_viewer
+│   │   │   ├── index.html
+│   │   │   ├── README.md
+│   │   │   └── script.js
+│   │   ├── perfetto_ui_test_helper.ts
+│   │   └── ui_integrationtest.ts
+│   ├── traceconv
+│   │   └── index.ts
+│   ├── trace_processor
+│   │   ├── engine.ts
+│   │   ├── http_rpc_engine.ts
+│   │   ├── proto_ring_buffer.ts
+│   │   ├── proto_ring_buffer_unittest.ts
+│   │   ├── query_result.ts
+│   │   ├── query_result_unittest.ts
+│   │   ├── query_utils.ts
+│   │   ├── query_utils_unittest.ts
+│   │   └── wasm_engine_proxy.ts
+│   ├── tracks
+│   │   ├── android_log
+│   │   │   └── index.ts
+│   │   ├── annotation
+│   │   │   └── index.ts
+│   │   ├── async_slices
+│   │   │   ├── async_slice_track_v2.ts
+│   │   │   └── index.ts
+│   │   ├── chrome_critical_user_interactions
+│   │   │   ├── index.ts
+│   │   │   ├── page_load_details_panel.ts
+│   │   │   ├── startup_details_panel.ts
+│   │   │   └── web_content_interaction_details_panel.ts
+│   │   ├── chrome_scroll_jank
+│   │   │   ├── chrome_tasks_scroll_jank_track.ts
+│   │   │   ├── event_latency_details_panel.ts
+│   │   │   ├── event_latency_track.ts
+│   │   │   ├── index.ts
+│   │   │   ├── jank_colors.ts
+│   │   │   ├── scroll_delta_graph.ts
+│   │   │   ├── scroll_details_panel.ts
+│   │   │   ├── scroll_jank_cause_link_utils.ts
+│   │   │   ├── scroll_jank_cause_map.ts
+│   │   │   ├── scroll_jank_slice.ts
+│   │   │   ├── scroll_jank_v3_details_panel.ts
+│   │   │   ├── scroll_jank_v3_track.ts
+│   │   │   └── scroll_track.ts
+│   │   ├── chrome_slices
+│   │   │   ├── generic_slice_track.ts
+│   │   │   └── index.ts
+│   │   ├── counter
+│   │   │   └── index.ts
+│   │   ├── cpu_freq
+│   │   │   └── index.ts
+│   │   ├── cpu_profile
+│   │   │   └── index.ts
+│   │   ├── cpu_slices
+│   │   │   └── index.ts
+│   │   ├── custom_sql_table_slices
+│   │   │   └── index.ts
+│   │   ├── debug
+│   │   │   ├── add_debug_track_menu.ts
+│   │   │   ├── counter_track.ts
+│   │   │   ├── details_tab.ts
+│   │   │   ├── index.ts
+│   │   │   └── slice_track.ts
+│   │   ├── flows
+│   │   │   └── index.ts
+│   │   ├── frames
+│   │   │   ├── actual_frames_track_v2.ts
+│   │   │   ├── expected_frames_track_v2.ts
+│   │   │   └── index.ts
+│   │   ├── ftrace
+│   │   │   └── index.ts
+│   │   ├── heap_profile
+│   │   │   └── index.ts
+│   │   ├── null_track
+│   │   │   └── index.ts
+│   │   ├── perf_samples_profile
+│   │   │   └── index.ts
+│   │   ├── pivot_table
+│   │   │   └── index.ts
+│   │   ├── process_summary
+│   │   │   ├── index.ts
+│   │   │   ├── process_scheduling_track.ts
+│   │   │   └── process_summary_track.ts
+│   │   ├── rtux
+│   │   │   └── index.ts
+│   │   ├── sched
+│   │   │   ├── active_cpu_count.ts
+│   │   │   ├── index.ts
+│   │   │   └── runnable_thread_count.ts
+│   │   ├── screenshots
+│   │   │   ├── index.ts
+│   │   │   └── screenshot_panel.ts
+│   │   ├── thread_state
+│   │   │   ├── index.ts
+│   │   │   └── thread_state_v2.ts
+│   │   └── visualised_args
+│   │       └── index.ts
+│   └── widgets
+│       ├── anchor.ts
+│       ├── basic_table.ts
+│       ├── button.ts
+│       ├── callout.ts
+│       ├── checkbox.ts
+│       ├── common.ts
+│       ├── details_shell.ts
+│       ├── editor.ts
+│       ├── empty_state.ts
+│       ├── error.ts
+│       ├── form.ts
+│       ├── grid_layout.ts
+│       ├── hotkey_context.ts
+│       ├── hotkey_glyphs.ts
+│       ├── icon.ts
+│       ├── menu.ts
+│       ├── modal.ts
+│       ├── multiselect.ts
+│       ├── popup.ts
+│       ├── portal.ts
+│       ├── raf.ts
+│       ├── section.ts
+│       ├── select.ts
+│       ├── spinner.ts
+│       ├── sql_ref.ts
+│       ├── switch.ts
+│       ├── text_input.ts
+│       ├── text_paragraph.ts
+│       ├── tree.ts
+│       ├── vega_view.ts
+│       └── virtual_scroll_container.ts
+├── tsconfig.base.json
+└── tsconfig.json
+
+795 directories, 596 files

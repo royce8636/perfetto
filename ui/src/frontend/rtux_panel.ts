@@ -1,8 +1,6 @@
 import m from 'mithril';
-
 import {time, Time} from '../base/time';
 import {Actions} from '../common/actions';
-// import {colorForFtrace} from '../common/colorizer';
 import {StringListPatch} from '../common/state';
 import {DetailsShell} from '../widgets/details_shell';
 import {
@@ -12,16 +10,28 @@ import {
 } from '../widgets/multiselect';
 import {PopupPosition} from '../widgets/popup';
 import {VirtualScrollContainer} from '../widgets/virtual_scroll_container';
-
 import {globals} from './globals';
 import {Timestamp} from './widgets/timestamp';
+import {RtuxPanelData} from './globals';
 
 const ROW_H = 20;
 const PAGE_SIZE = 250;
+const DEFAULT_COLUMN_WIDTH = 100;
+
+interface Column {
+  name: string;
+  width: number;
+}
 
 export class RTUXPanel implements m.ClassComponent {
   private page: number = 0;
   private pageCount: number = 0;
+  private columns: Column[] = [
+    {name: 'Timestamp', width: DEFAULT_COLUMN_WIDTH},
+    {name: 'Name', width: DEFAULT_COLUMN_WIDTH * 2},
+    {name: 'Type', width: DEFAULT_COLUMN_WIDTH},
+    {name: 'Level', width: DEFAULT_COLUMN_WIDTH},
+  ];
 
   view(_: m.CVnode<{}>) {
     return m(
@@ -39,6 +49,7 @@ export class RTUXPanel implements m.ClassComponent {
       ),
     );
   }
+
 
   recomputeVisibleRowsAndUpdate(scrollContainer: HTMLElement) {
     const prevPage = this.page;
@@ -123,40 +134,44 @@ export class RTUXPanel implements m.ClassComponent {
     );
   }
 
-  // Render all the rows including the first title row
   private renderRows() {
-    const data = globals.rtuxPanelData;
+    const data: RtuxPanelData | undefined = globals.rtuxPanelData;
     const rows: m.Children = [];
 
-    rows.push(m(
-      `.row`,
-      m('.cell.row-header', 'Timestamp'),
-      m('.cell.row-header', 'Event'),
-    //   m('.cell.row-header', 'CPU'),
-    //   m('.cell.row-header', 'Process'),
-    //   m('.cell.row-header', 'Args'),
-    ));
+    rows.push(m('.row', this.columns.map((col) => 
+      m('.cell.row-header', {
+        style: {width: `${col.width}px`},
+      }, col.name)
+    )));
 
     if (data) {
       const {events, offset, numEvents} = data;
-      for (let i = 0; i < events.length; i++) {
-        const {ts, event} = events[i];
+      
+      const sortedEvents = [...events].sort((a, b) => Number(a.ts) - Number(b.ts));
+
+      for (let i = 0; i < sortedEvents.length; i++) {
+        const {ts, event} = sortedEvents[i];
+        const parsedEvent = this.parseEvent(event);
 
         const timestamp = m(Timestamp, {ts});
-
         const rank = i + offset;
-
-        const color = 'rgb(255, 0, 0)';
+        const color = parsedEvent.type === 'detection' ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)';
 
         rows.push(m(
-          `.row`,
+          '.row',
           {
             style: {top: `${(rank + 1.0) * ROW_H}px`},
             onmouseover: this.onRowOver.bind(this, ts),
             onmouseout: this.onRowOut.bind(this),
           },
-          m('.cell', timestamp),
-          m('.cell', m('span.colour', {style: {background: color}}), event),
+          m('.cell', {style: {width: `${this.columns[0].width}px`}}, timestamp),
+          m('.cell', {style: {width: `${this.columns[1].width}px`}}, [
+            m('span.colour', {style: {background: color}}),
+            ' ',
+            parsedEvent.name
+          ]),
+          m('.cell', {style: {width: `${this.columns[2].width}px`}}, parsedEvent.type),
+          m('.cell', {style: {width: `${this.columns[3].width}px`}}, parsedEvent.level || 'N/A'),
         ));
       }
       return m('.rows', {style: {height: `${numEvents * ROW_H}px`}}, rows);
@@ -164,4 +179,18 @@ export class RTUXPanel implements m.ClassComponent {
       return m('.rows', rows);
     }
   }
+
+  private parseEvent(eventString: string): { type: string; name: string; level: string } {
+    const match = eventString.match(/^(\w+):(.+?)\s*\((\d+):(\d+)\)$/);
+    if (match) {
+      const [, type, name, , level] = match;
+      return { type, name: name.trim(), level };
+    }
+    // Fallback parsing if the regex doesn't match
+    const [type, ...rest] = eventString.split(':');
+    const name = rest.join(':').trim();
+    const level = 'N/A';
+    return { type, name, level };
+  }
+
 }

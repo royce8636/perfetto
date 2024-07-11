@@ -25,16 +25,17 @@ import { drawTrackHoverTooltip } from '../../common/canvas_utils';
 
 export interface Data extends TrackData {
   timestamps: BigInt64Array;
-  names: string[];
+  // names: string[];
+  events: Array<{ type: string, name: string, level: string }>;
 }
 
 const MARGIN = 2;
 const RECT_HEIGHT = 35;
 const TRACK_HEIGHT = (RECT_HEIGHT) + (2 * MARGIN);
 
-interface Grouped {
-  [key: string]: string[];
-}
+// interface Grouped {
+//   [key: string]: string[];
+// }
 
 class RTUXTrack implements Track {
   // private trackKey: string;
@@ -82,46 +83,97 @@ class RTUXTrack implements Track {
     this.fetcher.dispose();
   }
 
-  async onBoundsChange(start: time, end: time, resolution: duration): Promise<Data> {
-    // const excludeList = Array.from(globals.state.ftraceFilter.excludedNames);
+  // async onBoundsChange(start: time, end: time, resolution: duration): Promise<Data> {
+  //   // const excludeList = Array.from(globals.state.ftraceFilter.excludedNames);
   
+  //   // Access the vector using the provided function
+  //   const inputVector = rtux_loader.getStoredVector();
+  
+  //   // Filter the vector based on start, end, and excluded names
+  //   const filteredVector = inputVector.filter(item =>
+  //     item.key >= start &&
+  //     item.key <= end
+  //     // !excludeList.includes(item.value)
+  //   );
+  
+  //   // Initialize grouped with the explicit type
+  //   const grouped: Grouped = {};
+
+  //   filteredVector.forEach(({ key, value }) => {
+  //     // Convert the key to a string for consistent object indexing
+  //     const tsQuantKey = ((key / resolution) * resolution).toString(); // Ensure arithmetic is valid for BigInt
+
+  //     if (!grouped[tsQuantKey]) {
+  //       grouped[tsQuantKey] = [];
+  //     }
+  //     grouped[tsQuantKey].push(value);
+  //   });
+
+  //   // Prepare the result object
+  //   // Convert keys back to BigInt for timestamps array
+  //   const timestamps = Object.keys(grouped).map(ts => BigInt(ts));
+  //   const names = Object.values(grouped).flat(); // Flattening names if multiple per tsQuant
+
+  //   const result: Data = {
+  //     start: start,
+  //     end: end,
+  //     resolution: resolution,
+  //     length: timestamps.length,
+  //     timestamps: new BigInt64Array(timestamps),
+  //     names,
+  //   };
+
+  //   return result;
+  // }
+
+  async onBoundsChange(start: time, end: time, resolution: duration): Promise<Data> {
     // Access the vector using the provided function
     const inputVector = rtux_loader.getStoredVector();
   
-    // Filter the vector based on start, end, and excluded names
+    // Filter the vector based on start and end
     const filteredVector = inputVector.filter(item =>
       item.key >= start &&
       item.key <= end
-      // !excludeList.includes(item.value)
     );
   
     // Initialize grouped with the explicit type
-    const grouped: Grouped = {};
-
+    const grouped: { [key: string]: Array<{ type: string, name: string, level: string }> } = {};
+  
     filteredVector.forEach(({ key, value }) => {
       // Convert the key to a string for consistent object indexing
-      const tsQuantKey = ((key / resolution) * resolution).toString(); // Ensure arithmetic is valid for BigInt
-
+      const tsQuantKey = ((key / resolution) * resolution).toString();
+  
       if (!grouped[tsQuantKey]) {
         grouped[tsQuantKey] = [];
       }
-      grouped[tsQuantKey].push(value);
+  
+      // Parse the value string
+      const [eventType, eventName, level] = value.split(':');
+  
+      // Create a structured object for each event
+      const eventObject = {
+        type: eventType,
+        name: eventName,
+        level: level
+      };
+  
+      grouped[tsQuantKey].push(eventObject);
     });
-
+  
     // Prepare the result object
     // Convert keys back to BigInt for timestamps array
     const timestamps = Object.keys(grouped).map(ts => BigInt(ts));
-    const names = Object.values(grouped).flat(); // Flattening names if multiple per tsQuant
-
+    const events = Object.values(grouped).flat(); // Flattening events if multiple per tsQuant
+  
     const result: Data = {
       start: start,
       end: end,
       resolution: resolution,
       length: timestamps.length,
       timestamps: new BigInt64Array(timestamps),
-      names,
+      events,
     };
-
+  
     return result;
   }
 
@@ -129,51 +181,45 @@ class RTUXTrack implements Track {
         return TRACK_HEIGHT;
     }
     render(ctx: CanvasRenderingContext2D, size: PanelSize): void {
-        const {
-          visibleTimeScale,
-        } = globals.timeline;
-
-        const data = this.fetcher.data;
-        
-        if (data === undefined) return;
-
-        const dataStartPx = visibleTimeScale.timeToPx(data.start);
-        const dataEndPx = visibleTimeScale.timeToPx(data.end);
-
-        // checkerboardExcept(
-        //   ctx, this.getHeight(), 0, size.width, dataStartPx, dataEndPx);
-        checkerboardExcept_debug(
-            ctx, this.getHeight(), 0, size.width, dataStartPx, dataEndPx);
-    
-        const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
-
-        if (this.mousePos !== undefined){
-          const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
-          const imageInfo = rtux_loader.findImageInfo(timeToFind);
-          if (imageInfo){
-            let image_path = `${globals.root}assets${imageInfo.image_path}`;
-            rtux_loader.setImageToDisplay(image_path);
-          }
+      const { visibleTimeScale } = globals.timeline;
+      const data = this.fetcher.data;
+      
+      if (data === undefined) return;
+  
+      const dataStartPx = visibleTimeScale.timeToPx(data.start);
+      const dataEndPx = visibleTimeScale.timeToPx(data.end);
+  
+      checkerboardExcept_debug(
+        ctx, this.getHeight(), 0, size.width, dataStartPx, dataEndPx);
+  
+      const diamondSideLen = RECT_HEIGHT / Math.sqrt(2);
+  
+      if (this.mousePos !== undefined) {
+        const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
+        const imageInfo = rtux_loader.findImageInfo(timeToFind);
+        if (imageInfo) {
+          let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          rtux_loader.setImageToDisplay(image_path);
         }
-
-        for (let i = 0; i < data.timestamps.length; i++) {
-          // const name = data.names[i];
-          ctx.fillStyle = 'rgb(255, 0, 0)';
-          const timestamp = Time.fromRaw(data.timestamps[i]);
-          const xPos = Math.floor(visibleTimeScale.timeToPx(timestamp));
-    
-          // Draw a diamond over the event
-          ctx.save();
-          ctx.translate(xPos, MARGIN);
-          ctx.rotate(Math.PI / 4);
-          ctx.fillRect(0, 0, diamondSideLen, diamondSideLen);
-          ctx.restore();
-
-          if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2){
-            drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), data.names[i]);
-          }
+      }
+  
+      for (let i = 0; i < data.timestamps.length; i++) {
+        const event = data.events[i];
+        ctx.fillStyle = event.type === 'detection' ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)';
+        const timestamp = Time.fromRaw(data.timestamps[i]);
+        const xPos = Math.floor(visibleTimeScale.timeToPx(timestamp));
+  
+        // Draw a diamond over the event
+        ctx.save();
+        ctx.translate(xPos, MARGIN);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillRect(0, 0, diamondSideLen, diamondSideLen);
+        ctx.restore();
+  
+        if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2) {
+          drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), `${event.type}: ${event.name} (Level: ${event.level})`);
         }
-
+      }
     }
 
       
