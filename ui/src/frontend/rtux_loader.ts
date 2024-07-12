@@ -37,7 +37,7 @@ class RtuxLoader {
 
     findImageInfo(timestamp: time): any {
         if (this.photoInfo === undefined || this.photoInfo.length === 0) {
-            console.log("photo_info is undefined or empty");
+            console.log("photo_info is undefined or empty", timestamp);
             return undefined;
         }
         const rounded_time = this.roundToSignificantFigures(timestamp, 6);
@@ -143,7 +143,32 @@ class RtuxLoader {
                     publishRtuxPanelData({events, offset: 0, numEvents: cnt});
                 }
 
-                // ... (rest of the method remains the same)
+                // Process "rounded_photo_info" section if it exists
+                if (json.rounded_photo_info) {
+                    Object.entries(json.rounded_photo_info).forEach(([timestamp, value]: [any, any]) => {
+                        timestamp = Time.fromRaw(BigInt(Math.floor(parseFloat(timestamp) * 1e9)));
+                        const imagesForTimestamp: Array<{ image_path: string; time: any }> = [];
+
+                        Object.entries(value).forEach(([imagePath, imageTime]: [string, any]) => {
+                            imagesForTimestamp.push({
+                                image_path: imagePath,
+                                time: Time.fromRaw(BigInt(Math.floor(parseFloat(imageTime) * 1e9))),
+                            });
+                        });
+
+                        photoVector.push([timestamp, imagesForTimestamp]);
+                    });
+                }
+                try{
+                    if (json.hash.min_key && json.hash.min_step){
+                        this.minKey = json.hash.min_key;
+                        this.minStep = json.hash.min_step;
+                        console.log("minKey", this.minKey);
+                        console.log("minStep", this.minStep);
+                    }
+                }catch(e){
+                    console.log("minKey and minStep not found");
+                }
 
                 this.globalVector = vector;
                 this.photoInfo = photoVector;

@@ -23,7 +23,7 @@ export class RTUXDetailsTab implements m.ClassComponent{
     this.imageUrl = rtux_loader.getImageToDisplay();
     // this.imageTime = rtux_loader.getImageDisplayedTime();
     // this.imageTimeString = this.imageTime ? Time.toTimecode(this.imageTime).toString('\u2009') : 'N/A';
-    const match = this.imageUrl.match(/(\d+)\.png$/);
+    const match = this.imageUrl.match(/(\d+)\.jpg$/);
     const imageNumber = match ? match[1] : null;
     const hasImage = this.imageUrl && imageNumber;
     const leftText = hasImage ? [

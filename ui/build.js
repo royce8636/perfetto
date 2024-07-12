@@ -574,6 +574,12 @@ function startServer() {
         }
 
         let absPath = path.normalize(path.join(cfg.outDistRootDir, uri));
+
+        if (uri.startsWith('/assets/logs/')) {
+          absPath = path.join('/data/rtux_ai', uri.slice('/assets'.length));
+          console.log('RTUX REQUEST: Serving logs from', absPath);
+        }
+
         // We want to be able to use the data in '/test/' for e2e tests.
         // However, we don't want do create a symlink into the 'dist/' dir,
         // because 'dist/' gets shipped on the production server.
@@ -582,7 +588,9 @@ function startServer() {
         }
 
         // Don't serve contents outside of the project root (b/221101533).
-        if (path.relative(ROOT_DIR, absPath).startsWith('..')) {
+        // if (path.relative(ROOT_DIR, absPath).startsWith('..')) {
+        if (path.relative(ROOT_DIR, absPath).startsWith('..') &&
+          !absPath.startsWith('/data/rtux_ai')) {  // Allow access to /data/rtux_ai
           res.writeHead(403);
           res.end('403 Forbidden - Request path outside of the repo root');
           return;

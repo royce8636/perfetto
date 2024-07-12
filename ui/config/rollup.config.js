@@ -17,6 +17,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from 'rollup-plugin-re';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
+import copy from 'rollup-plugin-copy';
 
 const path = require('path');
 const ROOT_DIR = path.dirname(path.dirname(__dirname));  // The repo root.
@@ -33,11 +34,27 @@ function defBundle(tsRoot, bundle, distDir) {
       sourcemap: true,
     },
     plugins: [
+
+      copy({
+        targets: [
+          { 
+            src: 'ui/src/assets/logs/**/*', 
+            dest: `${OUT_SYMLINK}/${distDir}/assets/logs`,
+            flatten: false,
+          }
+        ],
+        flatten: false,
+        // followSymlinks: true,
+        copyOnce: true,
+        follow: true
+      }),
+
       nodePolyfills(),
       nodeResolve({
         mainFields: ['browser'],
         browser: true,
         preferBuiltins: false,
+        symlinks: true,
       }),
 
       commonjs({
@@ -88,6 +105,7 @@ function defServiceWorkerBundle() {
         mainFields: ['browser'],
         browser: true,
         preferBuiltins: false,
+        symlinks: true,
       }),
       commonjs(),
       sourcemaps(),

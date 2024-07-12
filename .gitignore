@@ -38,3 +38,4 @@ GTAGS
 /ui/src/assets/data_copied/rtux_ai/logs/
 /ui/src/assets/data/rtux_ai/logs
 /ui/src/assets/logs
+node_modules

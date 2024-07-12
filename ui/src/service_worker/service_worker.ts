@@ -149,6 +149,11 @@ function shouldHandleHttpRequest(req: Request): boolean {
 
   const url = new URL(req.url);
   if (url.pathname === '/live_reload') return false;
+
+  if (req.destination === 'image' && url.origin !== self.location.origin) {
+    console.debug(LOG_TAG + `Not caching image ${req.url}`)
+    return false;
+  }
   return req.method === 'GET' && url.origin === self.location.origin;
 }
 

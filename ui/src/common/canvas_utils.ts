@@ -315,7 +315,8 @@ export function drawRtuxHoverScreen(
   console.log("drawRtuxHoverScreen: ", pos, maxHeight, imageInfo, timeToFind.toString());
   if (imageInfo) {
     let { image_path } = imageInfo;
-    image_path = `${globals.root}assets${image_path}`;
+    // image_path = `${globals.root}assets${image_path}`;
+    image_path = `assets/${image_path}`;
     rtux_loader.setImageToDisplay(image_path);
     // const { image_path } = `${imageInfo}`;
     // drawTrackHoverTooltip(ctx, pos, maxHeight, imageInfo.image_path, imageInfo.time.toString());

@@ -65,7 +65,8 @@ class RTUXTrack implements Track {
       const timeToFind = globals.timeline.visibleTimeScale.pxToHpTime(this.mouseX).toTime();
       const imageInfo = rtux_loader.findImageInfo(timeToFind);
       if (imageInfo){
-          let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          // let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          let image_path = `assets/${imageInfo.image_path}`;
           rtux_loader.setImageToDisplay(image_path);
           rtux_loader.setImageDisplayedTime(imageInfo.time);
       }
@@ -198,7 +199,8 @@ class RTUXTrack implements Track {
         const timeToFind = visibleTimeScale.pxToHpTime(this.mousePos.x).toTime();
         const imageInfo = rtux_loader.findImageInfo(timeToFind);
         if (imageInfo) {
-          let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          // let image_path = `${globals.root}assets${imageInfo.image_path}`;
+          let image_path = `assets/${imageInfo.image_path}`;
           rtux_loader.setImageToDisplay(image_path);
         }
       }
