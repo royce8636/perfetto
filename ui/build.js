@@ -157,6 +157,11 @@ async function main() {
     help: 'filter Jest tests by regex, e.g. \'chrome_render\'',
   });
   parser.add_argument('--no-override-gn-args', {action: 'store_true'});
+  parser.add_argument('--rtux-path', {
+    help: 'Path to rtux_ai directory',
+    default: '/data/rtux'
+  });
+  
 
   const args = parser.parse_args();
   const clean = !args.no_build;
@@ -195,6 +200,7 @@ async function main() {
   if (args.cross_origin_isolation) {
     cfg.crossOriginIsolation = true;
   }
+  cfg.rtuxPath = args.rtux_path;
 
   process.on('SIGINT', () => {
     console.log('\nSIGINT received. Killing all child processes and exiting');
@@ -576,9 +582,9 @@ function startServer() {
         let absPath = path.normalize(path.join(cfg.outDistRootDir, uri));
 
         if (uri.startsWith('/assets/logs/')) {
-          absPath = path.join('/data/rtux_ai', uri.slice('/assets'.length));
-          // console.log('RTUX REQUEST: Serving logs from', absPath);
+          absPath = path.join(cfg.rtuxPath, uri.slice('/assets'.length));
         }
+        
 
         // We want to be able to use the data in '/test/' for e2e tests.
         // However, we don't want do create a symlink into the 'dist/' dir,
@@ -589,13 +595,14 @@ function startServer() {
 
         // Don't serve contents outside of the project root (b/221101533).
         // if (path.relative(ROOT_DIR, absPath).startsWith('..')) {
-        if (path.relative(ROOT_DIR, absPath).startsWith('..') &&
-          !absPath.startsWith('/data/rtux_ai')) {  // Allow access to /data/rtux_ai
-          res.writeHead(403);
-          res.end('403 Forbidden - Request path outside of the repo root');
-          return;
-        }
-
+          if (
+            path.relative(ROOT_DIR, absPath).startsWith('..') &&
+            !absPath.startsWith(cfg.rtuxPath)
+          ) {  
+            res.writeHead(403);
+            res.end('403 Forbidden - Request path outside of the repo root');
+            return;
+          }
         fs.readFile(absPath, function(err, data) {
           if (err) {
             res.writeHead(404);

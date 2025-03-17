@@ -14,6 +14,10 @@
 
 import("../gn/perfetto.gni")
 
+declare_args() {
+  RTUX_PATH = "/data/rtux_ai"  # Default path, can be overridden
+}
+
 # Prevent that this file is accidentally included in embedder builds.
 assert(enable_perfetto_ui)
 
@@ -35,7 +39,7 @@ action("deprecation_warning") {
     "cat",
     rebase_path("config/gn_deprecation_banner.txt", root_build_dir),
   ]
-}
+}                     
 
 action("ui_build") {
   deps = [ ":deprecation_warning" ]
@@ -50,5 +54,8 @@ action("ui_build") {
     rebase_path("build.js", root_build_dir),
     "--out",
     ".",
+    "--rtux-path",
+    RTUX_PATH
   ]
 }
+
