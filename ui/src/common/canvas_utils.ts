@@ -126,6 +126,7 @@ export function drawTrackHoverTooltip(
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'left';
 
+
   // TODO(hjd): Avoid measuring text all the time (just use monospace?)
   const textMetrics = ctx.measureText(text);
   const text2Metrics = ctx.measureText(text2 || '');

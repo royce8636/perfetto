@@ -35,40 +35,98 @@ class RtuxLoader {
         return Time.fromRaw(BigInt(rounded));
     }
 
+    // findImageInfo(timestamp: time): any {
+    //     if (this.photoInfo === undefined || this.photoInfo.length === 0) {
+    //         console.log("photo_info is undefined or empty", timestamp);
+    //         return undefined;
+    //     }
+    //     const rounded_time = this.roundToSignificantFigures(timestamp, 6);
+    //     let matchingEntry;
+    //     if (this.minKey === -1 || this.minStep === -1){  // if hash is not available
+    //         // console.log("hash is not available")
+    //         matchingEntry = this.photoInfo.find(([key, _]) => key === rounded_time);
+    //         if (!matchingEntry) {
+    //             console.log("No hash: matchingEntry is undefined");
+    //             return undefined;
+    //         }
+    //     }else{  // if hash is available
+    //         const index = Math.floor((Number(rounded_time) - this.minKey) / this.minStep);
+    //         // console.log("Hash:", index)
+    //         matchingEntry = this.photoInfo[index];
+    //         if (!matchingEntry) {
+    //             console.log("Hash: matchingEntry is undefined", rounded_time, index);
+    //             return undefined;
+    //         }
+    //     }
+    //     const [, image_info] = matchingEntry;
+    //     let closest = image_info[0];
+    //     let closest_time = Math.abs(Number(closest.time) - Number(timestamp));
+    //     image_info.forEach((info) => {
+    //         const diff = Math.abs(Number(info.time) - Number(timestamp));
+    //         if (diff < closest_time) {
+    //             closest = info;
+    //             closest_time = diff;
+    //         }
+    //     });
+    //     // log the given time, the closest time, and the image path
+    //     console.log("Given time:", timestamp, "Closest time:", closest.time, "Image path:", closest.image_path);
+    //     return closest;
+    // }
+
     findImageInfo(timestamp: time): any {
         if (this.photoInfo === undefined || this.photoInfo.length === 0) {
             console.log("photo_info is undefined or empty", timestamp);
             return undefined;
         }
-        const rounded_time = this.roundToSignificantFigures(timestamp, 6);
-        let matchingEntry;
-        if (this.minKey === -1 || this.minStep === -1){  // if hash is not available
-            // console.log("hash is not available")
-            matchingEntry = this.photoInfo.find(([key, _]) => key === rounded_time);
-            if (!matchingEntry) {
-                console.log("No hash: matchingEntry is undefined");
+    
+        const timestampNs = Number(timestamp);
+    
+        if (this.minKey !== -1 && this.minStep !== -1) {
+            // Use hash-based method
+            const index = Math.floor((timestampNs - this.minKey) / this.minStep);
+            
+            let closestIndex = index;
+            let closestDiff = Infinity;
+            
+            for (let i = Math.max(0, index - 5); i < Math.min(this.photoInfo.length, index + 6); i++) {
+                if (this.photoInfo[i]) {
+                    const diff = Math.abs(Number(this.photoInfo[i][0]) - timestampNs);
+                    if (diff < closestDiff) {
+                        closestIndex = i;
+                        closestDiff = diff;
+                    }
+                }
+            }
+    
+            if (!this.photoInfo[closestIndex]) {
+                console.log("Hash: matchingEntry is undefined", timestampNs, closestIndex);
                 return undefined;
             }
-        }else{  // if hash is available
-            const index = (Number(rounded_time) - this.minKey) / this.minStep;
-            // console.log("Hash:", index)
-            matchingEntry = this.photoInfo[index];
-            if (!matchingEntry) {
-                console.log("Hash: matchingEntry is undefined", rounded_time, index);
-                return undefined;
+    
+            const [, image_info] = this.photoInfo[closestIndex];
+    
+            let closest = image_info[0];
+            let closest_time = Math.abs(Number(closest.time) - timestampNs);
+            
+            for (const info of image_info) {
+                const diff = Math.abs(Number(info.time) - timestampNs);
+                if (diff < closest_time) {
+                    closest = info;
+                    closest_time = diff;
+                }
             }
-        }
-        const [, image_info] = matchingEntry;
-        let closest = image_info[0];
-        let closest_time = Math.abs(Number(closest.time) - Number(timestamp));
-        image_info.forEach((info) => {
-            const diff = Math.abs(Number(info.time) - Number(timestamp));
-            if (diff < closest_time) {
-                closest = info;
-                closest_time = diff;
-            }
-        });
-        return closest;
+    
+            // console.log("Given time:", timestamp, "Closest time:", closest.time, "Image path:", closest.image_path);
+            return closest;
+        } 
+        // else {
+        //     let matchingEntry;
+        //     matchingEntry = this.photoInfo.find(([key, _]) => key === timestampNs);
+        //     if (!matchingEntry) {
+        //         console.log("No hash: matchingEntry is undefined");
+        //         return undefined;
+        //     }
+        // }
     }
 
     setImageToDisplay(imagePath: string): void {

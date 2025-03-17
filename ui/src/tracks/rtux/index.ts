@@ -61,11 +61,12 @@ class RTUXTrack implements Track {
       }
       const rect = element.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
+      this.mousePos = {x: this.mouseX, y: event.clientY - rect.top};
+
       // console.log("globalEvent", this.mouseX);
       const timeToFind = globals.timeline.visibleTimeScale.pxToHpTime(this.mouseX).toTime();
       const imageInfo = rtux_loader.findImageInfo(timeToFind);
       if (imageInfo){
-          // let image_path = `${globals.root}assets${imageInfo.image_path}`;
           let image_path = `assets/${imageInfo.image_path}`;
           rtux_loader.setImageToDisplay(image_path);
           rtux_loader.setImageDisplayedTime(imageInfo.time);
@@ -219,7 +220,8 @@ class RTUXTrack implements Track {
         ctx.restore();
   
         if (this.mousePos !== undefined && xPos - diamondSideLen / 2 < this.mousePos.x && this.mousePos.x < xPos + diamondSideLen / 2) {
-          drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), `${event.type}: ${event.name} (Level: ${event.level})`);
+          // drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), `${event.type}: ${event.name} (Level: ${event.level})`);
+          drawTrackHoverTooltip(ctx, this.mousePos, this.getHeight(), `${event.type}: ${event.name}`);
         }
       }
     }

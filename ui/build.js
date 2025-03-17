@@ -577,7 +577,7 @@ function startServer() {
 
         if (uri.startsWith('/assets/logs/')) {
           absPath = path.join('/data/rtux_ai', uri.slice('/assets'.length));
-          console.log('RTUX REQUEST: Serving logs from', absPath);
+          // console.log('RTUX REQUEST: Serving logs from', absPath);
         }
 
         // We want to be able to use the data in '/test/' for e2e tests.

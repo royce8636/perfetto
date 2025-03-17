@@ -5,13 +5,13 @@ import { Tree, TreeNode } from '../widgets/tree';
 import { Section } from '../widgets/section';
 import { GridLayout } from '../widgets/grid_layout';
 import { DetailsShell } from '../widgets/details_shell';
-// import { Time, time } from '../base/time';
-// import { Time} from '../base/time';
+// import {Timestamp} from './widgets/timestamp';
+import { Time, time } from '../base/time';
 
 export class RTUXDetailsTab implements m.ClassComponent{
   imageUrl: string = '';
-  // imageTime: time = Time.INVALID;
-  // imageTimeString: string = '';
+  imageTime: time = Time.INVALID;
+  imageTimeString: string = '';
 
   // oninit() {
   //   rtux_loader.subscribe(this.updateImage.bind(this));
@@ -21,16 +21,18 @@ export class RTUXDetailsTab implements m.ClassComponent{
   // }
   view() {
     this.imageUrl = rtux_loader.getImageToDisplay();
-    // this.imageTime = rtux_loader.getImageDisplayedTime();
-    // this.imageTimeString = this.imageTime ? Time.toTimecode(this.imageTime).toString('\u2009') : 'N/A';
+    this.imageTime = rtux_loader.getImageDisplayedTime();
+    this.imageTimeString = this.imageTime ? Time.toTimecode(this.imageTime).toString('\u2009') : 'N/A';
     const match = this.imageUrl.match(/(\d+)\.jpg$/);
     const imageNumber = match ? match[1] : null;
     const hasImage = this.imageUrl && imageNumber;
+    // const startTime = getStartTimestamp();
     const leftText = hasImage ? [
           m('div', {style: {'font-weight': 'bold', 'text-decoration': 'underline' }}, 'Image Number:'),
           m('div', {style: {'font-weight': 'normal !important' }}, imageNumber),
-          // m('div', {style: {'font-weight': 'bold', 'text-decoration': 'underline' }}, 'Displayed Time:'),
-          // m('div', {style: {'font-weight': 'normal !important' }}, this.imageTimeString)
+          m('div', {style: {'font-weight': 'bold', 'text-decoration': 'underline' }}, 'Perfetto Time:'),
+          m('div', {style: {'font-weight': 'normal !important' }}, this.imageTimeString),
+          // m(Timestamp, {ts: startTime}),
       ]: 'No Image Available';
   
     return m(
